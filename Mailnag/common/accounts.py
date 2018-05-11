@@ -5,7 +5,7 @@
 #
 # Copyright 2011 - 2017 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -238,14 +238,7 @@ class AccountManager:
 				option_spec = get_mailbox_parameter_specs(mailbox_type)
 				options = self._get_cfg_options(cfg, section_name, option_spec)
 
-				# TODO: Getting password from credentials is mailbox specific.
-				#       Every backend do not have or need password.
-				user = options.get('user')
-				server = options.get('server')
-				if self._credentialstore != None and user and server:
-					protocol = 'imap' if imap else 'pop'
-					password = self._credentialstore.get(CREDENTIAL_KEY % (protocol, user, server))
-					options['password'] = password
+				self._load_credentials(options, mailbox_type)
 
 				acc = Account(enabled=enabled,
 							  name=name,
@@ -269,12 +262,9 @@ class AccountManager:
 		# Delete secrets of removed accounts from the credential store
 		# (it's important to do this before adding accounts, 
 		# in case multiple accounts with the same credential key exist).
-		if self._credentialstore != None:
-			for acc in self._removed:
-				protocol = 'imap' if acc.imap else 'pop'
-				# Note: CredentialStore implementations must check if the key acutally exists!
-				self._credentialstore.remove(CREDENTIAL_KEY % (protocol, acc.user, acc.server))
-			
+		for acc in self._removed:
+			config = acc.get_config()
+			self._remove_crendentials(config, acc.mailbox_type)
 		del self._removed[:]
 		
 		# Add accounts
@@ -295,13 +285,7 @@ class AccountManager:
 			config = acc.get_config()
 			option_spec = get_mailbox_parameter_specs(acc.mailbox_type)
 
-			# TODO: Setting password to credentials is mailbox specific.
-			#       Every backend do not have or need password.
-			if self._credentialstore != None:
-				protocol = 'imap' if acc.imap else 'pop'
-				self._credentialstore.set(CREDENTIAL_KEY % (protocol, acc.user, acc.server), acc.password)
-				config['password'] = ''
-
+			self._save_credentials(config, acc.mailbox_type)
 			self._set_cfg_options(cfg, section_name, config, option_spec)
 
 			i = i + 1
@@ -340,4 +324,59 @@ class AccountManager:
 			else:
 				value = s.default_value
 			cfg.set(section_name, s.option_name, value)
+
+
+	def _load_credentials(self, config, mailbox_type):
+		if self._credentialstore != None:
+			try:
+				if mailbox_type == 'imap':
+					key = self._get_imap_credential_key(config)
+					password = self._credentialstore.get(key)
+					config['password'] = password
+				if mailbox_type == 'pop3':
+					key = self._get_pop3_credential_key(config)
+					password = self._credentialstore.get(key)
+					config['password'] = password
+			except KeyError as err:
+				logging.warning("No credential key: '%s'" % err)
+
+
+	def _save_credentials(self, config, mailbox_type):
+		if self._credentialstore != None:
+			if mailbox_type == 'imap':
+				key = self._get_imap_credential_key(config)
+				password = config.get('password')
+				self._credentialstore.set(key, password)
+				config['password'] = ''
+			if mailbox_type == 'pop3':
+				key = self._get_pop3_credential_key(config)
+				password = config.get('password')
+				self._credentialstore.set(key, password)
+				config['password'] = ''
+
+
+	def _remove_crendentials(self, config, mailbox_type):
+		if self._credentialstore != None:
+			if mailbox_type == 'imap':
+				key = self._get_imap_credential_key(config)
+				# Note: CredentialStore implementations must check if the key acutally exists!
+				self._credentialstore.remove(key)
+			if mailbox_type == 'pop3':
+				key = self._get_pop3_credential_key(config)
+				# Note: CredentialStore implementations must check if the key acutally exists!
+				self._credentialstore.remove(key)
+
+
+	def _get_imap_credential_key(self, config):
+		user = config['user']
+		server = config['server']
+		protocol = 'imap'
+		return CREDENTIAL_KEY % (protocol, user, server)
+
+
+	def _get_pop3_credential_key(self, config):
+		user = config['user']
+		server = config['server']
+		protocol = 'pop'
+		return CREDENTIAL_KEY % (protocol, user, server)
 

@@ -1,0 +1,6 @@
+pytest
+pyxdg
+vext
+vext.gi
+vext.dbus
+

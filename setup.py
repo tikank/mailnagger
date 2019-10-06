@@ -122,5 +122,9 @@ setup(name=PACKAGE_NAME,
 		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnag.desktop'), os.path.join(BUILD_PATCH_DIR, 'mailnag-config.desktop')])],
 	cmdclass={'build': BuildData, 
 			'install_data': InstallData,
-			'uninstall': Uninstall}
-	)
+			'uninstall': Uninstall},
+	install_requires=[
+		'configparser ; python_version < "3.7"'
+	],
+)
+

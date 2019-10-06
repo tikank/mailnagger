@@ -61,6 +61,7 @@ though make sure the requirements stated below are met.
 * python-dbus
 * pyxdg
 * gettext
+* [configparser](https://pypi.org/project/configparser/) (replaces Python 2 ConfigParser library and is compatible with Python 3)
 * gir-gnomekeyring-1.0 (optional)
 * networkmanager (optional)
 

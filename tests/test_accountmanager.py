@@ -22,7 +22,7 @@
 
 """Test cases for account manager."""
 
-from ConfigParser import RawConfigParser
+from configparser import RawConfigParser
 from io import StringIO
 import pytest
 
@@ -96,7 +96,7 @@ folder = ["folderA", "folderB", "folderC"]
 @pytest.fixture
 def config():
 	cp = RawConfigParser()
-	cp.readfp(StringIO(sample_config_file), filename='sample_config_file')
+	cp.read_file(StringIO(sample_config_file), source='sample_config_file')
 	return cp
 
 

@@ -29,8 +29,7 @@ nox.options.sessions = ['test-2.7']
 @nox.session(python=['2.7', '3.7'])
 def test(session):
 	"""Run unit tests."""
-	session.install('pytest')
-	session.install('pyxdg', 'vext', 'vext.gi', 'vext.dbus')
+	session.install('-r', 'requirements-test.txt')
 	session.install('.')
 	session.run('pytest')
 

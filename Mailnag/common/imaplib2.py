@@ -45,7 +45,7 @@ __URL__ = "http://imaplib2.sourceforge.net"
 __license__ = "Python License"
 
 try:
-    from multiprocessing import Queue
+    import queue as Queue
 except ImportError:
     import Queue
 

@@ -44,7 +44,12 @@ __author__ = "Piers Lauder <piers@janeelix.com>"
 __URL__ = "http://imaplib2.sourceforge.net"
 __license__ = "Python License"
 
-import binascii, errno, os, Queue, random, re, select, socket, sys, time, threading, zlib
+try:
+    from multiprocessing import Queue
+except ImportError:
+    import Queue
+
+import binascii, errno, os, random, re, select, socket, sys, time, threading, zlib
 
 select_module = select
 
@@ -373,7 +378,7 @@ class IMAP4(object):
             elif self._get_untagged_response('OK'):
                 if __debug__: self._log(1, 'state => NONAUTH')
             else:
-                raise self.error('unrecognised server welcome message: %s' % `self.welcome`)
+                raise self.error('unrecognised server welcome message: %s' % self.welcome)
 
             typ, dat = self.capability()
             if dat == [None]:
@@ -426,19 +431,19 @@ class IMAP4(object):
             af, socktype, proto, canonname, sa = res
             try:
                 s = socket.socket(af, socktype, proto)
-            except socket.error, msg:
+            except socket.error as msg:
                 continue
             try:
                 for i in (0, 1):
                     try:
                         s.connect(sa)
                         break
-                    except socket.error, msg:
+                    except socket.error as msg:
                         if len(msg.args) < 2 or msg.args[0] != errno.EINTR:
                             raise
                 else:
                     raise socket.error(msg)
-            except socket.error, msg:
+            except socket.error as msg:
                 s.close()
                 continue
             break
@@ -1357,7 +1362,8 @@ class IMAP4(object):
         return typ, dat
 
 
-    def _command_completer(self, (response, cb_arg, error)):
+    def _command_completer(self, arg_tuple):
+        (response, cb_arg, error) = arg_tuple
 
         # Called for callback commands
         rqb, kw = cb_arg
@@ -1572,7 +1578,7 @@ class IMAP4(object):
             tag = rqb.tag
         self.tagged_commands[tag] = rqb
         self.commands_lock.release()
-        if __debug__: self._log(4, '_request_push(%s, %s, %s) = %s' % (tag, name, `kw`, rqb.tag))
+        if __debug__: self._log(4, '_request_push(%s, %s, %s) = %s' % (tag, name, kw, rqb.tag))
         return rqb
 
 
@@ -1671,7 +1677,7 @@ class IMAP4(object):
 
         self.Terminate = True
 
-        if __debug__: self._log(1, 'terminating: %s' % `val`)
+        if __debug__: self._log(1, 'terminating: %s' % val)
 
         while not self.ouq.empty():
             try:
@@ -1724,7 +1730,7 @@ class IMAP4(object):
                 timeout = read_poll_timeout
             try:
                 r = poll.poll(timeout)
-                if __debug__: self._log(5, 'poll => %s' % `r`)
+                if __debug__: self._log(5, 'poll => %s' % r)
                 if not r:
                     continue                                    # Timeout
 
@@ -2284,7 +2290,7 @@ if __name__ == '__main__':
 
     try:
         optlist, args = getopt.getopt(sys.argv[1:], 'd:l:s:p:')
-    except getopt.error, val:
+    except getopt.error as val:
         optlist, args = (), ()
 
     debug, debug_buf_lvl, port, stream_command, keyfile, certfile = (None,)*6
@@ -2343,7 +2349,8 @@ if __name__ == '__main__':
 
     AsyncError = None
 
-    def responder((response, cb_arg, error)):
+    def responder(args_tuple):
+        (response, cb_arg, error) = args_tuple
         global AsyncError
         cmd, args = cb_arg
         if error is not None:
@@ -2434,15 +2441,15 @@ if __name__ == '__main__':
             M._mesg('unused untagged responses in order, most recent last:')
             for typ,dat in M.pop_untagged_responses(): M._mesg('\t%s %s' % (typ, dat))
 
-        print 'All tests OK.'
+        print('All tests OK.')
 
     except:
-        print 'Tests failed.'
+        print('Tests failed.')
 
         if not debug:
-            print '''
+            print('''
 If you would like to see debugging output,
 try: %s -d5
-''' % sys.argv[0]
+''' % sys.argv[0])
 
         raise

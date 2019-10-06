@@ -4,6 +4,7 @@
 # config.py
 #
 # Copyright 2011 - 2015 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2019 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,7 +24,7 @@
 
 import os
 import xdg.BaseDirectory as bd
-from ConfigParser import RawConfigParser
+from configparser import RawConfigParser
 
 mailnag_defaults = {
 	'core':

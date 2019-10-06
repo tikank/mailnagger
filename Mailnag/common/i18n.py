@@ -4,6 +4,7 @@
 # i18n.py
 #
 # Copyright 2011, 2012, 2014 Patrick Ulbrich <zulu99@gmx.net>
+# Copyright 2019 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -29,4 +30,10 @@ from Mailnag.common.dist_cfg import PACKAGE_NAME, LOCALE_DIR
 locale.bindtextdomain(PACKAGE_NAME, LOCALE_DIR)
 
 # add gettext shortcut "_" for string translations
-_ = gettext.translation(domain = PACKAGE_NAME, localedir = LOCALE_DIR, fallback = True).ugettext
+try: 
+	# Py2
+	_ = gettext.translation(domain = PACKAGE_NAME, localedir = LOCALE_DIR, fallback = True).ugettext
+except AttributeError:
+	# Py3
+	_ = gettext.translation(domain = PACKAGE_NAME, localedir = LOCALE_DIR, fallback = True).gettext
+

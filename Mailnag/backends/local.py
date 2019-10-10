@@ -2,7 +2,7 @@
 #
 # local.py
 #
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2019 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ import email
 import mailbox
 import logging
 import os.path
+import six
 
 from Mailnag.backends.base import MailboxBackend
 
@@ -119,10 +120,7 @@ class MaildirBackend(MailboxBackend):
 		root_maildir = mailbox.Maildir(self._path, factory=None, create=False)
 		try:
 			for folder in folders:
-				if isinstance(folder, unicode):
-					# Python2 maildir folders must be str not unicode.
-					# TODO: Python3 probably does not need this.
-					folder = folder.encode('utf-8')
+				folder = six.ensure_str(folder)
 				maildir = self._get_folder(root_maildir, folder)
 				for msg in maildir:
 					if 'S' not in msg.get_flags():

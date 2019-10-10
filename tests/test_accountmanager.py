@@ -2,7 +2,7 @@
 #
 # test_accountmanager.py
 #
-# Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2018 - 2019 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -198,7 +198,7 @@ def test_imap_config_values_should_be_stored():
 		'ssl': True,
 		'imap': True,
 		'idle': True,
-		'folders': ['a', 'b'],
+		'folders': [u'aä', u'bö'],
 	}
 	config = RawConfigParser()
 	config.add_section('account1')
@@ -211,7 +211,7 @@ def test_imap_config_values_should_be_stored():
 		('ssl', '1'),
 		('imap', '1'),
 		('idle', '1'),
-		('folder', '["a", "b"]'),
+		('folder', u'["aä", "bö"]'),
 	]
 	assert set(expected_config_items) == set(config.items('account1'))
 

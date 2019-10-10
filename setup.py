@@ -124,7 +124,8 @@ setup(name=PACKAGE_NAME,
 			'install_data': InstallData,
 			'uninstall': Uninstall},
 	install_requires=[
-		'configparser ; python_version < "3.7"'
+		'configparser ; python_version < "3.7"',
+		'six',
 	],
 )
 

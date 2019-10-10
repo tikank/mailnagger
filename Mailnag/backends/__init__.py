@@ -2,7 +2,7 @@
 #
 # __init__.py
 #
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2019 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 from collections import namedtuple
 import json
 import re
+import six
 
 from Mailnag.backends.imap import IMAPMailboxBackend
 from Mailnag.backends.pop3 import POP3MailboxBackend
@@ -41,7 +42,7 @@ def _str_to_folders(folders_str):
 
 
 def _folders_to_str(folders):
-	return json.dumps(folders, ensure_ascii=False).encode('utf-8')
+	return six.ensure_text(json.dumps(folders, ensure_ascii=False))
 
 
 def _str_to_bool(string):

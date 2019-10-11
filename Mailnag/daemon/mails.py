@@ -26,6 +26,7 @@
 
 import time
 import email
+import operator
 import os
 import logging
 import hashlib
@@ -268,7 +269,7 @@ def sort_mails(mail_list, sort_desc = False):
 		sort_list.append([mail.datetime, mail])
 	
 	# sort asc
-	sort_list.sort()
+	sort_list.sort(key=operator.itemgetter(0))
 	if sort_desc:
 		sort_list.reverse()
 

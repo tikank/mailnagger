@@ -24,7 +24,7 @@
 
 import nox
 
-nox.options.sessions = ['test-2.7']
+nox.options.sessions = ['test-2.7', 'test-3.7']
 
 @nox.session(python=['2.7', '3.7'])
 def test(session):

@@ -232,7 +232,7 @@ class MailSyncer:
 		for acc_id in six.iterkeys(self._mails_by_account):
 			if acc_id in tmp:
 				del_ids = []
-				for mail_id in self._mails_by_account[acc_id].iterkeys():
+				for mail_id in six.iterkeys(self._mails_by_account[acc_id]):
 					if not (mail_id in tmp[acc_id]):
 						del_ids.append(mail_id)
 						needs_rebuild = True

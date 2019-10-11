@@ -4,7 +4,7 @@
 # mails.py
 #
 # Copyright 2011 - 2016 Patrick Ulbrich <zulu99@gmx.net>
-# Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2018 - 2019 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
@@ -29,6 +29,7 @@ import email
 import os
 import logging
 import hashlib
+import six
 
 from email.header import decode_header
 from Mailnag.common.i18n import _
@@ -227,7 +228,7 @@ class MailSyncer:
 	
 		# compare current mails against received mails
 		# and remove those that are gone (probably opened in mail client).
-		for acc_id in self._mails_by_account.iterkeys():
+		for acc_id in six.iterkeys(self._mails_by_account):
 			if acc_id in tmp:
 				del_ids = []
 				for mail_id in self._mails_by_account[acc_id].iterkeys():

@@ -2,7 +2,7 @@
 #
 # test_account.py
 #
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2019 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -39,5 +39,5 @@ def test_decode_mutf7():
 def test_encode_mutf7_with_str_fails():
 	"""Test to document current behaviour: encode_mutf7 requires unicode."""
 	with pytest.raises(Exception):
-		encode_mutf7('Die Katzen & die Mäuse')
+		encode_mutf7('Die Katzen & die Mäuse'.encode())
 

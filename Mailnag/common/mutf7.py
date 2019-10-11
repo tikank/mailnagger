@@ -24,7 +24,7 @@ def __get_ascii(text):
         if ord(c) not in ascii_codes :
             break
         pos += 1
-    return text[:pos].encode('ascii')
+    return text[:pos]
 
 def __remove_ascii(text):
     pos = 0
@@ -53,7 +53,7 @@ def __remove_nonascii(text):
 
 def __encode_modified_utf7(text):
     #modified base64 - good old base64 without padding characters (=)
-    result = base64.b64encode(text.encode('utf-16be')).rstrip('=')
+    result = base64.b64encode(text.encode('utf-16be')).decode("ascii").rstrip('=')
     result = result.replace('/',',')
     result = '&' + result + '-'
     return result

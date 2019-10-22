@@ -30,6 +30,15 @@ nox.options.sessions = ['test-2.7', 'test-3.7']
 def test(session):
 	"""Run unit tests."""
 	session.install('-r', 'requirements-test.txt')
-	session.install('.')
-	session.run('pytest')
+	session.install('-e', '.')
+	session.run('pytest', '--cov=Mailnag', '--cov-branch')
+	session.notify('coverage')
+
+@nox.session
+def coverage(session):
+	"""Make coverage analysis."""
+	session.install('coverage')
+	session.run('coverage', 'report', '--show-missing', '--skip-covered')
+	session.run('coverage', 'html')
+	session.run('coverage', 'erase')
 

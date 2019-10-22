@@ -1,4 +1,5 @@
 pytest
+pytest-cov
 pyxdg
 vext
 vext.gi

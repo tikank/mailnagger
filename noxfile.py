@@ -40,5 +40,6 @@ def coverage(session):
 	session.install('coverage')
 	session.run('coverage', 'report', '--show-missing', '--skip-covered')
 	session.run('coverage', 'html')
+	print('See coverage report from file: htmlcov/index.html')
 	session.run('coverage', 'erase')
 

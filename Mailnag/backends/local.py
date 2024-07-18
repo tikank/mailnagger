@@ -119,7 +119,7 @@ class MaildirBackend(MailboxBackend):
 
 	def list_messages(self):
 		"""List unread messages from the mailbox.
-		Yields pairs (folder, message).
+		Yields tuples (folder, message, flags).
 		"""
 		folders = self._folders if len(self._folders) != 0 else ['']
 		root_maildir = mailbox.Maildir(self._path, factory=None, create=False)
@@ -128,7 +128,7 @@ class MaildirBackend(MailboxBackend):
 				maildir = self._get_folder(root_maildir, folder)
 				for msg in maildir:
 					if 'S' not in msg.get_flags():
-						yield folder, msg
+						yield folder, msg, {}
 		finally:
 			root_maildir.close()
 

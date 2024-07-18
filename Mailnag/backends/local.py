@@ -1,5 +1,5 @@
 # Copyright 2020 Patrick Ulbrich <zulu99@gmx.net>
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2024 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -140,6 +140,11 @@ class MaildirBackend(MailboxBackend):
 			return [''] + maildir.list_folders()
 		finally:
 			maildir.close()
+
+
+	def mark_as_seen(self, mails):
+		# TODO: local mailboxes should support this
+		raise NotImplementedError
 
 
 	def notify_next_change(self, callback=None, timeout=None):

@@ -1,3 +1,27 @@
+Fork of Mailnag news
+====================
+
+Version 2.2.1 (Not released):
+=============================
+* Fixed unit tests (https://github.com/pulb/mailnag/pull/250)
+* Fixed maildir bug about missing method
+  (https://github.com/pulb/mailnag/pull/249 which fixes
+  https://github.com/pulb/mailnag/issues/224)
+* Merged Python 3.12 related issues
+  (https://github.com/pulb/mailnag/pull/232 which fixes IMAP issues
+  https://github.com/pulb/mailnag/issues/244 and 
+  https://github.com/pulb/mailnag/issues/245)
+
+
+Mailnag news
+============
+
+Version 2.2.x (Not released):
+=============================
+* Fixed Glib exception handling in conntest
+  (https://github.com/pulb/mailnag/issues/220)
+
+
 Version 2.2 (2021-02-14):
 =========================
 * Massive robustness improvements. Especially long running IMAP IDLE 

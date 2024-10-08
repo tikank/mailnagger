@@ -314,15 +314,15 @@ def test_save_all_accounts_to_config_with_secret_store(config, secret_store):
 	assert secret_store.secrets == {
 	    'f827cf462f62848df37c5e1e94a4da74': (
 	    	'',
-	    	'Mailnag password for account @'
+	    	'Mailnagger password for account @'
 	    ),
 	    'b1a892abc4445a099647cb0df75c6f7c' : (
 	    	'verry seecret',
-	    	'Mailnag password for account you@imap.example.org'
+	    	'Mailnagger password for account you@imap.example.org'
 	    ),
 	    '1f8d0aabde255c9eea2ebf2c4b09dfc6': (
 	    	'seecret too',
-	    	'Mailnag password for account me@pop.example.org'
+	    	'Mailnagger password for account me@pop.example.org'
 	    ),
 	}
 

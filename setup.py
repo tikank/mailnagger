@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# To install Mailnag run this script as root:
+# To install Mailnagger run this script as root:
 # ./setup.py install
 
 from distutils.core import setup
@@ -56,8 +56,8 @@ class BuildData(build):
 		shutil.copytree('Mailnag/common', os.path.join(BUILD_PATCH_DIR, 'common'))
 		
 		# patch paths
-		self._patch_file('./data/mailnag.desktop', os.path.join(BUILD_PATCH_DIR, 'mailnag.desktop'), '/usr', PREFIX)
-		self._patch_file('./data/mailnag-config.desktop', os.path.join(BUILD_PATCH_DIR, 'mailnag-config.desktop'), '/usr', PREFIX)
+		self._patch_file('./data/mailnagger.desktop', os.path.join(BUILD_PATCH_DIR, 'mailnagger.desktop'), '/usr', PREFIX)
+		self._patch_file('./data/mailnagger-config.desktop', os.path.join(BUILD_PATCH_DIR, 'mailnagger-config.desktop'), '/usr', PREFIX)
 		self._patch_file(os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 
 			'./locale', os.path.join(PREFIX, 'share/locale'))
 		self._patch_file(os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 
@@ -114,12 +114,12 @@ setup(name=PACKAGE_NAME,
 	license='GNU GPL2',
 	package_dir = {'Mailnag.common' : os.path.join(BUILD_PATCH_DIR, 'common')},
 	packages=['Mailnag', 'Mailnag.common', 'Mailnag.configuration', 'Mailnag.daemon', 'Mailnag.backends', 'Mailnag.plugins'],
-	scripts=['mailnag', 'mailnag-config'],
+	scripts=['mailnagger', 'mailnagger-config'],
 	data_files=[('share/mailnag', glob.glob('data/*.ui')),
 		('share/mailnag', ['data/mailnag.ogg']),
 		('share/mailnag', ['data/mailnag.png']),
 		('share/metainfo', ['data/mailnag.appdata.xml']),
-		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnag.desktop'), os.path.join(BUILD_PATCH_DIR, 'mailnag-config.desktop')])],
+		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnagger.desktop'), os.path.join(BUILD_PATCH_DIR, 'mailnagger-config.desktop')])],
 	cmdclass={'build': BuildData, 
 			'install_data': InstallData,
 			'uninstall': Uninstall}

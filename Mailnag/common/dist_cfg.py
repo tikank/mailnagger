@@ -1,3 +1,4 @@
+# Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2012 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -30,7 +31,7 @@ APP_VERSION = '2.2.0'
 # 2) paths for localization files generated with gen_locales
 #    (usually /usr/share/locale/<LANG>/LC_MESSAGES/<PACKAGE_NAME>.mo).
 # Typically, there's no need to touch this constant.
-PACKAGE_NAME = 'mailnag'
+PACKAGE_NAME = 'mailnagger'
 
 # The LOCALE_DIR constant specifies the root path for localization files
 # (usually you have to make it point to '/usr/share/locale').

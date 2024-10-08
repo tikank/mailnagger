@@ -1,10 +1,10 @@
 
 [Desktop Entry]
-Name=Mailnag
+Name=Mailnagger
 Comment=An extensible mail notification daemon
 Comment[de]=Ein erweiterbarer Mail-Benachrichtigungs-Dämon
 Keywords=mail;notify;notification;
-Exec=/usr/bin/mailnag --quiet
+Exec=/usr/bin/mailnagger --quiet
 Icon=mailnag
 Type=Application
 NoDisplay=true

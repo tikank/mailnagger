@@ -1,3 +1,4 @@
+# Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2019 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2019 razer <razerraz@free.fr>
 #
@@ -37,8 +38,11 @@ class SecretStore():
 			raise _libsecret_err
 	        
 		self._schema = Secret.Schema.new(
-			f'com.github.pulb.{PACKAGE_NAME}', Secret.SchemaFlags.NONE,
-			{'id' : Secret.SchemaAttributeType.STRING})
+#			f'com.github.pulb.{PACKAGE_NAME}',
+			f'com.github.pulb.mailnag',  # Temporary fix to use Mailnags passwords.
+			Secret.SchemaFlags.NONE,
+			{'id' : Secret.SchemaAttributeType.STRING}
+		)
 
 
 	def get(self, secret_id):

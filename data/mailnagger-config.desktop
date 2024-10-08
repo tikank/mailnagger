@@ -1,11 +1,11 @@
 
 [Desktop Entry]
-Name=Mailnag Configuration
-Name[de]=Mailnag-Konfiguration
+Name=Mailnagger Configuration
+Name[de]=Mailnagger-Konfiguration
 Comment=An extensible mail notification daemon
 Comment[de]=Ein erweiterbarer Mail-Benachrichtigungs-Dämon
 Keywords=mail;notify;notification;config;settings;preferences;
-Exec=/usr/bin/mailnag-config
+Exec=/usr/bin/mailnagger-config
 Icon=mailnag
 Terminal=false
 Type=Application

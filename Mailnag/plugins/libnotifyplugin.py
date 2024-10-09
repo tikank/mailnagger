@@ -1,3 +1,4 @@
+# Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2013 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2020 Dan Christensen <jdc@uwo.ca>
 # Copyright 2020 Denis Anuschewski
@@ -64,7 +65,7 @@ class LibNotifyPlugin(Plugin):
 		
 		# initialize Notification
 		if not self._initialized:
-			Notify.init("Mailnag")
+			Notify.init("Mailnagger")
 			self._is_gnome = self._is_gnome_environment(('XDG_CURRENT_DESKTOP', 'GDMSESSION'))
 			self._initialized = True
 		
@@ -321,7 +322,7 @@ class LibNotifyPlugin(Plugin):
 	def _get_notification(self, summary, body, icon):
 		n = Notify.Notification.new(summary, body, icon)		
 		n.set_category("email")
-		n.set_hint_string("desktop-entry", "mailnag")
+		n.set_hint_string("desktop-entry", "mailnagger")
 		
 		if self._is_gnome:
 			n.add_action("default", "default", self._notification_action_handler, None)

@@ -1,12 +1,17 @@
-Fork of Mailnag news
-====================
+Mailnagger news
+===============
 
 Version 2.2.1 (Not released):
 =============================
+* Mailnag is forked. The name is changed to Mailnagger.
+  (https://github.com/tikank/mailnagger/issues/1)
+
 * Fixed unit tests (https://github.com/pulb/mailnag/pull/250)
+
 * Fixed maildir bug about missing method
   (https://github.com/pulb/mailnag/pull/249 which fixes
   https://github.com/pulb/mailnag/issues/224)
+
 * Merged Python 3.12 related issues
   (https://github.com/pulb/mailnag/pull/232 which fixes IMAP issues
   https://github.com/pulb/mailnag/issues/244 and 

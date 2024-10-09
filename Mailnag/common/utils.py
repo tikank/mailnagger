@@ -1,3 +1,4 @@
+# Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2007 Marco Ferragina <marco.ferragina@gmail.com>
 #
@@ -108,7 +109,7 @@ def shutdown_existing_instance(wait_for_completion = True):
 	bus = dbus.SessionBus()
 	
 	if bus.name_has_owner(DBUS_BUS_NAME):
-		sys.stdout.write('Shutting down existing Mailnag process...')
+		sys.stdout.write('Shutting down existing Mailnagger process...')
 		sys.stdout.flush()
 		
 		try:

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 #
+# Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -40,7 +41,7 @@ LOG_LEVEL = logging.DEBUG
 
 class App(Gtk.Application):
 	def __init__(self):
-		Gtk.Application.__init__(self, application_id = 'com.github.pulp.Mailnag')
+		Gtk.Application.__init__(self, application_id = 'com.github.tikank.mailnagger')
 		self.win = None
 
 
@@ -70,17 +71,17 @@ class App(Gtk.Application):
 			try:
 				# the launched daemon shuts down 
 				# an already running daemon
-				print("Launching Mailnag daemon.")
-				subprocess.Popen(os.path.join(BIN_DIR, "mailnag"))
+				print("Launching Mailnagger daemon.")
+				subprocess.Popen(os.path.join(BIN_DIR, "mailnagger"))
 			except:
-				print("ERROR: Failed to launch Mailnag daemon.")
+				print("ERROR: Failed to launch Mailnagger daemon.")
 		else:
-			# shutdown running Mailnag daemon
+			# shutdown running Mailnagger daemon
 			shutdown_existing_instance(wait_for_completion = False)
 
 
 def main():
-	set_procname("mailnag-config")
+	set_procname("mailnagger-config")
 	init_logging(enable_stdout = True, enable_syslog = False, log_level = LOG_LEVEL)
 	app = App()
 	app.run(None)

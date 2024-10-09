@@ -1,3 +1,4 @@
+# Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 - 2021 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
@@ -239,8 +240,8 @@ class ConfigWindow:
 	
 	def _create_autostart(self):
 		autostart_folder = os.path.join(bd.xdg_config_home, "autostart")
-		src = os.path.join(DESKTOP_FILE_DIR, "mailnag.desktop")
-		dst = os.path.join(autostart_folder, "mailnag.desktop")
+		src = os.path.join(DESKTOP_FILE_DIR, "mailnagger.desktop")
+		dst = os.path.join(autostart_folder, "mailnagger.desktop")
 		
 		if not os.path.exists(autostart_folder):
 			os.makedirs(autostart_folder)
@@ -255,17 +256,17 @@ class ConfigWindow:
 		# If mailag-config was started from a local directory, 
 		# patch the exec path of the autostart .desktop file accordingly.
 		if not os.path.isabs(DESKTOP_FILE_DIR):
-			exec_file = os.path.join(os.path.abspath(BIN_DIR), "mailnag")
+			exec_file = os.path.join(os.path.abspath(BIN_DIR), "mailnagger")
 			with open(dst, 'r') as f:
 				strn = f.read()
-				strn = strn.replace('/usr/bin/mailnag', exec_file)
+				strn = strn.replace('/usr/bin/mailnagger', exec_file)
 			with open(dst, 'w') as f:
 				f.write(strn)
 
 
 	def _delete_autostart(self):
 		autostart_folder = os.path.join(bd.xdg_config_home, "autostart")
-		autostart_file = os.path.join(autostart_folder, "mailnag.desktop")
+		autostart_file = os.path.join(autostart_folder, "mailnagger.desktop")
 		if os.path.exists(autostart_file):
 			os.remove(autostart_file)
 

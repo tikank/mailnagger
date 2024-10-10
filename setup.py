@@ -1,26 +1,29 @@
 #!/usr/bin/env python3
 
-# To install Mailnagger run this script as root:
-# ./setup.py install
+# To build Mailnagger run this script:
+# ./setup.py build
+# Then to install Mailnagger run pip as root:
+# pip install --break-system-packages .
 
 from distutils.core import setup
 from distutils.cmd import Command
 from distutils.log import warn, info, error
 from distutils.command.install_data import install_data
 from distutils.command.build import build
-from distutils.sysconfig import get_python_lib
+#from distutils.sysconfig import get_python_lib
 
 import sys
 import os
 import subprocess
 import glob
 import shutil
+import sysconfig
 
 from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION
 
 
 # TODO : This hack won't work with --user and --home options
-PREFIX = '/usr'
+PREFIX = sysconfig.get_path('data')
 for arg in sys.argv:
 	if arg.startswith('--prefix='):
 		PREFIX = arg[9:]
@@ -32,7 +35,7 @@ for arg in sys.argv:
 
 BUILD_LOCALE_DIR = os.path.join(BUILD_DIR, 'locale')
 BUILD_PATCH_DIR = os.path.join(BUILD_DIR, 'patched')
-INSTALL_LIB_DIR =  os.path.join(get_python_lib(prefix=PREFIX), 'Mailnag')
+INSTALL_LIB_DIR =  os.path.join(sysconfig.get_path('purelib'), 'Mailnag')
 
 
 class BuildData(build):
@@ -65,7 +68,7 @@ class BuildData(build):
 		self._patch_file(os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 
 			'./Mailnag', INSTALL_LIB_DIR)
 		self._patch_file(os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 
-			"'.'", "'%s'" % os.path.join(PREFIX, 'bin'))
+			"'.'", "'%s'" % sysconfig.get_path('scripts'))
 		build.run (self)
 
 
@@ -108,19 +111,19 @@ class Uninstall(Command):
 setup(name=PACKAGE_NAME,
 	version=APP_VERSION,
 	description='An extensible mail notification daemon',
-	author='Patrick Ulbrich',
-	author_email='zulu99@gmx.net',
-	url='https://github.com/pulb/mailnag',
+	author='Timo Kankare',
+	author_email='timo.kankare@iki.fi',
+	url='https://github.com/tikank/mailnagger',
 	license='GNU GPL2',
 	package_dir = {'Mailnag.common' : os.path.join(BUILD_PATCH_DIR, 'common')},
 	packages=['Mailnag', 'Mailnag.common', 'Mailnag.configuration', 'Mailnag.daemon', 'Mailnag.backends', 'Mailnag.plugins'],
 	scripts=['mailnagger', 'mailnagger-config'],
-	data_files=[('share/mailnag', glob.glob('data/*.ui')),
-		('share/mailnag', ['data/mailnag.ogg']),
-		('share/mailnag', ['data/mailnag.png']),
+	data_files=[('share/mailnagger', glob.glob('data/*.ui')),
+		('share/mailnagger', ['data/mailnag.ogg']),
+		('share/mailnagger', ['data/mailnag.png']),
 		('share/metainfo', ['data/mailnag.appdata.xml']),
 		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnagger.desktop'), os.path.join(BUILD_PATCH_DIR, 'mailnagger-config.desktop')])],
 	cmdclass={'build': BuildData, 
 			'install_data': InstallData,
 			'uninstall': Uninstall}
-	)
+)

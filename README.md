@@ -27,7 +27,7 @@ Distribution independent tarball releases are available [here](https://github.co
 Build Mailnagger by running
 
 ```
-    ./setup build`.
+    ./setup build
 ```
 
 Then run

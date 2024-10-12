@@ -277,13 +277,14 @@ class ConfigWindow:
 		aboutdialog.set_version(APP_VERSION)
 		aboutdialog.set_program_name(PACKAGE_NAME.title())
 		aboutdialog.set_comments(_("An extensible mail notification daemon."))
-		aboutdialog.set_copyright(_("Copyright (c) 2011 - 2021 Patrick Ulbrich and contributors."))
+		aboutdialog.set_copyright(_("Copyright (c) 2024 Timo Kankare and contributors."))
 		aboutdialog.set_logo_icon_name("mailnag")
-		aboutdialog.set_website("https://github.com/pulb/mailnag")
+		aboutdialog.set_website("https://github.com/tikank/mailnagger")
 		aboutdialog.set_website_label(_("Homepage"))
 		aboutdialog.set_license_type(Gtk.License.GPL_2_0)		
 		aboutdialog.set_authors([
-			"Patrick Ulbrich (maintainer)",
+			"Timo Kankare (maintainer)",
+			"Patrick Ulbrich",
 			"Andreas Angerer",
 			"Balló György",
 			"Dan Christensen",
@@ -298,7 +299,6 @@ class ConfigWindow:
 			"razer",
 			"Taylor Braun-Jones",
 			"Thomas Haider",
-			"Timo Kankare",
 			"Vincent Cheng"
 		])
 		aboutdialog.set_translator_credits(_("translator-credits"))

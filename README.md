@@ -8,7 +8,7 @@ Mailnagger comes with a set of desktop-independent default plugins for
 visual/sound notifications, script execution etc. and can be extended
 with additional plugins easily.
 
-Mailnagger is a fork from [Mailnag](https://github.com/pulb/mailnag).
+Mailnagger is a fork of [Mailnag](https://github.com/pulb/mailnag).
 
 __This project needs your support!__
 

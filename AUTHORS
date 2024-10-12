@@ -1,18 +1,22 @@
 Maintainer:
 ===========
-Patrick Ulbrich <zulu99@gmx.net>
+
+Timo Kankare <timo.kankare@iki.fi>
 
 
 Related software:
 =================
-Even though many parts of Mailnag have completely been
-rewritten by now, Mailnag started out as a fork of 
-Popper (http://launchpad.net/popper).
+
+Mailnagger is a fork of Mailnag (https://github.com/pulb/mailnag).
+Mailnag was written by Patrick Ulbrich <zulu99@gmx.net>.
+
+Mailnag started out as a fork of Popper (http://launchpad.net/popper).
 Popper was written by Ralf Hersel <ralf.hersel@gmx.net>.
 
 
 Code, docs and packaging contributors:
 ======================================
+
 Amin Bandali <me@aminb.org>
 Andreas Angerer
 Balló György <ballogyor@gmail.com>
@@ -26,6 +30,7 @@ James Powell <jamespo@gmail.com>
 Leighton Earl <leighton.earl@gmx.com>
 Matthias Mailänder
 Oleg <cheshire-mouse@users.noreply.github.com>
+Patrick Ulbrich <zulu99@gmx.net>
 razer <razerraz@free.fr>
 Taylor Braun-Jones <taylor@braun-jones.org>
 Thorsten Leemhuis <Thorsten_leemhuis@gmx.de>
@@ -36,11 +41,13 @@ Vincent Cheng <Vincentc1208@gmail.com>
 
 Artwork & icon design:
 ======================
+
 Reda Lazri <the.red.shortcut@gmail.com>
 
 
 Translators (launchpad):
 ========================
+
 Adolfo Jayme Barrientos
 Alin Andrei
 AmiG
@@ -94,3 +101,4 @@ Wolter Hellmund
 Zeppelinlg
 zmni
 朱涛
+

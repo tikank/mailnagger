@@ -1,44 +1,41 @@
-# Serbian translation for mailnag
-# Copyright (c) 2011 Rosetta Contributors and Canonical Ltd 2011
-# This file is distributed under the same license as the mailnag package.
-# Мирослав Николић <miroslavnikolic@rocketmail.com>, 2013—2016.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR 2024 Timo Kankare <timo.kankare@iki.fi>
+# This file is distributed under the same license as the Mailnagger package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: mailnag\n"
+"Project-Id-Version: Mailnagger 2.2.1\n"
 "Report-Msgid-Bugs-To: https://github.com/tikank/mailnagger/issues\n"
 "POT-Creation-Date: 2024-10-14 18:10+0300\n"
-"PO-Revision-Date: 2021-01-07 11:29+0000\n"
-"Last-Translator: Burek <jokxa@hotmail.com>\n"
-"Language-Team: Serbian <https://hosted.weblate.org/projects/mailnag/mailnag/"
-"sr/>\n"
-"Language: sr\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.4.1-dev\n"
-"X-Launchpad-Export-Date: 2020-06-11 14:44+0000\n"
 
 #: Mailnag/configuration/accountdialog.py:72
 msgid "Mail Account"
-msgstr "Налог поште"
+msgstr ""
 
 #: Mailnag/configuration/accountdialog.py:114
 msgid "optional"
-msgstr "изборно"
+msgstr ""
 
 #: Mailnag/configuration/accountdialog.py:118
 #: Mailnag/configuration/configwindow.py:83
 #: Mailnag/configuration/configwindow.py:103
 msgid "Enabled"
-msgstr "Укључено"
+msgstr ""
 
 #: Mailnag/configuration/accountdialog.py:124
 #: Mailnag/configuration/configwindow.py:89
 #: Mailnag/configuration/configwindow.py:109
 msgid "Name"
-msgstr "Назив"
+msgstr ""
 
 #: Mailnag/configuration/accountdialog.py:247
 msgid "IMAP (Custom)"
@@ -58,7 +55,7 @@ msgstr ""
 
 #: Mailnag/configuration/accountdialog.py:356
 msgid "Connection failed."
-msgstr "Веза није успела."
+msgstr ""
 
 #: Mailnag/configuration/configwindow.py:276
 #, python-format
@@ -80,125 +77,123 @@ msgstr ""
 
 #: Mailnag/configuration/configwindow.py:309
 msgid "translator-credits"
-msgstr "преводилац/иоци-заслуге"
+msgstr ""
 
 #: Mailnag/configuration/configwindow.py:349
 msgid "Delete this account:"
-msgstr "Обриши ове налоге:"
+msgstr ""
 
 #: Mailnag/configuration/plugindialog.py:30
 msgid "Plugin Configuration"
-msgstr "Подешавање прикључка"
+msgstr ""
 
 #: Mailnag/daemon/mails.py:136
 msgid "No subject"
-msgstr "Без теме"
+msgstr ""
 
 #: Mailnag/plugins/spamfilterplugin.py:67
 msgid "Spam Filter"
-msgstr "Пропусник спама"
+msgstr ""
 
 #: Mailnag/plugins/spamfilterplugin.py:68
 msgid "Filters out unwanted mails."
-msgstr "Издваја нежељену пошту."
+msgstr ""
 
 #: Mailnag/plugins/spamfilterplugin.py:87
 msgid ""
 "Mailnag will ignore mails containing at least one of \n"
 "the following words in subject or sender."
 msgstr ""
-"Поштарко ће занемарити пошту која садржи барем једну \n"
-"од следећих речи у теми или пошиљаоцу."
 
 #: Mailnag/plugins/soundplugin.py:63
 msgid "Sound Notifications"
-msgstr "Звучно обавештавање"
+msgstr ""
 
 #: Mailnag/plugins/soundplugin.py:64
 msgid "Plays a sound when new mails arrive."
-msgstr "Пушта звук када стигне нова пошта."
+msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:114
 msgid "LibNotify Notifications"
-msgstr "Обавештења либнотифија"
+msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:115
 msgid "Shows a popup when new mails arrive."
-msgstr "Приказује облачић када стигне нова пошта."
+msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:130
 msgid "Count of new mails"
-msgstr "Број нових поштанских порука"
+msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:131
 msgid "Short summary of new mails"
-msgstr "Кратак сажетак нове поште"
+msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:132
 msgid "Detailed summary of new mails"
-msgstr "Опширан сажетак нове поште"
+msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:133
 msgid "One notification per new mail"
-msgstr "Једно обавештење по новој пошти"
+msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:141
 msgid "Notification mode:"
-msgstr "Режим обавештавања:"
+msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:234
 #: Mailnag/plugins/libnotifyplugin.py:270
 #: Mailnag/plugins/libnotifyplugin.py:307
 #, python-brace-format
 msgid "{0} new mails"
-msgstr "нових поштанских порука: {0}"
+msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:236
 #, python-brace-format
 msgid "from {0} and others."
-msgstr "шаље {0} и други."
+msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:238
 #: Mailnag/plugins/libnotifyplugin.py:241
 #, python-brace-format
 msgid "from {0}."
-msgstr "шаље {0}."
+msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:240
 #: Mailnag/plugins/libnotifyplugin.py:272
 #: Mailnag/plugins/libnotifyplugin.py:309
 msgid "New mail"
-msgstr "Нова пошта"
+msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:265
 #: Mailnag/plugins/libnotifyplugin.py:267
 #, python-brace-format
 msgid "(and {0} more)"
-msgstr "(и још {0})"
+msgstr ""
 
 #: Mailnag/plugins/libnotifyplugin.py:296
 msgid "Mark as read"
-msgstr "Означи као прочитано"
+msgstr ""
 
 #: Mailnag/plugins/userscriptplugin.py:60
 msgid "User Script"
-msgstr "Корисничка скрипта"
+msgstr ""
 
 #: Mailnag/plugins/userscriptplugin.py:61
 msgid "Runs an user defined script on mail arrival."
-msgstr "Покреће скрипту коју је одредио корисник када пристигне пошта."
+msgstr ""
 
 #: Mailnag/plugins/userscriptplugin.py:80
 msgid "account"
-msgstr "налог"
+msgstr ""
 
 #: Mailnag/plugins/userscriptplugin.py:80
 msgid "sender"
-msgstr "пошиљалац"
+msgstr ""
 
 #: Mailnag/plugins/userscriptplugin.py:80
 msgid "subject"
-msgstr "тема"
+msgstr ""
 
 #: Mailnag/plugins/userscriptplugin.py:81
 #, python-format
@@ -216,39 +211,39 @@ msgstr ""
 
 #: data/account_widget.ui.h:3
 msgid "Enable Push-IMAP"
-msgstr "Укључи Гурни-ИМАП"
+msgstr ""
 
 #: data/account_widget.ui.h:4
 msgid "Enable SSL encryption"
-msgstr "Укључи ССЛ шифровање"
+msgstr ""
 
 #: data/account_widget.ui.h:5
 msgid "Accountname:"
-msgstr "Назив налога:"
+msgstr ""
 
 #: data/account_widget.ui.h:6
 msgid "Account type:"
-msgstr "Врста налога:"
+msgstr ""
 
 #: data/account_widget.ui.h:7
 msgid "User:"
-msgstr "Корисник:"
+msgstr ""
 
 #: data/account_widget.ui.h:8
 msgid "Password:"
-msgstr "Лозинка:"
+msgstr ""
 
 #: data/account_widget.ui.h:9
 msgid "Server:"
-msgstr "Сервер:"
+msgstr ""
 
 #: data/account_widget.ui.h:10
 msgid "Port:"
-msgstr "Прикључник:"
+msgstr ""
 
 #: data/account_widget.ui.h:11
 msgid "Folders (optional)"
-msgstr "Фасцикле (изборно)"
+msgstr ""
 
 #: data/account_widget.ui.h:12
 msgid "File path:"
@@ -264,37 +259,28 @@ msgstr ""
 
 #: data/config_window.ui.h:2
 msgid "Add Account"
-msgstr "Додај налог"
+msgstr ""
 
 #: data/config_window.ui.h:3
 msgid "Remove Account"
-msgstr "Уклони налог"
+msgstr ""
 
 #: data/config_window.ui.h:4
 msgid "Edit Account"
-msgstr "Уреди налог"
+msgstr ""
 
 #: data/config_window.ui.h:5
 msgid "Accounts"
-msgstr "Налози"
+msgstr ""
 
 #: data/config_window.ui.h:6
 msgid "Edit Plugin"
-msgstr "Уреди прикључак"
+msgstr ""
 
 #: data/config_window.ui.h:7
 msgid "Plugins"
-msgstr "Прикључци"
+msgstr ""
 
 #: data/config_window.ui.h:8
 msgid "Info"
 msgstr ""
-
-#~ msgid "Maximum number of visible mails:"
-#~ msgstr "Највећи број видљивих поштанских порука:"
-
-#~ msgid "GNOME Online Accounts"
-#~ msgstr "Гномови налози на мрежи"
-
-#~ msgid "GNOME Online Accounts Integration."
-#~ msgstr "Обједињавање Гномових налога на мрежи."

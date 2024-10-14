@@ -277,7 +277,12 @@ class ConfigWindow:
 		aboutdialog.set_version(APP_VERSION)
 		aboutdialog.set_program_name(PACKAGE_NAME.title())
 		aboutdialog.set_comments(_("An extensible mail notification daemon."))
-		aboutdialog.set_copyright(_("Copyright (c) 2024 Timo Kankare and contributors."))
+		aboutdialog.set_copyright(
+			_("Copyright (c) {years} {author} and contributors.").format(
+				years="2024",
+				author="Timo Kankare",
+			)
+		)
 		aboutdialog.set_logo_icon_name("mailnag")
 		aboutdialog.set_website("https://github.com/tikank/mailnagger")
 		aboutdialog.set_website_label(_("Homepage"))

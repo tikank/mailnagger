@@ -76,7 +76,7 @@ Closing the configuration window will start Mailnagger automatically.
 > **Note:**
 > Mailnagger uses same configuration files and secret storage as Mailnag.
 > They are currently compatible, but there will be someday some kind of
-> migration to Mailnager's own configuration files.
+> migration to Mailnagger's own configuration files.
 
 
 ### Default Mail Client

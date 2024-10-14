@@ -1,10 +1,10 @@
 #/bin/bash
 
 #
-# script to generate mailnag locales
+# script to generate mailnagger locales
 #
 
-APPNAME=mailnag
+APPNAME=mailnagger
 PO_DIR=po
 LOCALE_DIR=locale # /usr/share/locale
 

@@ -39,6 +39,11 @@ Then run
 (as root) to install Mailnagger system wide,
 though make sure the requirements stated below are met.
 
+> **Note:**
+> Mailnagger conflict with Mailnag, because the code is not (yet) renamed.
+> So don't install Mailnagger and Mailnag same time.
+
+
 ###### Requirements
 
 * python (>= 3.5)
@@ -68,6 +73,11 @@ Run `mailnagger-config` to setup Mailnagger.
 
 Closing the configuration window will start Mailnagger automatically.
 
+> **Note:**
+> Mailnagger uses same configuration files and secret storage as Mailnag.
+> They are currently compatible, but there will be someday some kind of
+> migration to Mailnager's own configuration files.
+
 
 ### Default Mail Client
 
@@ -95,6 +105,7 @@ work with Mailnagger.
 
 Furthermore, GNOME users can also install the [GOA plugin](https://github.com/pulb/mailnag-goa-plugin),
 which makes Mailnagger aware of email accounts specified in GNOME Online Accounts.
+
 
 ### Troubleshooting
 

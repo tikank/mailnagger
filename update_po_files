@@ -1,0 +1,15 @@
+#!/bin/bash
+# Update all po files to match pot template.
+
+pot_file=./po/mailnagger.pot
+
+if [ ! -d ./po ]; then
+	mkdir ./po
+fi
+
+
+for po in ./po/*.po ; do
+    msgmerge --update --backup=none $po $pot_file
+done
+
+

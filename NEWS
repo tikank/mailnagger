@@ -1,8 +1,9 @@
 Mailnagger news
 ===============
 
-Version 2.2.1 (Not released):
-=============================
+Version 2.2.1 (2024-10-16)
+==========================
+
 * Mailnag is forked. The name is changed to Mailnagger.
   (https://github.com/tikank/mailnagger/issues/1)
 
@@ -18,6 +19,9 @@ Version 2.2.1 (Not released):
   (https://github.com/pulb/mailnag/pull/232 which fixes IMAP issues
   https://github.com/pulb/mailnag/issues/244 and 
   https://github.com/pulb/mailnag/issues/245)
+
+* Translation files updated. Not much actually changed but newest
+  gettext tools seems to reorder entries.
 
 
 Mailnag news

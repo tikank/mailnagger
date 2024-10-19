@@ -5,22 +5,21 @@
 # Then to install Mailnagger run pip as root:
 # pip install --break-system-packages .
 
-from distutils.core import setup
-from distutils.cmd import Command
-from distutils.log import warn, info, error
+from setuptools import setup, Command
 from distutils.command.install_data import install_data
-from distutils.command.build import build
-#from distutils.sysconfig import get_python_lib
+from setuptools.command.build import build
 
-import sys
-import os
-import subprocess
 import glob
+import logging
+import os
 import shutil
+import subprocess
+import sys
 import sysconfig
 
 from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION
 
+logger = logging.getLogger(__name__)
 
 # TODO : This hack won't work with --user and --home options
 PREFIX = sysconfig.get_path('data')
@@ -49,8 +48,8 @@ class BuildData(build):
 				else: err = "UNKNOWN_ERR"
 				raise Warning("gen_locales returned %d (%s)" % (rc, err))
 		except Exception as e:
-			error("Building locales failed.")
-			error("Error: %s" % str(e))
+			logger.error("Building locales failed.")
+			logger.error("Error: %s" % str(e))
 			sys.exit(1)
 		
 		# remove patch dir (if existing)

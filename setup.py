@@ -17,7 +17,12 @@ import subprocess
 import sys
 import sysconfig
 
-from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION
+
+# NOTE: These should be in sync with Mailnag.common.dist_cfg PACKAGE_NAME
+#       and APP_VERSION.
+PACKAGE_NAME = 'mailnagger'
+APP_VERSION = '2.2.1'
+
 
 logger = logging.getLogger(__name__)
 

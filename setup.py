@@ -120,13 +120,25 @@ setup(name=PACKAGE_NAME,
 	url='https://github.com/tikank/mailnagger',
 	license='GNU GPL2',
 	package_dir = {'Mailnag.common' : os.path.join(BUILD_PATCH_DIR, 'common')},
-	packages=['Mailnag', 'Mailnag.common', 'Mailnag.configuration', 'Mailnag.daemon', 'Mailnag.backends', 'Mailnag.plugins'],
+	packages=[
+		'Mailnag',
+		'Mailnag.common',
+		'Mailnag.configuration',
+		'Mailnag.configuration.ui',
+		'Mailnag.daemon',
+		'Mailnag.backends',
+		'Mailnag.plugins',
+	],
+	package_data = {
+		'Mailnag.configuration.ui' : [ 'account_widget.ui', 'config_window.ui' ],
+	},
 	scripts=['mailnagger', 'mailnagger-config'],
-	data_files=[('share/mailnagger', glob.glob('data/*.ui')),
+	data_files=[
 		('share/mailnagger', ['data/mailnag.ogg']),
 		('share/mailnagger', ['data/mailnag.png']),
 		('share/metainfo', ['data/mailnag.appdata.xml']),
-		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnagger.desktop'), os.path.join(BUILD_PATCH_DIR, 'mailnagger-config.desktop')])],
+		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnagger.desktop'), os.path.join(BUILD_PATCH_DIR, 'mailnagger-config.desktop')])
+	],
 	cmdclass={'build': BuildData, 
 			'install_data': InstallData,
 			'uninstall': Uninstall}

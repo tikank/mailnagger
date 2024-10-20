@@ -25,6 +25,7 @@ import os
 import shutil
 import xdg.BaseDirectory as bd
 from gi.repository import Gtk
+from importlib.resources import files
 
 from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION, BIN_DIR, DESKTOP_FILE_DIR
 from Mailnag.common.i18n import _
@@ -34,13 +35,16 @@ from Mailnag.common.accounts import Account, AccountManager
 from Mailnag.common.plugins import Plugin
 from Mailnag.configuration.accountdialog import AccountDialog
 from Mailnag.configuration.plugindialog import PluginDialog
+import Mailnag.configuration.ui
 
 
 class ConfigWindow:
 	def __init__(self, app):
+		config_window_ui =  files(Mailnag.configuration.ui).joinpath('config_window.ui').read_text()
+
 		builder = Gtk.Builder()
 		builder.set_translation_domain(PACKAGE_NAME)
-		builder.add_from_file(get_data_file("config_window.ui"))
+		builder.add_from_string(config_window_ui)
 		builder.connect_signals({ \
 			"config_window_deleted" : self._on_config_window_deleted, \
 			"btn_info_clicked" : self._on_btn_info_clicked, \

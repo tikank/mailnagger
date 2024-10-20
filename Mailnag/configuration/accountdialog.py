@@ -23,11 +23,13 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('GLib', '2.0')
 
 from gi.repository import GObject, GLib, Gtk, Gdk
+from importlib.resources import files
 from _thread import start_new_thread
 from Mailnag.common.dist_cfg import PACKAGE_NAME
 from Mailnag.common.i18n import _
 from Mailnag.common.utils import get_data_file, splitstr
 from Mailnag.common.accounts import Account
+import Mailnag.configuration.ui
 
 IDX_GMAIL	= 0
 IDX_GMX		= 1
@@ -59,9 +61,11 @@ class AccountDialog:
 	def __init__(self, parent, acc):
 		self._acc = acc
 		
+		account_widget_ui = files(Mailnag.configuration.ui).joinpath('account_widget.ui').read_text()
+		
 		builder = Gtk.Builder()
 		builder.set_translation_domain(PACKAGE_NAME)
-		builder.add_from_file(get_data_file("account_widget.ui"))
+		builder.add_from_string(account_widget_ui)
 		builder.connect_signals({ \
 			"account_type_changed" : self._on_cmb_account_type_changed, \
 			"entry_changed" : self._on_entry_changed, \

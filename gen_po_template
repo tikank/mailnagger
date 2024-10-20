@@ -2,7 +2,7 @@
 # extracts strings from *.py and .ui files and
 # generates a gettext .pot template.
 
-glade_dir=./data
+glade_dir=./Mailnag/configuration/ui
 python_dir=./Mailnag
 pot_file=./po/mailnagger.pot
 

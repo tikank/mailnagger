@@ -5,22 +5,26 @@
 # Then to install Mailnagger run pip as root:
 # pip install --break-system-packages .
 
-from distutils.core import setup
-from distutils.cmd import Command
-from distutils.log import warn, info, error
+from setuptools import setup, Command
 from distutils.command.install_data import install_data
-from distutils.command.build import build
-#from distutils.sysconfig import get_python_lib
+from setuptools.command.build import build
 
-import sys
-import os
-import subprocess
 import glob
+import logging
+import os
 import shutil
+import subprocess
+import sys
 import sysconfig
 
-from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION
 
+# NOTE: These should be in sync with Mailnag.common.dist_cfg PACKAGE_NAME
+#       and APP_VERSION.
+PACKAGE_NAME = 'mailnagger'
+APP_VERSION = '2.2.1'
+
+
+logger = logging.getLogger(__name__)
 
 # TODO : This hack won't work with --user and --home options
 PREFIX = sysconfig.get_path('data')
@@ -49,8 +53,8 @@ class BuildData(build):
 				else: err = "UNKNOWN_ERR"
 				raise Warning("gen_locales returned %d (%s)" % (rc, err))
 		except Exception as e:
-			error("Building locales failed.")
-			error("Error: %s" % str(e))
+			logger.error("Building locales failed.")
+			logger.error("Error: %s" % str(e))
 			sys.exit(1)
 		
 		# remove patch dir (if existing)
@@ -116,13 +120,25 @@ setup(name=PACKAGE_NAME,
 	url='https://github.com/tikank/mailnagger',
 	license='GNU GPL2',
 	package_dir = {'Mailnag.common' : os.path.join(BUILD_PATCH_DIR, 'common')},
-	packages=['Mailnag', 'Mailnag.common', 'Mailnag.configuration', 'Mailnag.daemon', 'Mailnag.backends', 'Mailnag.plugins'],
+	packages=[
+		'Mailnag',
+		'Mailnag.common',
+		'Mailnag.configuration',
+		'Mailnag.configuration.ui',
+		'Mailnag.daemon',
+		'Mailnag.backends',
+		'Mailnag.plugins',
+	],
+	package_data = {
+		'Mailnag.configuration.ui' : [ 'account_widget.ui', 'config_window.ui' ],
+	},
 	scripts=['mailnagger', 'mailnagger-config'],
-	data_files=[('share/mailnagger', glob.glob('data/*.ui')),
+	data_files=[
 		('share/mailnagger', ['data/mailnag.ogg']),
 		('share/mailnagger', ['data/mailnag.png']),
 		('share/metainfo', ['data/mailnag.appdata.xml']),
-		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnagger.desktop'), os.path.join(BUILD_PATCH_DIR, 'mailnagger-config.desktop')])],
+		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnagger.desktop'), os.path.join(BUILD_PATCH_DIR, 'mailnagger-config.desktop')])
+	],
 	cmdclass={'build': BuildData, 
 			'install_data': InstallData,
 			'uninstall': Uninstall}

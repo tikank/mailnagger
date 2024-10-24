@@ -4,7 +4,7 @@
 
 #### Test tools
 
-* [pytest](https://docs.pytest.org/en/stable/]
+* [pytest](https://docs.pytest.org/en/stable/)
 * [nox](https://github.com/wntrblm/nox)
 
 

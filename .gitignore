@@ -4,4 +4,5 @@ Mailnag/plugins/goaplugin.py
 Mailnag/plugins/messagingmenuplugin.py
 /.cache
 /build/
+.nox/
 

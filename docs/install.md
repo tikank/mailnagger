@@ -35,7 +35,7 @@ Make virtualenv
     python3 -m venv --system-site-packages env
 ```
 
-Then run as root
+Then run
 
 ```
     ./env/bin/python3 -m pip install .

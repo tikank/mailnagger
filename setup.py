@@ -139,6 +139,11 @@ setup(name=PACKAGE_NAME,
 		('share/metainfo', ['data/mailnag.appdata.xml']),
 		('share/applications', [os.path.join(BUILD_PATCH_DIR, 'mailnagger.desktop'), os.path.join(BUILD_PATCH_DIR, 'mailnagger-config.desktop')])
 	],
+	install_requires = [
+		'pygobject',
+		'pyxdg',
+		'dbus-python',
+	],
 	cmdclass={'build': BuildData, 
 			'install_data': InstallData,
 			'uninstall': Uninstall}

@@ -32,7 +32,7 @@ Build Mailnagger
 Make virtualenv
 
 ```
-    python3 -m venv --system-site-packages env
+    python3 -m venv env
 ```
 
 Then run

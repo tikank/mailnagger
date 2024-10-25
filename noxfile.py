@@ -25,9 +25,6 @@ import nox
 )
 def tests(session):
     """Run unit tests"""
-    session.install('pygobject')
-    session.install('pyxdg')
-    session.install('dbus-python')
     session.install('.')
     session.install('pytest')
     session.run('python', '-m', 'pytest')

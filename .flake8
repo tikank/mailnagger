@@ -1,0 +1,61 @@
+[flake8]
+extend-ignore =
+    # indentation contains mixed spaces and tabs. TODO
+    E101
+    # continuation line under-indented for visual indent. TODO
+    E128
+    # do not use bare 'except'. TODO
+    E722
+    # comparison to None should be 'if cond is not None:'. TODO
+    E711
+    # Currently most of the files are indented with tabs. TODO
+    W191
+    # Blank line at the end of file. TODO
+    W391
+    # whitespace before ':'. TODO
+    E203
+    # unexpected spaces around keyword / parameter equals TODO
+    E251
+    # blank line contains whitespace. TODO
+    W293
+    # too many blank lines (2). TODO
+    E303
+    # line too long. TODO
+    E501
+    # multiple spaces after ':'. TODO
+    E241
+    #  trailing whitespace. TODO
+    W291
+    # expected 2 blank lines. TODO
+    E302
+    # multiple statements on one line (colon). TODO
+    E701
+    # module level import not at top of file. TODO
+    E402
+    # whitespace after '['. TODO
+    E201
+    # whitespace before ']'. TODO
+    E202
+    # at least two spaces before inline comment. TODO
+    E261
+    #  missing whitespace after ','. TODO
+    E231
+    # block comment should start with '# '. TODO
+    E265
+    # whitespace before '['. TODO
+    E211
+    # tab before operator. TODO
+    E223
+    # tab before keyword. TODO
+    E274
+    # expected 1 blank line. TODO
+    E301
+    # the backslash is redundant between brackets. TODO
+    E502
+
+extend-exclude =
+    # External code.
+    Mailnag/common/imaplib2.py
+    # Build directory.
+    build/
+

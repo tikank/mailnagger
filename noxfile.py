@@ -42,4 +42,12 @@ def tests_with_system_site(session):
     session.run('python', '-m', 'pytest')
 
 
+@nox.session(
+    default=False,
+)
+def flake8(session):
+    """Run flake8"""
+    session.install('flake8')
+    session.run('python', '-m', 'flake8', '--statistics')
+
 

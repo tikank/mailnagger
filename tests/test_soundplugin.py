@@ -114,7 +114,6 @@ def test_multiple_mails_added_should_initialize_gst_only_once(fake_gst):
     fake_gst.init.assert_called_once_with(None)
 
 
-@pytest.mark.xfail(reason='Sound plugin uses wrong uri in venvs.')
 def test_mails_added_should_play_correct_sound(fake_gst):
     # GIVEN
     play = MagicMock()

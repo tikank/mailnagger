@@ -26,6 +26,9 @@ import dbus
 import logging
 import logging.handlers
 import inspect
+import sysconfig
+from pathlib import Path
+
 
 from Mailnag.common.dist_cfg import PACKAGE_NAME, DBUS_BUS_NAME, DBUS_OBJ_PATH
 
@@ -54,8 +57,9 @@ def init_logging(enable_stdout = True, enable_syslog = True, log_level = logging
 
 
 def get_data_paths():
-	# Add "./data" in workdir for running from builddir
 	data_paths = []
+	data_paths.append(Path(sysconfig.get_path('data')) / 'share' / PACKAGE_NAME)
+	# Add "./data" in workdir for running from builddir
 	data_paths.append("./data")
 	data_paths.extend(base.load_data_paths(PACKAGE_NAME))
 	return data_paths

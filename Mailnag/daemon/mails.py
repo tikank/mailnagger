@@ -1,6 +1,6 @@
 # Copyright 2011 - 2021 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2020 Andreas Angerer
-# Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2018, 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 # Copyright 2019 razer <razerraz@free.fr>
@@ -171,8 +171,6 @@ class MailCollector:
 	# return utf-8 decoded string from multi-part/multi-charset header text
 	def _convert(self, text):
 		decoded = decode_header(text)
-		if not decoded[0][1] or 'unknown' in decoded[0][1]:
-			decoded = [(decoded[0][0], 'latin-1')]
 		return str(make_header(decoded))
 
 

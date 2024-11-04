@@ -65,12 +65,10 @@ def test_one_account_no_mails():
         ("=?ISO-8859-1?Q?a?=", "a"),
         ("=?ISO-8859-1?Q?a?= b", "a b"),
         ("=?ISO-8859-1?Q?a?= =?ISO-8859-1?Q?b?=", "ab"),
+        ("=?ISO-8859-1?Q?a?==?ISO-8859-1?Q?b?=", "ab"),
         ("=?ISO-8859-1?Q?a?=  =?ISO-8859-1?Q?b?=", "ab"),
         ("=?ISO-8859-1?Q?a_b?=", "a b"),
-        pytest.param(
-            "a =?ISO-8859-1?Q?b?=", "a b",
-             marks=pytest.mark.xfail(reason="Bug https://github.com/pulb/mailnag/issues/252")
-        ),
+        ("a =?ISO-8859-1?Q?b?=", "a b"),
     ]
 )
 def test_collector_should_parse_subjects_correctly(input_subject, expected_subject):

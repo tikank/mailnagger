@@ -33,7 +33,7 @@ _func_lock = threading.Lock()
 
 # Dictionary holding popen objects 
 # and associated thread objects.
-_procs = {}
+_procs : dict[threading.Thread, subprocess.Popen] = {}
 
 
 # Starts a subprocess and an associated thread that waits for

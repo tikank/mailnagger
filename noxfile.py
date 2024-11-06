@@ -20,6 +20,15 @@ import nox
 
 
 @nox.session(
+    name='tests-default',
+    venv_backend='venv',
+)
+def tests_default(session):
+    """Run unit tests with default python."""
+    tests(session)
+
+
+@nox.session(
     python=['3.12'],
     venv_backend='venv',
 )
@@ -30,16 +39,9 @@ def tests(session):
     session.run('python', '-m', 'pytest')
 
 
-@nox.session(
-    python=['3.12'],
-    venv_backend='venv',
-    venv_params=['--system-site-packages'],
-)
-def tests_with_system_site(session):
-    """Run unit tests (with system-site-packages)"""
-    session.install('.')
-    session.install('pytest')
-    session.run('python', '-m', 'pytest')
-
-
+@nox.session
+def mypy(session):
+    """Run mypy type checker."""
+    session.install('mypy')
+    session.run('python', '-m', 'mypy')
 

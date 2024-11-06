@@ -6,6 +6,8 @@
 
 * [pytest](https://docs.pytest.org/en/stable/)
 * [nox](https://github.com/wntrblm/nox)
+* [flake8](https://github.com/pycqa/flake8)
+* [mypy](https://www.mypy-lang.org/)
 
 
 #### Running tests
@@ -23,4 +25,10 @@ Whole tests set can be run with command
 ```
     nox
 ```
+
+Nox runs
+
+* unit tests using pytest,
+* flake8 to do static code checks and
+* mypy to make static type checking.
 

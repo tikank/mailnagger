@@ -1,6 +1,13 @@
 Mailnagger news
 ===============
 
+Version 2.2.x (not released)
+============================
+
+* Fixed subject header truncation.
+  https://github.com/pulb/mailnag/issues/252
+
+
 Version 2.2.1 (2024-10-16)
 ==========================
 

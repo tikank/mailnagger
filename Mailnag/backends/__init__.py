@@ -49,7 +49,7 @@ def _bool_to_str(b):
 
 
 Param = namedtuple('Param',
-    ['param_name', 'option_name', 'from_str', 'to_str', 'default_value']
+	['param_name', 'option_name', 'from_str', 'to_str', 'default_value']
 )
 Backend = namedtuple('Backend', ['backend_class', 'params'])
 
@@ -63,7 +63,7 @@ _backends = {
 				Param('imap', 'imap', _str_to_bool, _bool_to_str, True),
 				Param('idle', 'idle', _str_to_bool, _bool_to_str, True),
 				Param('folders', 'folder', _str_to_folders, _folders_to_str, []),
-			 ]),
+			]),
 	'pop3' : Backend(POP3MailboxBackend, [
 				Param('user', 'user', str, str, ''),
 				Param('password', 'password', str, str, ''),
@@ -72,10 +72,10 @@ _backends = {
 				Param('ssl', 'ssl', _str_to_bool, _bool_to_str, True),
 				Param('imap', 'imap', _str_to_bool, _bool_to_str, False),
 				Param('idle', 'idle', _str_to_bool, _bool_to_str, False),
-			 ]),
+			]),
 	'mbox' : Backend(MBoxBackend, [
 				Param('path', 'path', str, str, ''),
-			 ]),
+			]),
 	'maildir' : Backend(MaildirBackend, [
 				Param('path', 'path', str, str, ''),
 				Param('folders', 'folder', _str_to_folders, _folders_to_str, []),
@@ -92,7 +92,7 @@ def get_mailbox_parameter_specs(mailbox_type):
 	"""Returns mailbox backend specific parameter specification.
 	The specification is a list objects which have atributes:
 	* param_name - the name of argument in which parameter value is given to
-				   backend constructor
+					backend constructor
 	* option_name - the name used in configuration
 	* from_str - the function to convert string to parameter specific type
 	* default_value - the value used when the option is not found

@@ -407,7 +407,7 @@ def ellipsize(str, max_len):
 
 # If the user has closed the notification, an exception is raised.
 def try_close(notification):
-        try:
-                notification.close()
-        except:
-                pass
+	try:
+		notification.close()
+	except:
+		pass

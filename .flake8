@@ -1,7 +1,5 @@
 [flake8]
 extend-ignore =
-    # indentation contains mixed spaces and tabs. TODO
-    E101
     # continuation line under-indented for visual indent. TODO
     E128
     # do not use bare 'except'. TODO

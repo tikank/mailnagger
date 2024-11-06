@@ -311,18 +311,18 @@ def test_save_all_accounts_to_config_with_secret_store(config, secret_store):
 	am.save_to_cfg(config)
 	assert len(config.sections()) == 6
 	assert secret_store.secrets == {
-	    'f827cf462f62848df37c5e1e94a4da74': (
-	    	'',
-	    	'Mailnagger password for account @'
-	    ),
-	    'b1a892abc4445a099647cb0df75c6f7c' : (
-	    	'verry seecret',
-	    	'Mailnagger password for account you@imap.example.org'
-	    ),
-	    '1f8d0aabde255c9eea2ebf2c4b09dfc6': (
-	    	'seecret too',
-	    	'Mailnagger password for account me@pop.example.org'
-	    ),
+		'f827cf462f62848df37c5e1e94a4da74': (
+			'',
+			'Mailnagger password for account @'
+		),
+		'b1a892abc4445a099647cb0df75c6f7c' : (
+			'verry seecret',
+			'Mailnagger password for account you@imap.example.org'
+		),
+		'1f8d0aabde255c9eea2ebf2c4b09dfc6': (
+			'seecret too',
+			'Mailnagger password for account me@pop.example.org'
+		),
 	}
 
 

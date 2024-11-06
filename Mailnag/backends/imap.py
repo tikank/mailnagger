@@ -38,7 +38,7 @@ class IMAPMailboxBackend(MailboxBackend):
 	"""Implementation of IMAP mail boxes."""
 
 	def __init__(self, name = '', user = '', password = '', oauth2string = '',
-				 server = '', port = '', ssl = True, folders = [], idle=True, **kw):
+				server = '', port = '', ssl = True, folders = [], idle=True, **kw):
 		self.name = name
 		self.user = user
 		self.password = password

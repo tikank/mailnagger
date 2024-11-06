@@ -47,18 +47,20 @@ def test_account_get_id_should_be_consistent():
 
 
 def test_account_should_keep_configuration():
-	account = Account(enabled=True,
-					  name='my name',
-					  user='who',
-					  password='secret',
-					  oauth2string='who knows',
-					  server='example.org',
-					  port='1234',
-					  ssl=True,
-					  imap=True,
-					  idle=True,
-					  folders=['a', 'b'],
-					  mailbox_type='mybox')
+	account = Account(
+		enabled=True,
+		name='my name',
+		user='who',
+		password='secret',
+		oauth2string='who knows',
+		server='example.org',
+		port='1234',
+		ssl=True,
+		imap=True,
+		idle=True,
+		folders=['a', 'b'],
+		mailbox_type='mybox'
+	)
 	config = account.get_config()
 	expected_config = {
 		'enabled': True,

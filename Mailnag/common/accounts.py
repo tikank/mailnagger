@@ -1,6 +1,6 @@
 # Copyright 2011 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
-# Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2018, 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -60,7 +60,7 @@ class Account:
 		elif 'imap' in config:
 			self.mailbox_type = 'imap' if config.get('imap', True) else 'pop3'
 		else:
-		    self.mailbox_type = ''
+			self.mailbox_type = ''
 		self.name = name
 		self.user = config.get('user', '')
 		self.password = config.get('password', '')
@@ -159,8 +159,8 @@ class Account:
 		if not self._backend:
 			backend_config = self._get_backend_config()
 			self._backend = create_backend(self.mailbox_type,
-										   name=self.name,
-										   **backend_config)
+											name=self.name,
+											**backend_config)
 		return self._backend
 
 
@@ -260,10 +260,12 @@ class AccountManager:
 					if not password: password = ''
 					options['password'] = password
 
-				acc = Account(enabled=enabled,
-							  name=name,
-							  mailbox_type=mailbox_type,
-							  **options)
+				acc = Account(
+					enabled=enabled,
+					name=name,
+					mailbox_type=mailbox_type,
+					**options
+				)
 				self._accounts.append(acc)
 
 			i = i + 1
@@ -309,18 +311,21 @@ class AccountManager:
 			# TODO: Storing a password is mailbox specific.
 			#       Not every backend requires a password.
 			if self._secretstore != None:
-				self._secretstore.set(self._get_account_id(acc.user, acc.server, acc.imap), acc.password,
-				        f'{PACKAGE_NAME.capitalize()} password for account {acc.user}@{acc.server}')
+				self._secretstore.set(
+					self._get_account_id(acc.user, acc.server, acc.imap),
+					acc.password,
+					f'{PACKAGE_NAME.capitalize()} password for account {acc.user}@{acc.server}'
+				)
 				config['password'] = ''
-                        
+
 			self._set_cfg_options(cfg, section_name, config, option_spec)
 
 			i = i + 1
 	
 		
 	def _get_account_id(self, user, server, is_imap):
-                # TODO : Introduce account.uuid when rewriting account and backend code
-                return hashlib.md5((user + server + str(is_imap)).encode('utf-8')).hexdigest()
+		# TODO : Introduce account.uuid when rewriting account and backend code
+		return hashlib.md5((user + server + str(is_imap)).encode('utf-8')).hexdigest()
 	
 	
 	def _get_account_cfg(self, cfg, section_name, option_name):
@@ -334,10 +339,10 @@ class AccountManager:
 		options = {}
 		for s in option_spec:
 			options[s.param_name] = self._get_cfg_option(cfg,
-														 section_name,
-														 s.option_name,
-														 s.from_str,
-														 s.default_value)
+														section_name,
+														s.option_name,
+														s.from_str,
+														s.default_value)
 		return options
 
 

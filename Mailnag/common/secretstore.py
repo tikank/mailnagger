@@ -25,7 +25,7 @@ try:
 	from gi.repository import Secret
 	_libsecret_err = None
 except ModuleNotFoundError as e:
-        _libsecret_err = e
+	_libsecret_err = e
 
 
 
@@ -61,7 +61,7 @@ class SecretStore():
 	def get_default():
 		if _libsecret_err != None:
 			return None
-        	
+
 		if SecretStore._instance == None:
 			SecretStore._instance = SecretStore()
 

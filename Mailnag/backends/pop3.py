@@ -1,5 +1,5 @@
 # Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 # Copyright 2019 razer <razerraz@free.fr>
@@ -34,7 +34,7 @@ class POP3MailboxBackend(MailboxBackend):
 	"""Implementation of POP3 mail boxes."""
 	
 	def __init__(self, name = '', user = '', password = '', oauth2string = '',
-				 server = '', port = '', ssl = True, **kw):
+				server = '', port = '', ssl = True, **kw):
 		self.name = name
 		self.user = user
 		self.password = password

@@ -297,18 +297,18 @@ class AccountDialog:
 		acctype = self._cmb_account_type.get_active()
 		if (acctype == IDX_POP3) or (acctype == IDX_IMAP):
 			ok = len(self._entry_account_name.get_text()) > 0 and \
-				 len(self._entry_account_user.get_text()) > 0 and \
-				 len(self._entry_account_password.get_text()) > 0 and \
-				 len(self._entry_account_server.get_text()) > 0
+				len(self._entry_account_user.get_text()) > 0 and \
+				len(self._entry_account_password.get_text()) > 0 and \
+				len(self._entry_account_server.get_text()) > 0
 		elif acctype == IDX_MBOX:
 			ok = len(self._entry_account_name.get_text()) > 0 and \
-				 (self._chooser_account_file_path.get_filename() is not None)
+				(self._chooser_account_file_path.get_filename() is not None)
 		elif acctype == IDX_MAILDIR:
 			ok = len(self._entry_account_name.get_text()) > 0 and \
-				 (self._chooser_account_directory_path.get_filename() is not None)
+				(self._chooser_account_directory_path.get_filename() is not None)
 		else: # known provider
 			ok = len(self._entry_account_user.get_text()) > 0 and \
-				 len(self._entry_account_password.get_text()) > 0
+				len(self._entry_account_password.get_text()) > 0
 	
 		self._expander_folders.set_sensitive(self._folders_received or ok)
 		self._button_ok.set_sensitive(ok)

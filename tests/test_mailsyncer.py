@@ -26,61 +26,8 @@ import pytest
 
 import email
 from Mailnag.daemon.mails import MailSyncer
-from Mailnag.common.accounts import Account
-from Mailnag.backends.base import MailboxBackend
+from fakeaccount import FakeAccount
 
-
-class FakeBackend(MailboxBackend):
-	"""Fake mailbox backend implementation for testing."""
-
-	def __init__(self, **kw):
-		self._opened = False
-		self.messages = []
-
-
-	def open(self):
-		self._opened = True
-
-
-	def close(self):
-		self._opened = False
-
-
-	def is_open(self):
-		return self._opened
-
-
-	def list_messages(self):
-		for msg in self.messages:
-			yield "samplefolder", msg, {}
-
-
-	def mark_as_seen(self, mails):
-		raise NotImplementedError
-
-
-	def request_folders(self):
-		raise NotImplementedError("no folder support")
-
-
-	def notify_next_change(self, callback=None, timeout=None):
-		raise NotImplementedError("no notification support")
-
-
-	def cancel_notifications(self):
-		raise NotImplementedError("no notification support")
-
-
-class FakeAccount(Account):
-	"""Fake account implementation to use special test backend."""
-
-	def __init__(self, **kw):
-		Account.__init__(self, **kw)
-		self._backend = FakeBackend()
-
-
-	def set_current_messages(self, messages):
-		self._backend.messages = messages
 
 message_template = """\
 From: You <you@example.org>
@@ -104,12 +51,11 @@ Date: Tue, 01 May 2018 16:28:08 +0300
 
 def make_messages(a, b):
 	"""Make list of messages with message ids in range(a, b)."""
-	make_msg = email.message_from_string
-	return [make_msg(message_template.format(mid=i)) for i in range(a, b)]
+	return [message_template.format(mid=i) for i in range(a, b)]
 
 
 def make_messages_without_mid():
-	"""Make list of messages with message ids in range(a, b)."""
+	"""Make list of message with without message id."""
 	return [message_template_without_mid]
 
 

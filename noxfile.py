@@ -45,3 +45,12 @@ def mypy(session):
     session.install('mypy')
     session.run('python', '-m', 'mypy')
 
+
+@nox.session(
+    default=False,
+)
+def flake8(session):
+    """Run flake8"""
+    session.install('flake8')
+    session.run('python', '-m', 'flake8', '--statistics')
+

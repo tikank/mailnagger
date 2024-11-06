@@ -1,5 +1,5 @@
 # Copyright 2011 - 2021 Patrick Ulbrich <zulu99@gmx.net>
-# Copyright 2016, 2019 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2019, 2024 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,14 +20,12 @@
 import os
 import gi
 gi.require_version('Gtk', '3.0')
-gi.require_version('GLib', '2.0')
 
-from gi.repository import GObject, GLib, Gtk, Gdk
+from gi.repository import GObject, Gtk, Gdk
 from importlib.resources import files
 from _thread import start_new_thread
 from Mailnag.common.dist_cfg import PACKAGE_NAME
 from Mailnag.common.i18n import _
-from Mailnag.common.utils import get_data_file, splitstr
 from Mailnag.common.accounts import Account
 import Mailnag.configuration.ui
 

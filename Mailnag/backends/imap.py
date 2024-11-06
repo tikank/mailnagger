@@ -1,6 +1,6 @@
 # Copyright 2011 - 2021 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2020 Andreas Angerer
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2016 Thomas Haider <t.haider@deprecate.de>
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
 # Copyright 2019 razer <razerraz@free.fr>
@@ -150,7 +150,7 @@ class IMAPMailboxBackend(MailboxBackend):
 							last_folder = folder
 						status, data = conn.uid("STORE", m.flags['uid'], "+FLAGS", r"(\Seen)")
 					except:
-						logging.warning("Failed to set mail with uid %s to seen on server (account: '%s').", m.flags['uid'], acc.name)
+						logging.warning("Failed to set mail with uid %s to seen on server (account: '%s').", m.flags['uid'], self.name)
 
 		finally:
 			self._disconnect(conn)

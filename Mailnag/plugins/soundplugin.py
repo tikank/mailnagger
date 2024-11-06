@@ -1,3 +1,4 @@
+# Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2013 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -96,7 +97,6 @@ class _GstPlayThread(threading.Thread):
 	
 	def run(self):
 		def on_eos(bus, msg):
-#			loggin.debug('EOS')
 			self.ply.set_state(Gst.State.NULL)
 			return True
 		

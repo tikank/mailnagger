@@ -19,9 +19,7 @@
 
 """Implementation of local mailboxes, like mbox and maildir."""
 
-import email
 import mailbox
-import logging
 import os.path
 
 from Mailnag.backends.base import MailboxBackend

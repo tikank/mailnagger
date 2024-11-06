@@ -1,3 +1,4 @@
+# Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2013 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -19,7 +20,6 @@
 import subprocess
 import threading
 import logging
-import time
 
 # Note : All functions of this module *are* thread-safe.
 

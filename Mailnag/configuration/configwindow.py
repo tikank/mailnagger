@@ -29,7 +29,6 @@ from importlib.resources import files
 
 from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION, BIN_DIR, DESKTOP_FILE_DIR
 from Mailnag.common.i18n import _
-from Mailnag.common.utils import get_data_file
 from Mailnag.common.config import read_cfg, write_cfg
 from Mailnag.common.accounts import Account, AccountManager
 from Mailnag.common.plugins import Plugin
@@ -40,7 +39,7 @@ import Mailnag.configuration.ui
 
 class ConfigWindow:
 	def __init__(self, app):
-		config_window_ui =  files(Mailnag.configuration.ui).joinpath('config_window.ui').read_text()
+		config_window_ui = files(Mailnag.configuration.ui).joinpath('config_window.ui').read_text()
 
 		builder = Gtk.Builder()
 		builder.set_translation_domain(PACKAGE_NAME)
@@ -164,7 +163,7 @@ class ConfigWindow:
 			plugin = row[0]
 			modname = plugin.get_modname()
 			
-			if row[1] == True:
+			if row[1]:
 				if len(enabled_plugins) > 0:
 					enabled_plugins += ', '
 				enabled_plugins += modname

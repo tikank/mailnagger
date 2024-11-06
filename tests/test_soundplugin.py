@@ -34,9 +34,8 @@ from Mailnag.common.plugins import (
 )
 
 import configparser
-from unittest.mock import MagicMock, patch, call, ANY
+from unittest.mock import MagicMock, patch, ANY
 import sys
-import time
 
 
 @pytest.fixture

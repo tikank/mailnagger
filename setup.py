@@ -9,7 +9,6 @@ from setuptools import setup, Command
 from distutils.command.install_data import install_data
 from setuptools.command.build import build
 
-import glob
 import logging
 import os
 import shutil
@@ -39,7 +38,7 @@ for arg in sys.argv:
 
 BUILD_LOCALE_DIR = os.path.join(BUILD_DIR, 'locale')
 BUILD_PATCH_DIR = os.path.join(BUILD_DIR, 'patched')
-INSTALL_LIB_DIR =  os.path.join(sysconfig.get_path('purelib'), 'Mailnag')
+INSTALL_LIB_DIR = os.path.join(sysconfig.get_path('purelib'), 'Mailnag')
 
 
 class BuildData(build):
@@ -180,8 +179,7 @@ setup(name=PACKAGE_NAME,
         ('share/applications', [
                 os.path.join(BUILD_PATCH_DIR, 'mailnagger.desktop'),
                 os.path.join(BUILD_PATCH_DIR, 'mailnagger-config.desktop')
-            ]
-        )
+        ])
     ],
     install_requires = [
         'pygobject',

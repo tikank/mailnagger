@@ -21,7 +21,6 @@
 # MA 02110-1301, USA.
 #
 
-import time
 import email
 import os
 import logging
@@ -293,7 +292,7 @@ class Memorizer(dict):
 
 	def sync(self, mail_list):
 		for m in mail_list:
-			if not m.id in self:
+			if m.id not in self:
 				# new mail is not yet known to the memorizer
 				self[m.id] = '0'
 				self._changed = True

@@ -46,9 +46,7 @@ def mypy(session):
     session.run('python', '-m', 'mypy')
 
 
-@nox.session(
-    default=False,
-)
+@nox.session
 def flake8(session):
     """Run flake8"""
     session.install('flake8')

@@ -18,7 +18,6 @@
 # MA 02110-1301, USA.
 #
 
-from Mailnag.common.dist_cfg import PACKAGE_NAME
 
 try:
 	import gi
@@ -36,10 +35,9 @@ class SecretStore():
 	def __init__(self):
 		if _libsecret_err != None:
 			raise _libsecret_err
-	        
+
 		self._schema = Secret.Schema.new(
-#			f'com.github.pulb.{PACKAGE_NAME}',
-			f'com.github.pulb.mailnag',  # Temporary fix to use Mailnags passwords.
+			'com.github.pulb.mailnag',  # Temporary fix to use Mailnags passwords.
 			Secret.SchemaFlags.NONE,
 			{'id' : Secret.SchemaAttributeType.STRING}
 		)

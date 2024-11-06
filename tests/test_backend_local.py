@@ -213,7 +213,7 @@ class TestMaildir:
 		be = create_backend('maildir', name='sample', path=sample_path, folders=['', 'folder1'])
 		be.open()
 		try:
-			msgs = list(be.list_messages())
+			list(be.list_messages())
 		finally:
 			be.close()
 

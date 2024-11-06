@@ -22,9 +22,6 @@
 
 """Test cases for MailSyncer."""
 
-import pytest
-
-import email
 from Mailnag.daemon.mails import MailSyncer
 from fakeaccount import FakeAccount
 
@@ -122,7 +119,7 @@ def test_syncing_should_update_messages():
 	account = FakeAccount()
 	messages = make_messages(0, 10)
 	account.set_current_messages(messages)
-	mails_in_first_sync = syncer.sync([account])
+	syncer.sync([account])
 	new_messages = make_messages(10, 14)
 	account.set_current_messages(messages[3:] + new_messages)
 	mails_in_second_sync = syncer.sync([account])

@@ -1,3 +1,4 @@
+# Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2020 Andreas Angerer
 # Copyright 2011 Ralf Hersel <ralf.hersel@gmx.net>
@@ -22,7 +23,6 @@ import threading
 import logging
 
 from Mailnag.common.utils import try_call
-from Mailnag.common.i18n import _
 from Mailnag.common.plugins import HookTypes
 from Mailnag.daemon.mails import MailSyncer
 
@@ -68,7 +68,7 @@ class MailChecker:
 						# if the mail account supports tagging mails as seen (e.g. IMAP), 
 						# mark the mail as seen on the server as well.
 						if mail.account.supports_mark_as_seen():
-							if not mail.account in seen_mails_by_account:
+							if mail.account not in seen_mails_by_account:
 								seen_mails_by_account[mail.account] = []
 							seen_mails_by_account[mail.account].append(mail)
 				else: # mail is fetched the first time

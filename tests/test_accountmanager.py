@@ -23,7 +23,6 @@
 """Test cases for account manager."""
 
 from configparser import RawConfigParser
-from io import StringIO
 import pytest
 
 from Mailnag.backends import get_mailbox_parameter_specs

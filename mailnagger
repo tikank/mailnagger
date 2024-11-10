@@ -34,7 +34,7 @@ import signal
 
 from Mailnag.common.utils import fix_cwd
 
-fix_cwd()
+# fix_cwd()
 
 from Mailnag.common.config import cfg_exists
 from Mailnag.common.dist_cfg import APP_VERSION

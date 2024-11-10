@@ -26,7 +26,7 @@ from enum import Enum
 from Mailnag.common.config import cfg_folder
 from Mailnag.common.dist_cfg import LIB_DIR
 
-PLUGIN_LIB_PATH = os.path.join(LIB_DIR, 'plugins')
+PLUGIN_LIB_PATH = LIB_DIR / 'plugins'
 PLUGIN_USER_PATH = os.path.join(cfg_folder, 'plugins')
 PLUGIN_PATHS = [ PLUGIN_LIB_PATH, PLUGIN_USER_PATH ]
 

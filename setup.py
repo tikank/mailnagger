@@ -11,6 +11,7 @@ from setuptools.command.build import build
 
 import logging
 import os
+from pathlib import Path
 import shutil
 import subprocess
 import sys
@@ -58,8 +59,7 @@ class BuildData(build):
 
         # remove patch dir (if existing)
         shutil.rmtree(BUILD_PATCH_DIR, ignore_errors = True)
-        # copy mailnag source to build dir for patching purposes
-        shutil.copytree('Mailnag/common', os.path.join(BUILD_PATCH_DIR, 'common'))
+        Path(BUILD_PATCH_DIR).mkdir(parents=True, exist_ok=True)
 
         # patch paths
         self._patch_file(
@@ -73,30 +73,6 @@ class BuildData(build):
             os.path.join(BUILD_PATCH_DIR, 'mailnagger-config.desktop'),
             '/usr',
             PREFIX
-        )
-        self._patch_file(
-            os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'),
-            os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'), 
-            './locale',
-            os.path.join(PREFIX, 'share/locale')
-        )
-        self._patch_file(
-            os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'),
-            os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'),
-            './data',
-            os.path.join(PREFIX, 'share/applications')
-        )
-        self._patch_file(
-            os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'),
-            os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'),
-            './Mailnag',
-            INSTALL_LIB_DIR
-        )
-        self._patch_file(
-            os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'),
-            os.path.join(BUILD_PATCH_DIR, 'common/dist_cfg.py'),
-            "'.'",
-            "'%s'" % sysconfig.get_path('scripts')
         )
         build.run (self)
 
@@ -150,13 +126,11 @@ setup(name=PACKAGE_NAME,
     author_email='timo.kankare@iki.fi',
     url='https://github.com/tikank/mailnagger',
     license='GNU GPL2',
-    package_dir = {
-        'Mailnag.common' : os.path.join(BUILD_PATCH_DIR, 'common')
-    },
     packages=[
         'Mailnag',
         'Mailnag.common',
         'Mailnag.configuration',
+        'Mailnag.configuration.desktop',
         'Mailnag.configuration.ui',
         'Mailnag.daemon',
         'Mailnag.backends',
@@ -166,6 +140,9 @@ setup(name=PACKAGE_NAME,
         'Mailnag.configuration.ui' : [
             'account_widget.ui',
             'config_window.ui',
+        ],
+        'Mailnag.configuration.desktop': [
+            'mailnagger.desktop',
         ],
     },
     scripts=[

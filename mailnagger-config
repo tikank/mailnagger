@@ -29,7 +29,7 @@ from gi.repository import Gtk
 
 from Mailnag.common.utils import fix_cwd, init_logging
 
-fix_cwd()
+# fix_cwd()
 
 from Mailnag.common.i18n import _
 from Mailnag.common.utils import set_procname, shutdown_existing_instance, get_data_file, get_data_paths
@@ -73,8 +73,8 @@ class App(Gtk.Application):
 				# an already running daemon
 				print("Launching Mailnagger daemon.")
 				subprocess.Popen(os.path.join(BIN_DIR, "mailnagger"))
-			except:
-				print("ERROR: Failed to launch Mailnagger daemon.")
+			except Exception as e:
+				print(f"ERROR: Failed to launch Mailnagger daemon: {str(e)}")
 		else:
 			# shutdown running Mailnagger daemon
 			shutdown_existing_instance(wait_for_completion = False)

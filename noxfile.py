@@ -23,16 +23,16 @@ import nox
     name='tests-default',
     venv_backend='venv',
 )
-def tests_default(session):
+def tests_default(session : nox.Session) -> None:
     """Run unit tests with default python."""
     tests(session)
 
 
 @nox.session(
-    python=['3.12'],
+    python=['3.13', '3.12'],
     venv_backend='venv',
 )
-def tests(session):
+def tests(session : nox.Session) -> None:
     """Run unit tests"""
     session.install('.')
     session.install('pytest')
@@ -40,15 +40,31 @@ def tests(session):
 
 
 @nox.session
-def mypy(session):
+def mypy(session : nox.Session) -> None:
     """Run mypy type checker."""
     session.install('mypy')
     session.run('python', '-m', 'mypy')
 
 
 @nox.session
-def flake8(session):
+def flake8(session : nox.Session) -> None:
     """Run flake8"""
     session.install('flake8')
     session.run('python', '-m', 'flake8', '--statistics')
+
+
+@nox.session(
+    default=False,
+)
+def dev(session : nox.Session) -> None:
+    """Set up a python development environment for the project at .env-dev."""
+
+    env = ".env-dev"
+
+    session.run("python", "-m", "venv", "--clear", env)
+
+    # Use the venv's interpreter to install the project along with
+    # all it's dev dependencies, this ensures it's installed in the right way
+    session.run(env + "/bin/python", "-m", "pip", "install", "-e", ".", external=True)
+    print("Activate environment: . " + env + "/bin/activate")
 

@@ -5,4 +5,6 @@ Mailnag/plugins/messagingmenuplugin.py
 /.cache
 /build/
 .nox/
+.env-dev/
+*.egg-info/
 

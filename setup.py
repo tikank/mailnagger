@@ -158,6 +158,7 @@ setup(name=PACKAGE_NAME,
                 os.path.join(BUILD_PATCH_DIR, 'mailnagger-config.desktop')
         ])
     ],
+    include_package_date=True,
     install_requires = [
         'pygobject',
         'pyxdg',

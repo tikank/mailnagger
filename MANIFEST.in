@@ -1,0 +1,12 @@
+include gen_locales
+include gen_po_template
+include update_po_files
+include po/*.po
+include po/*.pot
+include po/*.md
+include data/*
+include doc/*.md
+include .flake8
+include mypy.ini
+include noxfile.py
+include NEWS

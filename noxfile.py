@@ -56,6 +56,15 @@ def flake8(session : nox.Session) -> None:
 @nox.session(
     default=False,
 )
+def build(session : nox.Session) -> None:
+    """Build sdist and wheel packages to dist."""
+    session.install("build")
+    session.run("python", "-m", "build")
+
+
+@nox.session(
+    default=False,
+)
 def dev(session : nox.Session) -> None:
     """Set up a python development environment for the project at .env-dev."""
 

@@ -16,6 +16,7 @@
 # MA 02110-1301, USA.
 #
 
+import argparse
 import nox
 
 
@@ -76,4 +77,38 @@ def dev(session : nox.Session) -> None:
     # all it's dev dependencies, this ensures it's installed in the right way
     session.run(env + "/bin/python", "-m", "pip", "install", "-e", ".", external=True)
     print("Activate environment: . " + env + "/bin/activate")
+
+
+@nox.session(
+    default=False,
+)
+def bumpversion(session : nox.Session) -> None:
+    """Bump version number"""
+    session.install("bump-my-version")
+
+    parser = argparse.ArgumentParser(
+        description="Bump version number,",
+        prog="nox -s bumpversion --",
+    )
+    parser.add_argument(
+        "part",
+        type=str,
+        nargs='?',
+        default=None,
+        help="The part of version to bump.",
+        choices=["major", "minor", "patch", "state", "count"],
+    )
+    args : argparse.Namespace = parser.parse_args(args=session.posargs)
+    if not args.part:
+        session.run("bump-my-version", "show-bump")
+    else:
+        part : str = args.part
+        session.run("bump-my-version", "bump", "-v", "--dry-run", part)
+        confirm = input(
+           f"You are about to bump the {part!r} version. Are you sure? [y/n]: "
+        )
+        if confirm.lower().strip() != "y":
+            session.error(f"You said no when prompted to bump the {part!r} version")
+        session.log(f"Bumping the {part!r} version")
+        session.run("bump-my-version", "bump", part)
 

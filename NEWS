@@ -1,11 +1,18 @@
 Mailnagger news
 ===============
 
-Version 2.2.x (not released)
-============================
+Version 2.3.0.dev0 (not released)
+=================================
+
+Fixes
+-----
 
 * Fixed subject header truncation.
   https://github.com/pulb/mailnag/issues/252
+
+
+New features
+------------
 
 * Added support to build source and wheel packages.
 

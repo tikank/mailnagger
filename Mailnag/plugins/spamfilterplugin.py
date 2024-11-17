@@ -23,7 +23,7 @@ from gi.repository import Gtk
 from Mailnag.common.plugins import Plugin, HookTypes
 from Mailnag.common.i18n import _
 
-plugin_defaults = { 'filter_text' : 'newsletter, viagra' }
+plugin_defaults = {'filter_text' : 'newsletter, viagra'}
 
 
 class SpamfilterPlugin(Plugin):
@@ -82,13 +82,13 @@ class SpamfilterPlugin(Plugin):
 		box = Gtk.Box()
 		box.set_spacing(12)
 		box.set_orientation(Gtk.Orientation.VERTICAL)
-		#box.set_size_request(100, -1)
+		# box.set_size_request(100, -1)
 		
 		desc = _('Mailnag will ignore mails containing at least one of \nthe following words in subject or sender.')
 		
 		label = Gtk.Label(desc)
 		label.set_line_wrap(True)
-		#label.set_size_request(100, -1);
+		# label.set_size_request(100, -1);
 		box.pack_start(label, False, False, 0)
 		
 		scrollwin = Gtk.ScrolledWindow()
@@ -129,7 +129,7 @@ class SpamfilterPlugin(Plugin):
 			# remove CR and white space
 			f = f.strip()			
 			
-			if len (f) == 0:
+			if len(f) == 0:
 				continue
 			
 			f = f.lower()

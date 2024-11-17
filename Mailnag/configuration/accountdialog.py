@@ -29,22 +29,22 @@ from Mailnag.common.i18n import _
 from Mailnag.common.accounts import Account
 import Mailnag.configuration.ui
 
-IDX_GMAIL	= 0
-IDX_GMX		= 1
-IDX_WEB_DE	= 2
-IDX_YAHOO	= 3
-IDX_IMAP	= 4
-IDX_POP3	= 5
-IDX_MBOX	= 6
-IDX_MAILDIR	= 7
+IDX_GMAIL = 0
+IDX_GMX = 1
+IDX_WEB_DE = 2
+IDX_YAHOO = 3
+IDX_IMAP = 4
+IDX_POP3 = 5
+IDX_MBOX = 6
+IDX_MAILDIR = 7
 
 GMAIL_SUPPORT_PAGE = "https://support.google.com/mail/answer/185833?hl=en"
 
 PROVIDER_CONFIGS = [
-	[ 'Gmail', 'imap.gmail.com', '993'],
-	[ 'GMX', 'imap.gmx.net', '993'],
-	[ 'Web.de', 'imap.web.de', '993'],
-	[ 'Yahoo', 'imap.mail.yahoo.com', '993']
+	['Gmail', 'imap.gmail.com', '993'],
+	['GMX', 'imap.gmx.net', '993'],
+	['Web.de', 'imap.web.de', '993'],
+	['Yahoo', 'imap.mail.yahoo.com', '993']
 ]
 
 
@@ -64,14 +64,14 @@ class AccountDialog:
 		builder = Gtk.Builder()
 		builder.set_translation_domain(PACKAGE_NAME)
 		builder.add_from_string(account_widget_ui)
-		builder.connect_signals({ \
-			"account_type_changed" : self._on_cmb_account_type_changed, \
-			"entry_changed" : self._on_entry_changed, \
-			"expander_folders_activate" : self._on_expander_folders_activate, \
-			"password_info_icon_released" : self._on_password_info_icon_released \
+		builder.connect_signals({
+			"account_type_changed" : self._on_cmb_account_type_changed,
+			"entry_changed" : self._on_entry_changed,
+			"expander_folders_activate" : self._on_expander_folders_activate,
+			"password_info_icon_released" : self._on_password_info_icon_released
 		})
 
-		self._window = Gtk.Dialog(title = _('Mail Account'), parent = parent, use_header_bar = True, \
+		self._window = Gtk.Dialog(title = _('Mail Account'), parent = parent, use_header_bar = True,
 			buttons = (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
 		
 		self._window.set_default_response(Gtk.ResponseType.OK)

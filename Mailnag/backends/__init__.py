@@ -30,9 +30,9 @@ from Mailnag.common.utils import splitstr
 
 def _str_to_folders(folders_str):
 	if re.match(r'^\[.*\]$', folders_str):
-		folders	= json.loads(folders_str)
+		folders = json.loads(folders_str)
 	else:
-		folders	= splitstr(folders_str, ',')
+		folders = splitstr(folders_str, ',')
 	return folders
 
 

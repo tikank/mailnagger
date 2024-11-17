@@ -20,36 +20,16 @@ extend-ignore =
     E303
     # line too long. TODO
     E501
-    # multiple spaces after ':'. TODO
-    E241
     #  trailing whitespace. TODO
     W291
-    # expected 2 blank lines. TODO
-    E302
     # multiple statements on one line (colon). TODO
     E701
     # module level import not at top of file. TODO
     E402
-    # whitespace after '['. TODO
-    E201
-    # whitespace before ']'. TODO
-    E202
     # at least two spaces before inline comment. TODO
     E261
-    #  missing whitespace after ','. TODO
-    E231
-    # block comment should start with '# '. TODO
-    E265
-    # whitespace before '['. TODO
-    E211
-    # tab before operator. TODO
-    E223
-    # tab before keyword. TODO
-    E274
     # expected 1 blank line. TODO
     E301
-    # the backslash is redundant between brackets. TODO
-    E502
 
 extend-exclude =
     # External code.

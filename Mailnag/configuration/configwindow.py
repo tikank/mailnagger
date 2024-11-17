@@ -44,18 +44,18 @@ class ConfigWindow:
 		builder = Gtk.Builder()
 		builder.set_translation_domain(PACKAGE_NAME)
 		builder.add_from_string(config_window_ui)
-		builder.connect_signals({ \
-			"config_window_deleted" : self._on_config_window_deleted, \
-			"btn_info_clicked" : self._on_btn_info_clicked, \
-			"btn_add_account_clicked" : self._on_btn_add_account_clicked, \
-			"btn_edit_account_clicked" : self._on_btn_edit_account_clicked, \
-			"btn_remove_account_clicked" : self._on_btn_remove_account_clicked, \
-			"treeview_accounts_row_activated" : self._on_treeview_accounts_row_activated, \
-			"liststore_accounts_row_deleted" : self._on_liststore_accounts_row_deleted, \
-			"liststore_accounts_row_inserted" : self._on_liststore_accounts_row_inserted, \
-			"btn_edit_plugin_clicked" : self._on_btn_edit_plugin_clicked, \
-			"treeview_plugins_row_activated" : self._on_treeview_plugins_row_activated, \
-			"treeview_plugins_cursor_changed" : self._on_treeview_plugins_cursor_changed, \
+		builder.connect_signals({
+			"config_window_deleted" : self._on_config_window_deleted,
+			"btn_info_clicked" : self._on_btn_info_clicked,
+			"btn_add_account_clicked" : self._on_btn_add_account_clicked,
+			"btn_edit_account_clicked" : self._on_btn_edit_account_clicked,
+			"btn_remove_account_clicked" : self._on_btn_remove_account_clicked,
+			"treeview_accounts_row_activated" : self._on_treeview_accounts_row_activated,
+			"liststore_accounts_row_deleted" : self._on_liststore_accounts_row_deleted,
+			"liststore_accounts_row_inserted" : self._on_liststore_accounts_row_inserted,
+			"btn_edit_plugin_clicked" : self._on_btn_edit_plugin_clicked,
+			"treeview_plugins_row_activated" : self._on_treeview_plugins_row_activated,
+			"treeview_plugins_cursor_changed" : self._on_treeview_plugins_cursor_changed,
 		})
 		
 		self._window = builder.get_object("config_window")
@@ -184,7 +184,7 @@ class ConfigWindow:
 
 
 	def _show_confirmation_dialog(self, text):
-		message = Gtk.MessageDialog(self._window, Gtk.DialogFlags.MODAL, \
+		message = Gtk.MessageDialog(self._window, Gtk.DialogFlags.MODAL,
 			Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO, text)
 		resp = message.run()
 		message.destroy()
@@ -304,7 +304,7 @@ class ConfigWindow:
 			"Vincent Cheng"
 		])
 		aboutdialog.set_translator_credits(_("translator-credits"))
-		aboutdialog.set_artists([ "Reda Lazri" ])
+		aboutdialog.set_artists(["Reda Lazri"])
 		aboutdialog.connect("response", lambda w, r: aboutdialog.destroy())
 		
 		aboutdialog.set_modal(True)
@@ -343,7 +343,7 @@ class ConfigWindow:
 	def _on_btn_remove_account_clicked(self, widget):
 		acc, model, iter = self._get_selected_account()
 		if iter != None:
-			if self._show_confirmation_dialog(_('Delete this account:') + \
+			if self._show_confirmation_dialog(_('Delete this account:') +
 				'\n\n' + acc.name):
 				
 				# select prev/next account

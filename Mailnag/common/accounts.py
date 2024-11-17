@@ -39,10 +39,9 @@ account_defaults = {
 	'folder'			: '[]'
 }
 
-#
-# Account class
-#
+
 class Account:
+	"""Account class"""
 	def __init__(self, mailbox_type = None, enabled = False, name = '', **kw):
 		self._backend = None
 		self.set_config(
@@ -237,7 +236,7 @@ class AccountManager:
 		section_name = "account" + str(i)
 		
 		while cfg.has_section(section_name):
-			enabled		= bool(int(	self._get_account_cfg(cfg, section_name, 'enabled')	))
+			enabled = bool(int(self._get_account_cfg(cfg, section_name, 'enabled')))
 			
 			if (not enabled_only) or (enabled_only and enabled):
 				if cfg.has_option(section_name, 'type'):

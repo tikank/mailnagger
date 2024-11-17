@@ -24,6 +24,7 @@ import os.path
 
 from Mailnag.backends.base import MailboxBackend
 
+
 class MBoxBackend(MailboxBackend):
 	"""Implementation of mbox mail boxes."""
 	

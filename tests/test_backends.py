@@ -24,17 +24,20 @@
 
 from Mailnag.backends import create_backend, get_mailbox_parameter_specs
 
+
 def test_create_imap_backend():
 	be = create_backend('imap', name='testing', user='nobody', password='', server='imap.example.org', port='', ssl=True, folders=['a', 'b'])
 	assert be is not None
 	assert not be.is_open()
 	assert be.server == 'imap.example.org'
 
+
 def test_create_imap_backend_with_defaults():
 	be = create_backend('imap', name='testing')
 	assert be is not None
 	assert not be.is_open()
 	assert be.server == ''
+
 
 def test_create_imap_backend_should_ignore_unknown_setting():
 	be = create_backend('imap', name='testing', odd='weird', weird='odd')
@@ -47,11 +50,13 @@ def test_create_pop3_backend():
 	assert not be.is_open()
 	assert be.server == 'pop.example.org'
 
+
 def test_create_pop3_backend_with_defaults():
 	be = create_backend('pop3', name='testing')
 	assert be is not None
 	assert not be.is_open()
 	assert be.server == ''
+
 
 def test_create_pop3_backend_should_ignore_unknown_setting():
 	be = create_backend('pop3', name='testing', odd='weird', weird='odd')
@@ -63,6 +68,7 @@ def test_imap_backend_parameter_names():
 	names = [spec.param_name for spec in specs]
 	assert set(['user', 'password', 'server', 'port',
 				'ssl', 'imap', 'idle', 'folders']) == set(names)
+
 
 def test_pop3_backend_parameter_names():
 	specs = get_mailbox_parameter_specs('pop3')

@@ -111,6 +111,7 @@ name = Imap config with json folder option
 folder = ["folderA", "folderB", "folderC"]
 """
 
+
 @pytest.fixture
 def config():
 	cp = RawConfigParser()

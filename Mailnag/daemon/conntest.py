@@ -24,8 +24,8 @@ TEST_HOST = 'www.google.com'
 
 
 class TestModes(Enum):
-	NETWORKMONITOR	= 0
-	PING			= 1
+	NETWORKMONITOR = 0
+	PING = 1
 
 
 class ConnectivityTest:

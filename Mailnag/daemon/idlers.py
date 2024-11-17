@@ -81,14 +81,14 @@ class Idler(object):
 				# waits for the event to be set
 				# (in idle callback or in dispose())
 				self._event.wait()
-			except:				
+			except:
 				logging.exception('Caught an exception.')
 				# Reset current connection if the call to notify_next_change() fails
 				# as this is probably connection related (e.g. conn terminated).
 				self._reset_conn()
 			
 			# if the event is set due to idle sync
-			if self._needsync:			
+			if self._needsync:
 				if self._needreset:
 					self._reset_conn()
 				
@@ -129,7 +129,7 @@ class Idler(object):
 		# Try to reset the connection to recover from a possible connection error (e.g. after system suspend)
 		logging.info("Resetting connection for account '%s'" % self._account.name)
 		try: self._account.close()
-		except:	pass
+		except: pass
 		self._reconnect()
 		
 	

@@ -78,7 +78,7 @@ class MailCollector:
 					# see _get_id()).
 					# Also filter duplicates caused by Gmail labels.
 					if id not in mail_ids:
-						mail_list.append(Mail(datetime, subject, \
+						mail_list.append(Mail(datetime, subject,
 							sender, id, acc, flags))
 						mail_ids[id] = None
 			except Exception as ex:

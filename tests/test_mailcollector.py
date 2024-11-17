@@ -56,6 +56,7 @@ def test_one_account_no_mails():
     # THEN
     assert mails == []
 
+
 @pytest.mark.parametrize('input_subject,expected_subject',
     [
         ("", ""),

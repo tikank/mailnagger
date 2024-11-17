@@ -25,7 +25,7 @@ from Mailnag.common.plugins import Plugin, HookTypes
 from Mailnag.common.i18n import _
 from Mailnag.common.subproc import start_subprocess
 
-plugin_defaults = { 'script_file' : '' }
+plugin_defaults = {'script_file' : ''}
 
 
 class UserscriptPlugin(Plugin):
@@ -75,17 +75,17 @@ class UserscriptPlugin(Plugin):
 		box = Gtk.Box()
 		box.set_spacing(12)
 		box.set_orientation(Gtk.Orientation.VERTICAL)
-		#box.set_size_request(100, -1)
+		# box.set_size_request(100, -1)
 		
 		markup_str = "<i>&lt;%s&gt; &lt;%s&gt; &lt;%s&gt;</i>" % (_('account'), _('sender'), _('subject'))
-		desc = _(	"The following script will be executed whenever new mails arrive.\n"
-					"Mailnag passes the total count of new mails to this script,\n"
-					"followed by %s sequences.") % markup_str
+		desc = _("The following script will be executed whenever new mails arrive.\n"
+				"Mailnag passes the total count of new mails to this script,\n"
+				"followed by %s sequences.") % markup_str
 		
 		label = Gtk.Label()
 		label.set_line_wrap(True)
 		label.set_markup(desc)
-		#label.set_size_request(100, -1);
+		# label.set_size_request(100, -1);
 		box.pack_start(label, False, False, 0)
 		
 		filechooser = Gtk.FileChooserButton()
@@ -114,7 +114,7 @@ class UserscriptPlugin(Plugin):
 		config = self.get_config()
 		script_file = config['script_file'].strip()
 		if (len(script_file) > 0) and os.path.exists(script_file):
-			script_args = [ script_file, str(len(new_mails)) ]
+			script_args = [script_file, str(len(new_mails))]
 			
 			for m in new_mails:
 				sender_name, sender_addr = m.sender

@@ -76,7 +76,7 @@ class IMAPMailboxBackend(MailboxBackend):
 		conn = self._conn
 		
 		if len(self.folders) == 0:
-			folder_list = [ 'INBOX' ]
+			folder_list = ['INBOX']
 		else:
 			folder_list = self.folders
 
@@ -101,7 +101,7 @@ class IMAPMailboxBackend(MailboxBackend):
 						except:
 							logging.debug("Couldn't get IMAP message.")
 							continue
-						yield (folder, msg, { 'uid' : num.decode("utf-8"), 'folder' : folder })
+						yield (folder, msg, {'uid' : num.decode("utf-8"), 'folder' : folder})
 
 
 	def request_folders(self):
@@ -227,7 +227,7 @@ class IMAPMailboxBackend(MailboxBackend):
 				if conn != None:
 					# conn.close() # allowed in SELECTED state only
 					conn.logout()
-			except:	pass
+			except: pass
 			raise # re-throw exception
 		
 		# notify_next_change() (IMAP IDLE) requires a selected folder

@@ -27,7 +27,7 @@ class PluginDialog:
 	def __init__(self, parent, plugin):
 		self._plugin = plugin
 		
-		self._window = Gtk.Dialog(title = _('Plugin Configuration'), parent = parent, use_header_bar = True, \
+		self._window = Gtk.Dialog(title = _('Plugin Configuration'), parent = parent, use_header_bar = True,
 			buttons = (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_OK, Gtk.ResponseType.OK))
 		
 		self._window.set_default_response(Gtk.ResponseType.OK)

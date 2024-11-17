@@ -34,10 +34,10 @@ from Mailnag.common.i18n import _
 from Mailnag.common.subproc import start_subprocess
 from Mailnag.common.exceptions import InvalidOperationException
 
-NOTIFICATION_MODE_COUNT			= '0'
-NOTIFICATION_MODE_SHORT_SUMMARY	= '3'
-NOTIFICATION_MODE_SUMMARY		= '1'
-NOTIFICATION_MODE_SINGLE		= '2'
+NOTIFICATION_MODE_COUNT = '0'
+NOTIFICATION_MODE_SHORT_SUMMARY = '3'
+NOTIFICATION_MODE_SUMMARY = '1'
+NOTIFICATION_MODE_SINGLE = '2'
 
 plugin_defaults = { 
 	'notification_mode' : NOTIFICATION_MODE_SHORT_SUMMARY,
@@ -165,13 +165,13 @@ class LibNotifyPlugin(Plugin):
 	
 	def load_ui_from_config(self, config_ui):
 		config = self.get_config()		
-		radio = [ r for m, r in config_ui._radio_mapping if m == config['notification_mode'] ][0]
+		radio = [r for m, r in config_ui._radio_mapping if m == config['notification_mode']][0]
 		radio.set_active(True)
 	
 	
 	def save_ui_to_config(self, config_ui):
 		config = self.get_config()
-		mode = [ m for m, r in config_ui._radio_mapping if r.get_active() ] [0]
+		mode = [m for m, r in config_ui._radio_mapping if r.get_active()][0]
 		config['notification_mode'] = mode
 
 
@@ -386,7 +386,7 @@ class LibNotifyPlugin(Plugin):
 
 def get_default_mail_reader():
 	mail_reader = None
-	app_info = Gio.AppInfo.get_default_for_type ("x-scheme-handler/mailto", False)
+	app_info = Gio.AppInfo.get_default_for_type("x-scheme-handler/mailto", False)
 
 	if app_info != None:
 		executable = Gio.AppInfo.get_executable(app_info)

@@ -75,7 +75,7 @@ class POP3MailboxBackend(MailboxBackend):
 			try:
 				if conn != None:
 					conn.quit()
-			except:	pass
+			except: pass
 			raise # re-throw exception
 		
 		self._conn = conn

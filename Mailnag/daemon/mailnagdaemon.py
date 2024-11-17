@@ -41,6 +41,7 @@ testmode_mapping = {
 	'ping'				: TestModes.PING
 }
 
+
 class MailnagDaemon(MailnagController):
 	def __init__(self, fatal_error_handler = None, shutdown_request_handler = None):
 		self._fatal_error_handler = fatal_error_handler
@@ -160,7 +161,7 @@ class MailnagDaemon(MailnagController):
 		try:
 			# Call Accounts-Loaded plugin hooks
 			for f in self._hookreg.get_hook_funcs(HookTypes.ACCOUNTS_LOADED):
-				try_call( lambda: f(self._accounts) )
+				try_call(lambda: f(self._accounts))
 			
 			if not self._wait_for_inet_connection():
 				return
@@ -213,8 +214,10 @@ class MailnagDaemon(MailnagController):
 			logging.info('Waiting for internet connection...')
 		
 		while True:
-			if self._disposed:					return False
-			if not self._conntest.is_offline():	return True
+			if self._disposed:
+				return False
+			if not self._conntest.is_offline():
+				return True
 			# Note: don't sleep too long
 			# (see timeout in mailnag.cleanup())
 			# ..but also don't sleep to short in case of a ping connection test.

@@ -43,7 +43,7 @@ INSTALL_LIB_DIR = os.path.join(sysconfig.get_path('purelib'), 'Mailnag')
 
 
 class BuildData(build):
-    def run (self):
+    def run(self):
         # generate translations
         try:
             rc = subprocess.call('./gen_locales ' + BUILD_LOCALE_DIR, shell = True)
@@ -74,7 +74,7 @@ class BuildData(build):
             '/usr',
             PREFIX
         )
-        build.run (self)
+        build.run(self)
 
 
     def _patch_file(self, infile, outfile, orig, replaced):
@@ -86,10 +86,10 @@ class BuildData(build):
 
 
 class InstallData(install_data):
-    def run (self):
+    def run(self):
         self._add_locale_data()
         self._add_icon_data()
-        install_data.run (self)
+        install_data.run(self)
 
 
     def _add_locale_data(self):
@@ -114,7 +114,7 @@ class InstallData(install_data):
 
 
 class Uninstall(Command):
-    def run (self):
+    def run(self):
         # TODO
         pass
 

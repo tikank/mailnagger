@@ -28,7 +28,7 @@ from Mailnag.common.utils import get_data_file
 from Mailnag.common.i18n import _
 
 
-plugin_defaults = { 'soundfile' : 'mailnag.ogg' }
+plugin_defaults = {'soundfile' : 'mailnag.ogg'}
 
 
 class SoundPlugin(Plugin):
@@ -108,6 +108,7 @@ class _GstPlayThread(threading.Thread):
 
 
 _gst_initialized = False
+
 
 def gstplay(filename):
 	global _gst_initialized

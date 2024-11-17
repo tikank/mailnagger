@@ -47,7 +47,7 @@ class MailChecker:
 			logging.info('Checking %s email account(s).' % len(accounts))
 			
 			for f in self._hookreg.get_hook_funcs(HookTypes.MAIL_CHECK):
-				try_call( f )
+				try_call(f)
 				
 			if self._conntest.is_offline():
 				logging.warning('No internet connection.')
@@ -86,7 +86,7 @@ class MailChecker:
 			# apply filter plugin hooks
 			filtered_unseen_mails = unseen_mails
 			for f in self._hookreg.get_hook_funcs(HookTypes.FILTER_MAILS):
-				filtered_unseen_mails = try_call( lambda: f(filtered_unseen_mails), filtered_unseen_mails )
+				filtered_unseen_mails = try_call(lambda: f(filtered_unseen_mails), filtered_unseen_mails)
 			
 			filtered_new_mails = [m for m in new_mails if m in filtered_unseen_mails]
 			
@@ -94,12 +94,12 @@ class MailChecker:
 				self._dbus_service.signal_mails_added(filtered_new_mails, filtered_unseen_mails)
 				
 				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_ADDED):
-					try_call( lambda: f(filtered_new_mails, filtered_unseen_mails) )
+					try_call(lambda: f(filtered_new_mails, filtered_unseen_mails))
 			elif len(filtered_unseen_mails) != self._count_on_last_check:
 				self._dbus_service.signal_mails_removed(filtered_unseen_mails)
 				
 				for f in self._hookreg.get_hook_funcs(HookTypes.MAILS_REMOVED):
-					try_call( lambda: f(filtered_unseen_mails) )
+					try_call(lambda: f(filtered_unseen_mails))
 			
 			self._count_on_last_check = len(filtered_unseen_mails)
 		

@@ -28,7 +28,8 @@ from Mailnag.common.dist_cfg import LIB_DIR
 
 PLUGIN_LIB_PATH = LIB_DIR / 'plugins'
 PLUGIN_USER_PATH = os.path.join(cfg_folder, 'plugins')
-PLUGIN_PATHS = [ PLUGIN_LIB_PATH, PLUGIN_USER_PATH ]
+PLUGIN_PATHS = [PLUGIN_LIB_PATH, PLUGIN_USER_PATH]
+
 
 #
 # All known hook types.
@@ -75,7 +76,7 @@ class HookRegistry:
 	# Priority should be an integer value fom 0 (very high) to 100 (very low)
 	# Plugin hooks will be called in order from high to low priority.
 	def register_hook_func(self, hooktype, func, priority = 100):
-		self._hooks[hooktype].append( (priority, func) )
+		self._hooks[hooktype].append((priority, func))
 	
 	
 	def unregister_hook_func(self, hooktype, func):
@@ -86,7 +87,7 @@ class HookRegistry:
 	
 	def get_hook_funcs(self, hooktype):
 		pairs_by_prio = sorted(self._hooks[hooktype], key = lambda p: p[0])
-		funcs = [ f for p, f in pairs_by_prio ]
+		funcs = [f for p, f in pairs_by_prio]
 		return funcs
 
 
@@ -94,16 +95,20 @@ class HookRegistry:
 # passed to plugins.
 class MailnagController:
 	# Returns a HookRegistry object.
-	def get_hooks(self):					pass
+	def get_hooks(self):
+		pass
 	# Shuts down the Mailnag process.
 	# May throw an InvalidOperationException.
-	def shutdown(self):						pass
+	def shutdown(self):
+		pass
 	# Enforces a manual mail check.
 	# May throw an InvalidOperationException.
-	def check_for_mails(self):				pass
+	def check_for_mails(self):
+		pass
 	# Marks the mail with specified mail_id as read.
 	# May throw an InvalidOperationException.
-	def mark_mail_as_read(self, mail_id):	pass
+	def mark_mail_as_read(self, mail_id):
+		pass
 
 
 #

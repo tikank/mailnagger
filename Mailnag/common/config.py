@@ -35,6 +35,7 @@ mailnag_defaults = {
 cfg_folder = os.path.join(bd.xdg_config_home, "mailnag")
 cfg_file = os.path.join(cfg_folder, "mailnag.cfg")
 
+
 def cfg_exists():
 	return os.path.exists(cfg_file)
 

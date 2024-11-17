@@ -17,9 +17,23 @@
 # MA 02110-1301, USA.
 #
 
-#
-# This file contains constants that need to be adjusted for propper distro integration.
-#
+
+"""dist_cfg contains constants that may need to be adjusted for
+   propper distro integration."""
+
+import sysconfig
+import importlib.resources
+from pathlib import Path
+
+# Default directories
+
+_prefix = Path(sysconfig.get_path('data'))
+_script_dir = Path(sysconfig.get_path('scripts'))
+_DEFAULT_LOCALE_DIR = _prefix / 'share' / 'locale'
+_DEFAULT_DESKTOP_FILE_DIR = _prefix / 'share' / 'applications'
+_DEFAULT_LIB_DIR = importlib.resources.files('Mailnag')
+_DEFAULT_BIN_DIR = _script_dir
+
 
 # Application version displayed in the 
 # about dialog of the config window.
@@ -35,19 +49,19 @@ PACKAGE_NAME = 'mailnagger'
 
 # The LOCALE_DIR constant specifies the root path for localization files
 # (usually you have to make it point to '/usr/share/locale').
-LOCALE_DIR = './locale'
+LOCALE_DIR = _DEFAULT_LOCALE_DIR
 
 # The DESKTOP_FILE_DIR constant specifies the root path for .desktop files
 # (usually you have to make it point to '/usr/share/applications').
-DESKTOP_FILE_DIR = './data'
+DESKTOP_FILE_DIR = _DEFAULT_DESKTOP_FILE_DIR
 
 # The LIB_DIR constant specifies the root path for the Mailnag python files
 # (usually you have to make it point to <PYTHON_LIB_DIR>/Mailnag).
-LIB_DIR = './Mailnag'
+LIB_DIR = _DEFAULT_LIB_DIR
 
 # The BIN_DIR constant specifies the path for the mailnag start scripts
 # (usually you have to make it point to '/usr/bin').
-BIN_DIR = '.'
+BIN_DIR = _DEFAULT_BIN_DIR
 
 # DBUS service configuration
 DBUS_BUS_NAME = 'mailnag.MailnagService'

@@ -56,4 +56,6 @@ extend-exclude =
     Mailnag/common/imaplib2.py
     # Build directory.
     build/
+    # Env directory
+    .env-dev/
 

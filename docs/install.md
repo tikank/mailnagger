@@ -1,33 +1,36 @@
 ### Install Mailnagger
 
-#### System wide installation
+Mailnagger can be installed from
 
-Build Mailnagger
+* source dir, for example: `.`
+
+* source package: `mailnagger-X.Y.Z.tar.gz`
+
+* wheel package: `mailnagger-X.Y.Z-py3-none-any.whl`
+
+* package from [PyPi}(https://pypi.org/): `mailnagger`
+  (**NOTE/TODO:** Not yet but someday in future!)
+
+Replace `mailnagger` with one of previous in following examples.
+
+
+#### Installing with pipx
+
+[pipx](https://pypi.org/project/pipx/) is a tool to install Python
+applications to isolated environment.
+This is recommented way to install mailnagger without root access.
+
+Run
 
 ```
-    python3 ./setup build
+    pipx install mailnagger
 ```
 
-Then run as root
-
-```
-    python3 -m pip install --break-system-packages .
-```
 
 #### Installation to virtual env
 
 The aim to support installation to virtual venv is to help run tests
 automatically and support installation without root access.
-
-> **NOTE:** Installation to virtual env works only partially. 
->           Soundplugin does not yet find sound file and all data files might
->           not be in correct place.
-
-Build Mailnagger
-
-```
-    python3 ./setup build
-```
 
 Make virtualenv
 
@@ -38,7 +41,7 @@ Make virtualenv
 Then run
 
 ```
-    ./env/bin/python3 -m pip install .
+    ./env/bin/python -m pip install mailnagger
 ```
 
 Running Mailnagger from virtual env
@@ -46,4 +49,17 @@ Running Mailnagger from virtual env
 ```
     ./env/bin/mailnagger-config
 ```
+
+
+#### System wide installation
+
+System wide installation requires root access rights.
+
+Run as root
+
+```
+    python3 -m pip install --break-system-packages mailnagger
+```
+
+> **TODO:** Setup mailnagger-config.desktop file, etc. How?
 

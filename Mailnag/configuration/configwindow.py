@@ -22,12 +22,11 @@ import gi
 gi.require_version('Gtk', '3.0')
 
 import os
-import shutil
 import xdg.BaseDirectory as bd
 from gi.repository import Gtk
 from importlib.resources import files
 
-from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION, BIN_DIR, DESKTOP_FILE_DIR
+from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION, BIN_DIR
 from Mailnag.common.i18n import _
 from Mailnag.common.config import read_cfg, write_cfg
 from Mailnag.common.accounts import Account, AccountManager
@@ -35,6 +34,7 @@ from Mailnag.common.plugins import Plugin
 from Mailnag.configuration.accountdialog import AccountDialog
 from Mailnag.configuration.plugindialog import PluginDialog
 import Mailnag.configuration.ui
+import Mailnag.configuration.desktop
 
 
 class ConfigWindow:
@@ -243,28 +243,22 @@ class ConfigWindow:
 	
 	def _create_autostart(self):
 		autostart_folder = os.path.join(bd.xdg_config_home, "autostart")
-		src = os.path.join(DESKTOP_FILE_DIR, "mailnagger.desktop")
+		strn = files(Mailnag.configuration.desktop).joinpath("mailnagger.desktop").read_text()
 		dst = os.path.join(autostart_folder, "mailnagger.desktop")
 		
 		if not os.path.exists(autostart_folder):
 			os.makedirs(autostart_folder)
 
+		exec_file = os.path.join(os.path.abspath(BIN_DIR), "mailnagger")
+		strn = strn.replace('/usr/bin/mailnagger', exec_file)
+
 		try:
-			shutil.copyfile(src, dst)
+			with open(dst, 'w') as f:
+				f.write(strn)
 		except Exception as e:
 			import logging
 			logging.info(f"failed setting autostart: {e}")
 			return
-		
-		# If mailag-config was started from a local directory, 
-		# patch the exec path of the autostart .desktop file accordingly.
-		if not os.path.isabs(DESKTOP_FILE_DIR):
-			exec_file = os.path.join(os.path.abspath(BIN_DIR), "mailnagger")
-			with open(dst, 'r') as f:
-				strn = f.read()
-				strn = strn.replace('/usr/bin/mailnagger', exec_file)
-			with open(dst, 'w') as f:
-				f.write(strn)
 
 
 	def _delete_autostart(self):

@@ -7,6 +7,13 @@ Version 2.2.x (not released)
 * Fixed subject header truncation.
   https://github.com/pulb/mailnag/issues/252
 
+* Added support to build source and wheel packages.
+
+* Added support to install Mailnagger to virtual env.
+  Mailnagger can now be installed with pipx.
+
+* Added man pages to data files, so they are installed also.
+
 
 Version 2.2.1 (2024-10-16)
 ==========================

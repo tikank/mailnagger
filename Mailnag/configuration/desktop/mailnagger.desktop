@@ -1,0 +1,13 @@
+
+[Desktop Entry]
+Name=Mailnagger
+Comment=An extensible mail notification daemon
+Comment[de]=Ein erweiterbarer Mail-Benachrichtigungs-Dämon
+Keywords=mail;notify;notification;
+Exec=/usr/bin/mailnagger --quiet
+Icon=mailnag
+Type=Application
+NoDisplay=true
+Categories=Network;Email;
+X-GNOME-Autostart-enabled=true
+X-GNOME-UsesNotifications=true

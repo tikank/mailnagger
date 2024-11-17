@@ -152,6 +152,7 @@ setup(name=PACKAGE_NAME,
     data_files=[
         ('share/mailnagger', ['data/mailnag.ogg']),
         ('share/mailnagger', ['data/mailnag.png']),
+        ('share/man/man1', ['data/mailnagger.1', 'data/mailnagger-config.1']),
         ('share/metainfo', ['data/mailnag.appdata.xml']),
         ('share/applications', [
                 os.path.join(BUILD_PATCH_DIR, 'mailnagger.desktop'),

@@ -47,3 +47,8 @@ filename = "Mailnag/common/dist_cfg.py"
 search = "APP_VERSION = '{current_version}'"
 replace = "APP_VERSION = '{new_version}'"
 
+[[tool.bumpversion.files]]
+filename = "gen_po_template"
+search = "version=\"{current_version}\""
+replace = "version=\"{new_version}\""
+

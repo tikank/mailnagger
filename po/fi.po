@@ -1,204 +1,207 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR 2024 Timo Kankare <timo.kankare@iki.fi>
+# Finnish translations for Mailnagger package.
+# Copyright (C) 2024 2024 Timo Kankare <timo.kankare@iki.fi>
 # This file is distributed under the same license as the Mailnagger package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Timo Kankare <timo.kankare@iki.fi>, 2024.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Mailnagger 2.3.0.dev0\n"
 "Report-Msgid-Bugs-To: https://github.com/tikank/mailnagger/issues\n"
 "POT-Creation-Date: 2024-11-20 19:12+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2024-11-20 19:28+0200\n"
+"Last-Translator: Timo Kankare <timo.kankare@iki.fi>\n"
+"Language-Team: \n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.5\n"
 
 #: Mailnag/configuration/accountdialog.py:74
 msgid "Mail Account"
-msgstr ""
+msgstr "Sähköpostitili"
 
 #: Mailnag/configuration/accountdialog.py:116
 msgid "optional"
-msgstr ""
+msgstr "valinnainen"
 
 #: Mailnag/configuration/accountdialog.py:120
 #: Mailnag/configuration/configwindow.py:86
 #: Mailnag/configuration/configwindow.py:106
 msgid "Enabled"
-msgstr ""
+msgstr "Käytössä"
 
 #: Mailnag/configuration/accountdialog.py:126
 #: Mailnag/configuration/configwindow.py:92
 #: Mailnag/configuration/configwindow.py:112
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: Mailnag/configuration/accountdialog.py:249
 msgid "IMAP (Custom)"
-msgstr ""
+msgstr "IMAP"
 
 #: Mailnag/configuration/accountdialog.py:250
 msgid "POP3 (Custom)"
-msgstr ""
+msgstr "POP3"
 
 #: Mailnag/configuration/accountdialog.py:251
 msgid "MBox (Custom)"
-msgstr ""
+msgstr "MBox"
 
 #: Mailnag/configuration/accountdialog.py:252
 msgid "Maildir (Custom)"
-msgstr ""
+msgstr "Maildir"
 
 #: Mailnag/configuration/accountdialog.py:358
 msgid "Connection failed."
-msgstr ""
+msgstr "Yhteydenotto epäonnistui."
 
 #: Mailnag/configuration/configwindow.py:273
 msgid "About Mailnagger"
-msgstr ""
+msgstr "Tietoja Mailnaggerista"
 
 #: Mailnag/configuration/configwindow.py:276
 msgid "An extensible mail notification daemon."
-msgstr ""
+msgstr "Laajennettava sähköpostihuomautin."
 
 #: Mailnag/configuration/configwindow.py:278
 #, python-brace-format
 msgid "Copyright (c) {years} {author} and contributors."
-msgstr ""
+msgstr "Copyright (c) {years} {author} ja muut tekijät."
 
 #: Mailnag/configuration/configwindow.py:285
 msgid "Homepage"
-msgstr ""
+msgstr "Kotisivu"
 
 #: Mailnag/configuration/configwindow.py:288
 msgid "maintainer"
-msgstr ""
+msgstr "ylläpitäjä"
 
 #. TRANSLATORS: Translate `translator-credits` to the list of names
 #. of translators, or team, or something like that.
 #: Mailnag/configuration/configwindow.py:308
 msgid "translator-credits"
-msgstr ""
+msgstr "Timo Kankare"
 
 #: Mailnag/configuration/configwindow.py:348
 msgid "Delete this account:"
-msgstr ""
+msgstr "Poista tämä tili:"
 
 #: Mailnag/configuration/plugindialog.py:30
 msgid "Plugin Configuration"
-msgstr ""
+msgstr "Lisäosan konfigurointi"
 
 #: Mailnag/daemon/mails.py:135
 msgid "No subject"
-msgstr ""
+msgstr "Ei otsikkoa"
 
 #: Mailnag/plugins/spamfilterplugin.py:67
 msgid "Spam Filter"
-msgstr ""
+msgstr "Roskapostisuodatin"
 
 #: Mailnag/plugins/spamfilterplugin.py:68
 msgid "Filters out unwanted mails."
-msgstr ""
+msgstr "Suodattaa pois ei-toivottuja sähköposteja."
 
 #: Mailnag/plugins/spamfilterplugin.py:87
 msgid ""
 "Mailnagger will ignore mails containing at least one of \n"
 "the following words in subject or sender."
 msgstr ""
+"Mailnagger suodattaa pois postit, joissa on otsikossa\n"
+"tai lähettäjäkentässä ainakin yksi seuraavista sanoista."
 
 #: Mailnag/plugins/soundplugin.py:64
 msgid "Sound Notifications"
-msgstr ""
+msgstr "Äänimerkki"
 
 #: Mailnag/plugins/soundplugin.py:65
 msgid "Plays a sound when new mails arrive."
-msgstr ""
+msgstr "Soittaa äänimerkin, kun uusi sähköposti saapuu."
 
 #: Mailnag/plugins/libnotifyplugin.py:114
 msgid "LibNotify Notifications"
-msgstr ""
+msgstr "LibNotify-huomautin"
 
 #: Mailnag/plugins/libnotifyplugin.py:115
 msgid "Shows a popup when new mails arrive."
-msgstr ""
+msgstr "Näyttää huomautuksen, kun uusi sähköposti saapuu."
 
 #: Mailnag/plugins/libnotifyplugin.py:130
 msgid "Count of new mails"
-msgstr ""
+msgstr "Uusien sähköpostien lukumäärä"
 
 #: Mailnag/plugins/libnotifyplugin.py:131
 msgid "Short summary of new mails"
-msgstr ""
+msgstr "Lyhyt yhteenveto uusista sähköposteista"
 
 #: Mailnag/plugins/libnotifyplugin.py:132
 msgid "Detailed summary of new mails"
-msgstr ""
+msgstr "Yksityiskohtainen yhteenveto uusista sähköposteista"
 
 #: Mailnag/plugins/libnotifyplugin.py:133
 msgid "One notification per new mail"
-msgstr ""
+msgstr "Oma huomautus kustakin uudesta sähköpostista"
 
 #: Mailnag/plugins/libnotifyplugin.py:141
 msgid "Notification mode:"
-msgstr ""
+msgstr "Huomautusvalinta:"
 
 #: Mailnag/plugins/libnotifyplugin.py:234
 #: Mailnag/plugins/libnotifyplugin.py:270
 #: Mailnag/plugins/libnotifyplugin.py:307
 #, python-brace-format
 msgid "{0} new mails"
-msgstr ""
+msgstr "{0} uutta sähköpostia"
 
 #: Mailnag/plugins/libnotifyplugin.py:236
 #, python-brace-format
 msgid "from {0} and others."
-msgstr ""
+msgstr "lähettäjältä {0} ja muilta."
 
 #: Mailnag/plugins/libnotifyplugin.py:238
 #: Mailnag/plugins/libnotifyplugin.py:241
 #, python-brace-format
 msgid "from {0}."
-msgstr ""
+msgstr "lähettäjältä {0}."
 
 #: Mailnag/plugins/libnotifyplugin.py:240
 #: Mailnag/plugins/libnotifyplugin.py:272
 #: Mailnag/plugins/libnotifyplugin.py:309
 msgid "New mail"
-msgstr ""
+msgstr "Uusi sähköposti"
 
 #: Mailnag/plugins/libnotifyplugin.py:265
 #: Mailnag/plugins/libnotifyplugin.py:267
 #, python-brace-format
 msgid "(and {0} more)"
-msgstr ""
+msgstr "(ja {0} muuta)"
 
 #: Mailnag/plugins/libnotifyplugin.py:296
 msgid "Mark as read"
-msgstr ""
+msgstr "Merkitse luetuksi"
 
 #: Mailnag/plugins/userscriptplugin.py:60
 msgid "User Script"
-msgstr ""
+msgstr "Käyttäjän skripti"
 
 #: Mailnag/plugins/userscriptplugin.py:61
 msgid "Runs an user defined script on mail arrival."
-msgstr ""
+msgstr "Ajaa käyttäjän määrittelemän skriptin, kun uusi sähköposti saapuu."
 
 #: Mailnag/plugins/userscriptplugin.py:80
 msgid "account"
-msgstr ""
+msgstr "tili"
 
 #: Mailnag/plugins/userscriptplugin.py:80
 msgid "sender"
-msgstr ""
+msgstr "lähettäjä"
 
 #: Mailnag/plugins/userscriptplugin.py:80
 msgid "subject"
-msgstr ""
+msgstr "otsikko"
 
 #: Mailnag/plugins/userscriptplugin.py:81
 #, python-format
@@ -207,85 +210,90 @@ msgid ""
 "Mailnagger passes the total count of new mails to this script,\n"
 "followed by %s sequences."
 msgstr ""
+"Seuraava skripti suoritetaan, kun uusi sähköposti saapuu.\n"
+"Mailnagger välittää skriptille uusien postien kokonaismäärän\n"
+"ja sen perään %s-sarjan."
 
 #: Mailnag/configuration/ui/account_widget.ui.h:1
 msgid ""
 "You may need to create an application-specific password for Gmail.\n"
 "Click this icon for more information."
 msgstr ""
+"Sinun pitää ehkä luoda sovelluskohtainen salasana Gmailiä varten.\n"
+"Klikkaa tätä ikonia saadaksesi lisätietoja."
 
 #: Mailnag/configuration/ui/account_widget.ui.h:3
 msgid "Enable Push-IMAP"
-msgstr ""
+msgstr "Ota käyttöön Push-IMAP"
 
 #: Mailnag/configuration/ui/account_widget.ui.h:4
 msgid "Enable SSL encryption"
-msgstr ""
+msgstr "Ota käyttöön SSL-salaus"
 
 #: Mailnag/configuration/ui/account_widget.ui.h:5
 msgid "Accountname:"
-msgstr ""
+msgstr "Tilin nimi:"
 
 #: Mailnag/configuration/ui/account_widget.ui.h:6
 msgid "Account type:"
-msgstr ""
+msgstr "Tilin tyyppi:"
 
 #: Mailnag/configuration/ui/account_widget.ui.h:7
 msgid "User:"
-msgstr ""
+msgstr "Käyttäjä:"
 
 #: Mailnag/configuration/ui/account_widget.ui.h:8
 msgid "Password:"
-msgstr ""
+msgstr "Salasana:"
 
 #: Mailnag/configuration/ui/account_widget.ui.h:9
 msgid "Server:"
-msgstr ""
+msgstr "Palvelin:"
 
 #: Mailnag/configuration/ui/account_widget.ui.h:10
 msgid "Port:"
-msgstr ""
+msgstr "Portti:"
 
 #: Mailnag/configuration/ui/account_widget.ui.h:11
 msgid "Folders (optional)"
-msgstr ""
+msgstr "Kansiot (valinnainen)"
 
 #: Mailnag/configuration/ui/account_widget.ui.h:12
 msgid "File path:"
-msgstr ""
+msgstr "Tiedostopolku:"
 
 #: Mailnag/configuration/ui/account_widget.ui.h:13
 msgid "Directory:"
-msgstr ""
+msgstr "Hakemisto:"
 
 #: Mailnag/configuration/ui/config_window.ui.h:1
 msgid "Enable/disable Mailnagger daemon"
-msgstr ""
+msgstr "Ota käyttöön tai poista käytöstä Mailnagger-palvelu"
 
 #: Mailnag/configuration/ui/config_window.ui.h:2
 msgid "Add Account"
-msgstr ""
+msgstr "Lisää tili"
 
 #: Mailnag/configuration/ui/config_window.ui.h:3
 msgid "Remove Account"
-msgstr ""
+msgstr "Posita tili"
 
 #: Mailnag/configuration/ui/config_window.ui.h:4
 msgid "Edit Account"
-msgstr ""
+msgstr "Muokkaa tiliä"
 
 #: Mailnag/configuration/ui/config_window.ui.h:5
 msgid "Accounts"
-msgstr ""
+msgstr "Sähköpostitilit"
 
 #: Mailnag/configuration/ui/config_window.ui.h:6
 msgid "Edit Plugin"
-msgstr ""
+msgstr "Muokkaa lisäosan asetuksia"
 
 #: Mailnag/configuration/ui/config_window.ui.h:7
 msgid "Plugins"
-msgstr ""
+msgstr "Lisäosat"
 
 #: Mailnag/configuration/ui/config_window.ui.h:8
 msgid "Info"
-msgstr ""
+msgstr "Tietoja"

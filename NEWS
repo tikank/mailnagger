@@ -10,6 +10,8 @@ Fixes
 * Fixed subject header truncation.
   https://github.com/pulb/mailnag/issues/252
 
+* Fixed some translatable texts.
+
 
 New features
 ------------
@@ -20,6 +22,8 @@ New features
   Mailnagger can now be installed with pipx.
 
 * Added man pages to data files, so they are installed also.
+
+* Added Finnish translation.
 
 
 Version 2.2.1 (2024-10-16)

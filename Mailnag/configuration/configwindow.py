@@ -270,7 +270,7 @@ class ConfigWindow:
 	
 	def _on_btn_info_clicked(self, widget):
 		aboutdialog = Gtk.AboutDialog()
-		aboutdialog.set_title(_("About %s") % PACKAGE_NAME.title())
+		aboutdialog.set_title(_("About Mailnagger"))
 		aboutdialog.set_version(APP_VERSION)
 		aboutdialog.set_program_name(PACKAGE_NAME.title())
 		aboutdialog.set_comments(_("An extensible mail notification daemon."))
@@ -285,7 +285,7 @@ class ConfigWindow:
 		aboutdialog.set_website_label(_("Homepage"))
 		aboutdialog.set_license_type(Gtk.License.GPL_2_0)		
 		aboutdialog.set_authors([
-			"Timo Kankare (maintainer)",
+			"Timo Kankare (" + _("maintainer") + ")",
 			"Patrick Ulbrich",
 			"Andreas Angerer",
 			"Balló György",
@@ -303,6 +303,8 @@ class ConfigWindow:
 			"Thomas Haider",
 			"Vincent Cheng"
 		])
+		# TRANSLATORS: Translate `translator-credits` to the list of names
+		#              of translators, or team, or something like that.
 		aboutdialog.set_translator_credits(_("translator-credits"))
 		aboutdialog.set_artists(["Reda Lazri"])
 		aboutdialog.connect("response", lambda w, r: aboutdialog.destroy())

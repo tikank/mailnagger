@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mailnagger 2.3.0.dev0\n"
 "Report-Msgid-Bugs-To: https://github.com/tikank/mailnagger/issues\n"
-"POT-Creation-Date: 2024-11-18 19:02+0200\n"
+"POT-Creation-Date: 2024-11-20 19:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,8 +58,7 @@ msgid "Connection failed."
 msgstr ""
 
 #: Mailnag/configuration/configwindow.py:273
-#, python-format
-msgid "About %s"
+msgid "About Mailnagger"
 msgstr ""
 
 #: Mailnag/configuration/configwindow.py:276
@@ -75,11 +74,17 @@ msgstr ""
 msgid "Homepage"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:306
+#: Mailnag/configuration/configwindow.py:288
+msgid "maintainer"
+msgstr ""
+
+#. TRANSLATORS: Translate `translator-credits` to the list of names
+#. of translators, or team, or something like that.
+#: Mailnag/configuration/configwindow.py:308
 msgid "translator-credits"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:346
+#: Mailnag/configuration/configwindow.py:348
 msgid "Delete this account:"
 msgstr ""
 
@@ -101,7 +106,7 @@ msgstr ""
 
 #: Mailnag/plugins/spamfilterplugin.py:87
 msgid ""
-"Mailnag will ignore mails containing at least one of \n"
+"Mailnagger will ignore mails containing at least one of \n"
 "the following words in subject or sender."
 msgstr ""
 
@@ -199,7 +204,7 @@ msgstr ""
 #, python-format
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
-"Mailnag passes the total count of new mails to this script,\n"
+"Mailnagger passes the total count of new mails to this script,\n"
 "followed by %s sequences."
 msgstr ""
 
@@ -254,7 +259,7 @@ msgid "Directory:"
 msgstr ""
 
 #: Mailnag/configuration/ui/config_window.ui.h:1
-msgid "Enable/disable Mailnag daemon"
+msgid "Enable/disable Mailnagger daemon"
 msgstr ""
 
 #: Mailnag/configuration/ui/config_window.ui.h:2

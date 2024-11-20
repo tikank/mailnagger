@@ -40,7 +40,7 @@
           <object class="GtkSwitch" id="switch_daemon_enabled">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="tooltip_text" translatable="yes">Enable/disable Mailnag daemon</property>
+            <property name="tooltip_text" translatable="yes">Enable/disable Mailnagger daemon</property>
           </object>
           <packing>
             <property name="position">1</property>

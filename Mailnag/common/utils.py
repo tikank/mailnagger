@@ -25,7 +25,6 @@ import time
 import dbus
 import logging
 import logging.handlers
-import inspect
 import sysconfig
 from pathlib import Path
 
@@ -82,15 +81,6 @@ def get_data_file(filename):
 
 def splitstr(strn, delimeter):
 	return [s.strip() for s in strn.split(delimeter) if s.strip()]
-
-			
-def fix_cwd():
-	# Change into local Mailnag source dir, where paths 
-	# in dist_cfg.py point to (e.g. "./locale").
-	# Only required when running Mailnag locally (wihout installation).
-	main_script_path = os.path.realpath(inspect.stack()[-1][1])
-	main_script_dir = os.path.dirname(main_script_path)
-	os.chdir(main_script_dir)
 
 
 def set_procname(newname):

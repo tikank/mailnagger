@@ -44,6 +44,12 @@ def tests(session : nox.Session) -> None:
 def mypy(session : nox.Session) -> None:
     """Run mypy type checker."""
     session.install('mypy')
+    session.install(
+        "pygobject-stubs",
+        "--no-cache-dir",
+        env={"PYGOBJECT_STUB_CONFIG": "Gtk3"}
+    )
+    session.install('.[dev]')
     session.run('python', '-m', 'mypy')
 
 

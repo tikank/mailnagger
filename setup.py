@@ -5,7 +5,7 @@
 # Then to install Mailnagger run pip as root:
 # pip install --break-system-packages .
 
-from setuptools import setup, Command, find_packages
+from setuptools import setup, find_packages
 from distutils.command.install_data import install_data
 from setuptools.command.build import build
 
@@ -113,12 +113,6 @@ class InstallData(install_data):
                 self.data_files.append((dst_path, [src_path]))
 
 
-class Uninstall(Command):
-    def run(self):
-        # TODO
-        pass
-
-
 setup(name=PACKAGE_NAME,
     version=APP_VERSION,
     description='An extensible mail notification daemon',
@@ -158,14 +152,22 @@ setup(name=PACKAGE_NAME,
         ])
     ],
     include_package_data=True,
-    install_requires = [
+    install_requires=[
         'pygobject',
         'pyxdg',
         'dbus-python',
     ],
+    extras_require={
+        "dev": [
+            "pygobject-stubs",
+            "types-pyxdg",
+            "pytest",
+            "nox",
+            "types-setuptools",
+        ],
+    },
     cmdclass={
         'build': BuildData,
         'install_data': InstallData,
-        'uninstall': Uninstall
     }
 )

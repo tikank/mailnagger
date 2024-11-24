@@ -5,7 +5,7 @@
 # Then to install Mailnagger run pip as root:
 # pip install --break-system-packages .
 
-from setuptools import setup, Command
+from setuptools import setup, Command, find_packages
 from distutils.command.install_data import install_data
 from setuptools.command.build import build
 
@@ -126,16 +126,12 @@ setup(name=PACKAGE_NAME,
     author_email='timo.kankare@iki.fi',
     url='https://github.com/tikank/mailnagger',
     license='GNU GPL2',
-    packages=[
-        'Mailnag',
-        'Mailnag.common',
-        'Mailnag.configuration',
-        'Mailnag.configuration.desktop',
-        'Mailnag.configuration.ui',
-        'Mailnag.daemon',
-        'Mailnag.backends',
-        'Mailnag.plugins',
-    ],
+    packages=find_packages(
+        include=[
+            "Mailnag*",
+            "mailnagger*"
+        ]
+    ) + ["Mailnag.plugins"],
     package_data = {
         'Mailnag.configuration.ui' : [
             'account_widget.ui',
@@ -145,10 +141,12 @@ setup(name=PACKAGE_NAME,
             'mailnagger.desktop',
         ],
     },
-    scripts=[
-        'mailnagger',
-        'mailnagger-config',
-    ],
+    entry_points={
+        "console_scripts": [
+            "mailnagger = mailnagger:main",
+            "mailnagger-config = mailnagger.config:main",
+        ],
+    },
     data_files=[
         ('share/mailnagger', ['data/mailnag.ogg']),
         ('share/mailnagger', ['data/mailnag.png']),
@@ -159,7 +157,7 @@ setup(name=PACKAGE_NAME,
                 os.path.join(BUILD_PATCH_DIR, 'mailnagger-config.desktop')
         ])
     ],
-    include_package_date=True,
+    include_package_data=True,
     install_requires = [
         'pygobject',
         'pyxdg',

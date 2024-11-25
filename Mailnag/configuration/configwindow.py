@@ -24,8 +24,6 @@ gi.require_version('Gtk', '3.0')
 import os
 import xdg.BaseDirectory as bd
 from gi.repository import Gtk
-from importlib.resources import files
-
 from Mailnag.common.dist_cfg import PACKAGE_NAME, APP_VERSION, BIN_DIR
 from Mailnag.common.i18n import _
 from Mailnag.common.config import read_cfg, write_cfg
@@ -33,13 +31,17 @@ from Mailnag.common.accounts import Account, AccountManager
 from Mailnag.common.plugins import Plugin
 from Mailnag.configuration.accountdialog import AccountDialog
 from Mailnag.configuration.plugindialog import PluginDialog
+from mailnagger.resources import get_resource_text
 import Mailnag.configuration.ui
 import Mailnag.configuration.desktop
 
 
 class ConfigWindow:
 	def __init__(self, app):
-		config_window_ui = files(Mailnag.configuration.ui).joinpath('config_window.ui').read_text()
+		config_window_ui = get_resource_text(
+			Mailnag.configuration.ui,
+			"config_window.ui"
+		)
 
 		builder = Gtk.Builder()
 		builder.set_translation_domain(PACKAGE_NAME)
@@ -243,7 +245,10 @@ class ConfigWindow:
 	
 	def _create_autostart(self):
 		autostart_folder = os.path.join(bd.xdg_config_home, "autostart")
-		strn = files(Mailnag.configuration.desktop).joinpath("mailnagger.desktop").read_text()
+		strn = get_resource_text(
+			Mailnag.configuration.desktop,
+			"mailnagger.desktop"
+		)
 		dst = os.path.join(autostart_folder, "mailnagger.desktop")
 		
 		if not os.path.exists(autostart_folder):

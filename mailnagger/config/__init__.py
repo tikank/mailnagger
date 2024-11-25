@@ -28,10 +28,10 @@ import logging
 from gi.repository import Gtk
 
 from Mailnag.common.utils import init_logging
-
-from Mailnag.common.utils import set_procname, shutdown_existing_instance, get_data_paths
+from Mailnag.common.utils import set_procname, shutdown_existing_instance
 from Mailnag.common.dist_cfg import BIN_DIR
 from Mailnag.configuration.configwindow import ConfigWindow
+from mailnagger.resources import get_icon_paths
 
 LOG_LEVEL = logging.DEBUG
 
@@ -49,8 +49,8 @@ class App(Gtk.Application):
         # to the icon search path in case Mailnag is launched 
         # from a local directory (without installing).
         icon_theme = Gtk.IconTheme.get_default()
-        for path in get_data_paths():
-            icon_theme.append_search_path(os.path.join(path, "icons"))
+        for path in get_icon_paths():
+            icon_theme.append_search_path(path)
 
     def do_activate(self):
         Gtk.Application.do_activate(self)

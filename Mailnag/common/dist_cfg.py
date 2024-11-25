@@ -22,18 +22,9 @@
    propper distro integration."""
 
 import sysconfig
-import importlib.resources
+from importlib.resources import files
+from importlib.resources.abc import Traversable
 from pathlib import Path
-
-# Default directories
-
-_prefix = Path(sysconfig.get_path('data'))
-_script_dir = Path(sysconfig.get_path('scripts'))
-_DEFAULT_LOCALE_DIR = _prefix / 'share' / 'locale'
-_DEFAULT_DESKTOP_FILE_DIR = _prefix / 'share' / 'applications'
-_DEFAULT_LIB_DIR = importlib.resources.files('Mailnag')
-_DEFAULT_BIN_DIR = _script_dir
-
 
 # Application version displayed in the 
 # about dialog of the config window.
@@ -47,21 +38,35 @@ APP_VERSION = '2.3.0.dev0'
 # Typically, there's no need to touch this constant.
 PACKAGE_NAME = 'mailnagger'
 
+# Default directories
+_prefix = Path(sysconfig.get_path("data"))
+_script_dir = Path(sysconfig.get_path('scripts'))
+_DEFAULT_DATA_DIR = _prefix / "share" / PACKAGE_NAME
+_DEFAULT_LOCALE_DIR = _prefix / "share" / "locale"
+_DEFAULT_DESKTOP_FILE_DIR = _prefix / 'share' / 'applications'
+_DEFAULT_LIB_DIR = files("Mailnag")
+_DEFAULT_PLUGIN_DIR = files("Mailnag") / "plugins"
+_DEFAULT_BIN_DIR = _script_dir
+
+# The DATA_DIR specifies the root path for mailnagger data files
+# (usually you have to make it pont to '/usr/share/mailnagger').
+DATA_DIR: Path = _DEFAULT_DATA_DIR
+
 # The LOCALE_DIR constant specifies the root path for localization files
 # (usually you have to make it point to '/usr/share/locale').
-LOCALE_DIR = _DEFAULT_LOCALE_DIR
+LOCALE_DIR: Path = _DEFAULT_LOCALE_DIR
 
 # The DESKTOP_FILE_DIR constant specifies the root path for .desktop files
 # (usually you have to make it point to '/usr/share/applications').
-DESKTOP_FILE_DIR = _DEFAULT_DESKTOP_FILE_DIR
+DESKTOP_FILE_DIR: Path = _DEFAULT_DESKTOP_FILE_DIR
 
-# The LIB_DIR constant specifies the root path for the Mailnag python files
-# (usually you have to make it point to <PYTHON_LIB_DIR>/Mailnag).
-LIB_DIR = _DEFAULT_LIB_DIR
+# The PLUGIN_DIR constant specifies the root path for the mailnagger plugin
+# files (usually you have to make it point to <PYTHON_LIB_DIR>/Mailnag/plugins).
+PLUGIN_DIR: Traversable | Path = _DEFAULT_PLUGIN_DIR
 
 # The BIN_DIR constant specifies the path for the mailnag start scripts
 # (usually you have to make it point to '/usr/bin').
-BIN_DIR = _DEFAULT_BIN_DIR
+BIN_DIR: Path = _DEFAULT_BIN_DIR
 
 # DBUS service configuration
 DBUS_BUS_NAME = 'mailnag.MailnagService'

@@ -1,4 +1,6 @@
 [flake8]
+show-source = True
+
 extend-ignore =
     # continuation line under-indented for visual indent. TODO
     E128

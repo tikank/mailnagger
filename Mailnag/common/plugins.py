@@ -22,13 +22,7 @@ import importlib.machinery
 import inspect
 import logging
 from enum import Enum
-
-from Mailnag.common.config import cfg_folder
-from Mailnag.common.dist_cfg import LIB_DIR
-
-PLUGIN_LIB_PATH = LIB_DIR / 'plugins'
-PLUGIN_USER_PATH = os.path.join(cfg_folder, 'plugins')
-PLUGIN_PATHS = [PLUGIN_LIB_PATH, PLUGIN_USER_PATH]
+from mailnagger.resources import get_plugin_paths
 
 
 #
@@ -254,7 +248,7 @@ class Plugin:
 	def _load_plugin_types():
 		plugin_types = []
 		
-		for path in PLUGIN_PATHS:
+		for path in get_plugin_paths():
 			if not os.path.exists(path):
 				continue
 			

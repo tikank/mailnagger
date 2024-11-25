@@ -137,7 +137,7 @@ setup(name=PACKAGE_NAME,
     },
     entry_points={
         "console_scripts": [
-            "mailnagger = mailnagger:main",
+            "mailnagger = mailnagger.daemon:main",
             "mailnagger-config = mailnagger.config:main",
         ],
     },

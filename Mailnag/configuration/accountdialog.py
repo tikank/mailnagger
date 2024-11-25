@@ -22,11 +22,11 @@ import gi
 gi.require_version('Gtk', '3.0')
 
 from gi.repository import GObject, Gtk, Gdk
-from importlib.resources import files
 from _thread import start_new_thread
 from Mailnag.common.dist_cfg import PACKAGE_NAME
 from Mailnag.common.i18n import _
 from Mailnag.common.accounts import Account
+from mailnagger.resources import get_resource_text
 import Mailnag.configuration.ui
 
 IDX_GMAIL = 0
@@ -59,8 +59,11 @@ class AccountDialog:
 	def __init__(self, parent, acc):
 		self._acc = acc
 		
-		account_widget_ui = files(Mailnag.configuration.ui).joinpath('account_widget.ui').read_text()
-		
+		account_widget_ui = get_resource_text(
+			Mailnag.configuration.ui,
+			"account_widget.ui"
+		)
+
 		builder = Gtk.Builder()
 		builder.set_translation_domain(PACKAGE_NAME)
 		builder.add_from_string(account_widget_ui)

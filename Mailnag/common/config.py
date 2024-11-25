@@ -19,6 +19,7 @@
 import os
 import xdg.BaseDirectory as bd
 from configparser import RawConfigParser
+from pathlib import Path
 
 mailnag_defaults = {
 	'core':
@@ -32,7 +33,7 @@ mailnag_defaults = {
 	}
 }
 
-cfg_folder = os.path.join(bd.xdg_config_home, "mailnag")
+cfg_folder = Path(bd.xdg_config_home) / "mailnag"
 cfg_file = os.path.join(cfg_folder, "mailnag.cfg")
 
 

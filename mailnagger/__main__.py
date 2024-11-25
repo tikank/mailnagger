@@ -16,7 +16,7 @@
 # MA 02110-1301, USA.
 #
 
-from mailnagger import main
+from mailnagger.daemon import main
 import sys
 
 sys.exit(main())

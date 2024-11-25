@@ -18,18 +18,14 @@
 # MA 02110-1301, USA.
 #
 
-import xdg.BaseDirectory as base
-import os
 import sys
 import time
 import dbus
 import logging
 import logging.handlers
-import sysconfig
-from pathlib import Path
 
 
-from Mailnag.common.dist_cfg import PACKAGE_NAME, DBUS_BUS_NAME, DBUS_OBJ_PATH
+from Mailnag.common.dist_cfg import DBUS_BUS_NAME, DBUS_OBJ_PATH
 
 LOG_FORMAT = '%(levelname)s (%(asctime)s): %(message)s'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
@@ -53,30 +49,6 @@ def init_logging(enable_stdout = True, enable_syslog = True, log_level = logging
 		syslog_handler.setFormatter(logging.Formatter(LOG_FORMAT, LOG_DATE_FORMAT))
 	
 		logger.addHandler(syslog_handler)
-
-
-def get_data_paths():
-	data_paths = []
-	data_paths.append(Path(sysconfig.get_path('data')) / 'share' / PACKAGE_NAME)
-	# Add "./data" in workdir for running from builddir
-	data_paths.append("./data")
-	data_paths.extend(base.load_data_paths(PACKAGE_NAME))
-	return data_paths
-
-
-def get_data_file(filename):
-	"""
-	Return path to @filename if it exists
-	anywhere in the data paths, else return None
-	"""
-	
-	data_paths = get_data_paths()
-
-	for direc in data_paths:
-		file_path = os.path.join(direc, filename)
-		if os.path.exists(file_path):
-			return file_path
-	return None
 
 
 def splitstr(strn, delimeter):

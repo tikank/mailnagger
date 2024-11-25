@@ -23,7 +23,9 @@ import xdg.BaseDirectory as base
 
 from importlib.resources import files
 from importlib.resources.abc import Traversable
-from Mailnag.common.dist_cfg import PACKAGE_NAME, DATA_DIR, PLUGIN_DIR
+from Mailnag.common.dist_cfg import (
+    PACKAGE_NAME, DATA_DIR, PLUGIN_DIR, LOCALE_DIR
+)
 from pathlib import Path
 from types import ModuleType
 
@@ -75,6 +77,14 @@ def get_plugin_paths() -> list[Path | Traversable]:
         PLUGIN_LIB_PATH,
         PLUGIN_USER_PATH
     ]
+
+
+def get_locale_path() -> Path:
+    """Returns path to translation files."""
+    for p in [LOCALE_DIR, Path("./locale")]:
+        if p.exists():
+            return p
+    return LOCALE_DIR
 
 
 def get_resource_text(module: ModuleType, resource: str) -> str:

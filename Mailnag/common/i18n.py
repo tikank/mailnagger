@@ -1,3 +1,4 @@
+# Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011, 2012, 2014 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -18,10 +19,15 @@
 
 import locale
 import gettext
-from Mailnag.common.dist_cfg import PACKAGE_NAME, LOCALE_DIR
+from Mailnag.common.dist_cfg import PACKAGE_NAME
+from mailnagger.resources import get_locale_path
 
 # bind textdomain for GTK Builder
-locale.bindtextdomain(PACKAGE_NAME, LOCALE_DIR)
+locale.bindtextdomain(PACKAGE_NAME, get_locale_path())
 
 # add gettext shortcut "_" for string translations
-_ = gettext.translation(domain = PACKAGE_NAME, localedir = LOCALE_DIR, fallback = True).gettext
+_ = gettext.translation(
+        domain=PACKAGE_NAME,
+        localedir=get_locale_path(),
+        fallback = True
+    ).gettext

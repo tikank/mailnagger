@@ -4,7 +4,7 @@ include update_po_files
 include po/*.po
 include po/*.pot
 include po/*.md
-include data/*
+recursive-include data/** *
 include doc/*.md
 include .flake8
 include .bumpversion.toml

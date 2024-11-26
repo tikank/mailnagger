@@ -42,7 +42,7 @@ class App(Gtk.Application):
         self.win = None
 
 
-    def do_startup(self):
+    def do_startup(self) -> None:
         Gtk.Application.do_startup(self)
 
         # Add icons in alternative data paths (e.g. ./data/icons) 
@@ -50,7 +50,7 @@ class App(Gtk.Application):
         # from a local directory (without installing).
         icon_theme = Gtk.IconTheme.get_default()
         for path in get_icon_paths():
-            icon_theme.append_search_path(path)
+            icon_theme.append_search_path(str(path))
 
     def do_activate(self):
         Gtk.Application.do_activate(self)

@@ -25,6 +25,11 @@ Whole tests set can be run with command
 ```
     nox
 ```
+or
+```
+    nox -R
+```
+which skips installing and is faster.
 
 Nox runs
 

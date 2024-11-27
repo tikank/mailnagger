@@ -7,6 +7,8 @@ Version 2.3.0.dev0 (not released)
 Fixes
 -----
 
+* Replaced deprecated distutils with setuptools.
+
 * Fixed subject header truncation.
   https://github.com/pulb/mailnag/issues/252
 

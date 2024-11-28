@@ -21,7 +21,7 @@ import sysconfig
 # NOTE: These should be in sync with Mailnag.common.dist_cfg PACKAGE_NAME
 #       and APP_VERSION.
 PACKAGE_NAME = 'mailnagger'
-APP_VERSION = '2.3.0.dev0'
+APP_VERSION = '2.3.0rc0'
 
 
 logger = logging.getLogger(__name__)

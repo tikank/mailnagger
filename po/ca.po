@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: https://github.com/tikank/mailnagger/issues\n"
-"POT-Creation-Date: 2024-10-14 18:10+0300\n"
+"POT-Creation-Date: 2024-11-27 20:16+0200\n"
 "PO-Revision-Date: 2020-04-05 12:44+0000\n"
 "Last-Translator: Marc Riera Irigoyen <marcriera@softcatala.org>\n"
 "Language-Team: Catalan <ca@li.org>\n"
@@ -18,71 +18,76 @@ msgstr ""
 "X-Launchpad-Export-Date: 2020-06-11 14:44+0000\n"
 "X-Generator: Launchpad (build b190cebbf563f89e480a8b57f641753c8196bda0)\n"
 
-#: Mailnag/configuration/accountdialog.py:72
+#: Mailnag/configuration/accountdialog.py:77
 msgid "Mail Account"
 msgstr "Compte de correu"
 
-#: Mailnag/configuration/accountdialog.py:114
+#: Mailnag/configuration/accountdialog.py:119
 msgid "optional"
 msgstr "opcional"
 
-#: Mailnag/configuration/accountdialog.py:118
-#: Mailnag/configuration/configwindow.py:83
-#: Mailnag/configuration/configwindow.py:103
+#: Mailnag/configuration/accountdialog.py:123
+#: Mailnag/configuration/configwindow.py:88
+#: Mailnag/configuration/configwindow.py:108
 msgid "Enabled"
 msgstr "Habilitat"
 
-#: Mailnag/configuration/accountdialog.py:124
-#: Mailnag/configuration/configwindow.py:89
-#: Mailnag/configuration/configwindow.py:109
+#: Mailnag/configuration/accountdialog.py:129
+#: Mailnag/configuration/configwindow.py:94
+#: Mailnag/configuration/configwindow.py:114
 msgid "Name"
 msgstr "Nom"
 
-#: Mailnag/configuration/accountdialog.py:247
+#: Mailnag/configuration/accountdialog.py:252
 msgid "IMAP (Custom)"
 msgstr "IMAP (personalitzat)"
 
-#: Mailnag/configuration/accountdialog.py:248
+#: Mailnag/configuration/accountdialog.py:253
 msgid "POP3 (Custom)"
 msgstr "POP3 (personalitzat)"
 
-#: Mailnag/configuration/accountdialog.py:249
+#: Mailnag/configuration/accountdialog.py:254
 msgid "MBox (Custom)"
 msgstr "MBox (personalitzat)"
 
-#: Mailnag/configuration/accountdialog.py:250
+#: Mailnag/configuration/accountdialog.py:255
 msgid "Maildir (Custom)"
 msgstr "Maildir (personalitzat)"
 
-#: Mailnag/configuration/accountdialog.py:356
+#: Mailnag/configuration/accountdialog.py:361
 msgid "Connection failed."
 msgstr "No s'ha pogut connectar."
 
-#: Mailnag/configuration/configwindow.py:276
-#, python-format
-msgid "About %s"
-msgstr "Quant al %s"
+#: Mailnag/configuration/configwindow.py:278
+msgid "About Mailnagger"
+msgstr ""
 
-#: Mailnag/configuration/configwindow.py:279
+#: Mailnag/configuration/configwindow.py:281
 msgid "An extensible mail notification daemon."
 msgstr "Un dimoni de notificacions de correu extensible."
 
-#: Mailnag/configuration/configwindow.py:281
+#: Mailnag/configuration/configwindow.py:283
 #, python-brace-format
 msgid "Copyright (c) {years} {author} and contributors."
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:288
+#: Mailnag/configuration/configwindow.py:290
 msgid "Homepage"
 msgstr "Lloc web"
 
-#: Mailnag/configuration/configwindow.py:309
+#: Mailnag/configuration/configwindow.py:293
+msgid "maintainer"
+msgstr ""
+
+#. TRANSLATORS: Translate `translator-credits` to the list of names
+#. of translators, or team, or something like that.
+#: Mailnag/configuration/configwindow.py:313
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
 "  Marc Riera Irigoyen https://launchpad.net/~marcriera"
 
-#: Mailnag/configuration/configwindow.py:349
+#: Mailnag/configuration/configwindow.py:353
 msgid "Delete this account:"
 msgstr "Suprimeix aquest compte:"
 
@@ -90,7 +95,7 @@ msgstr "Suprimeix aquest compte:"
 msgid "Plugin Configuration"
 msgstr "Configuració del connector"
 
-#: Mailnag/daemon/mails.py:136
+#: Mailnag/daemon/mails.py:135
 msgid "No subject"
 msgstr "Sense assumpte"
 
@@ -103,18 +108,19 @@ msgid "Filters out unwanted mails."
 msgstr "Exclou correus no desitjats."
 
 #: Mailnag/plugins/spamfilterplugin.py:87
+#, fuzzy
 msgid ""
-"Mailnag will ignore mails containing at least one of \n"
+"Mailnagger will ignore mails containing at least one of \n"
 "the following words in subject or sender."
 msgstr ""
 "El Mailnag ignorarà els correus que continguin com a mínim \n"
 "una de les paraules següents a l'assumpte o el remitent."
 
-#: Mailnag/plugins/soundplugin.py:63
+#: Mailnag/plugins/soundplugin.py:64
 msgid "Sound Notifications"
 msgstr "Notificacions sonores"
 
-#: Mailnag/plugins/soundplugin.py:64
+#: Mailnag/plugins/soundplugin.py:65
 msgid "Plays a sound when new mails arrive."
 msgstr "Reprodueix un so quan arriben correus nous."
 
@@ -201,97 +207,102 @@ msgid "subject"
 msgstr "assumpte"
 
 #: Mailnag/plugins/userscriptplugin.py:81
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
-"Mailnag passes the total count of new mails to this script,\n"
+"Mailnagger passes the total count of new mails to this script,\n"
 "followed by %s sequences."
 msgstr ""
 "S'executarà l'script següent quan arribin correus nous.\n"
 "El Mailnag passa el nombre total de correus nous a aquest script,\n"
 "seguit de seqüències %s."
 
-#: data/account_widget.ui.h:1
+#: Mailnag/configuration/ui/account_widget.ui.h:1
 msgid ""
 "You may need to create an application-specific password for Gmail.\n"
 "Click this icon for more information."
 msgstr ""
 
-#: data/account_widget.ui.h:3
+#: Mailnag/configuration/ui/account_widget.ui.h:3
 msgid "Enable Push-IMAP"
 msgstr "Habilita el Push-IMAP"
 
-#: data/account_widget.ui.h:4
+#: Mailnag/configuration/ui/account_widget.ui.h:4
 msgid "Enable SSL encryption"
 msgstr "Habilita el xifratge SSL"
 
-#: data/account_widget.ui.h:5
+#: Mailnag/configuration/ui/account_widget.ui.h:5
 msgid "Accountname:"
 msgstr "Nom del compte:"
 
-#: data/account_widget.ui.h:6
+#: Mailnag/configuration/ui/account_widget.ui.h:6
 msgid "Account type:"
 msgstr "Tipus de compte:"
 
-#: data/account_widget.ui.h:7
+#: Mailnag/configuration/ui/account_widget.ui.h:7
 msgid "User:"
 msgstr "Usuari:"
 
-#: data/account_widget.ui.h:8
+#: Mailnag/configuration/ui/account_widget.ui.h:8
 msgid "Password:"
 msgstr "Contrasenya:"
 
-#: data/account_widget.ui.h:9
+#: Mailnag/configuration/ui/account_widget.ui.h:9
 msgid "Server:"
 msgstr "Servidor:"
 
-#: data/account_widget.ui.h:10
+#: Mailnag/configuration/ui/account_widget.ui.h:10
 msgid "Port:"
 msgstr "Port:"
 
-#: data/account_widget.ui.h:11
+#: Mailnag/configuration/ui/account_widget.ui.h:11
 msgid "Folders (optional)"
 msgstr "Carpetes (opcional)"
 
-#: data/account_widget.ui.h:12
+#: Mailnag/configuration/ui/account_widget.ui.h:12
 msgid "File path:"
 msgstr "Camí del fitxer:"
 
-#: data/account_widget.ui.h:13
+#: Mailnag/configuration/ui/account_widget.ui.h:13
 msgid "Directory:"
 msgstr "Directori:"
 
-#: data/config_window.ui.h:1
-msgid "Enable/disable Mailnag daemon"
+#: Mailnag/configuration/ui/config_window.ui.h:1
+#, fuzzy
+msgid "Enable/disable Mailnagger daemon"
 msgstr "Habilita/inhabilita el dimoni del Mailnag"
 
-#: data/config_window.ui.h:2
+#: Mailnag/configuration/ui/config_window.ui.h:2
 msgid "Add Account"
 msgstr "Afegeix un compte"
 
-#: data/config_window.ui.h:3
+#: Mailnag/configuration/ui/config_window.ui.h:3
 msgid "Remove Account"
 msgstr "Suprimeix el compte"
 
-#: data/config_window.ui.h:4
+#: Mailnag/configuration/ui/config_window.ui.h:4
 msgid "Edit Account"
 msgstr "Edita el compte"
 
-#: data/config_window.ui.h:5
+#: Mailnag/configuration/ui/config_window.ui.h:5
 msgid "Accounts"
 msgstr "Comptes"
 
-#: data/config_window.ui.h:6
+#: Mailnag/configuration/ui/config_window.ui.h:6
 msgid "Edit Plugin"
 msgstr "Edita el connector"
 
-#: data/config_window.ui.h:7
+#: Mailnag/configuration/ui/config_window.ui.h:7
 msgid "Plugins"
 msgstr "Connectors"
 
-#: data/config_window.ui.h:8
+#: Mailnag/configuration/ui/config_window.ui.h:8
 msgid "Info"
 msgstr "Informació"
+
+#, python-format
+#~ msgid "About %s"
+#~ msgstr "Quant al %s"
 
 #~ msgid "MessagingMenu"
 #~ msgstr "Menú de missatges"

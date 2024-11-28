@@ -28,7 +28,7 @@ from pathlib import Path
 
 # Application version displayed in the 
 # about dialog of the config window.
-APP_VERSION = '2.3.0.dev0'
+APP_VERSION = '2.3.0rc0'
 
 # The PACKAGE_NAME constant is used to configure
 # 1) the path where all app data (glade files, images) is loaded from

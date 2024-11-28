@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/tikank/mailnagger/issues\n"
-"POT-Creation-Date: 2024-10-14 18:10+0300\n"
+"POT-Creation-Date: 2024-11-27 20:16+0200\n"
 "PO-Revision-Date: 2020-10-10 22:26+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/mailnag/mailnag/"
@@ -20,71 +20,76 @@ msgstr ""
 "X-Generator: Weblate 4.3-dev\n"
 "X-Launchpad-Export-Date: 2020-06-11 14:44+0000\n"
 
-#: Mailnag/configuration/accountdialog.py:72
+#: Mailnag/configuration/accountdialog.py:77
 msgid "Mail Account"
 msgstr "E-posta Hesabı"
 
-#: Mailnag/configuration/accountdialog.py:114
+#: Mailnag/configuration/accountdialog.py:119
 msgid "optional"
 msgstr "isteğe bağlı"
 
-#: Mailnag/configuration/accountdialog.py:118
-#: Mailnag/configuration/configwindow.py:83
-#: Mailnag/configuration/configwindow.py:103
+#: Mailnag/configuration/accountdialog.py:123
+#: Mailnag/configuration/configwindow.py:88
+#: Mailnag/configuration/configwindow.py:108
 msgid "Enabled"
 msgstr "Etkin"
 
-#: Mailnag/configuration/accountdialog.py:124
-#: Mailnag/configuration/configwindow.py:89
-#: Mailnag/configuration/configwindow.py:109
+#: Mailnag/configuration/accountdialog.py:129
+#: Mailnag/configuration/configwindow.py:94
+#: Mailnag/configuration/configwindow.py:114
 msgid "Name"
 msgstr "Adı"
 
-#: Mailnag/configuration/accountdialog.py:247
+#: Mailnag/configuration/accountdialog.py:252
 msgid "IMAP (Custom)"
 msgstr "IMAP (Özel)"
 
-#: Mailnag/configuration/accountdialog.py:248
+#: Mailnag/configuration/accountdialog.py:253
 msgid "POP3 (Custom)"
 msgstr "POP3 (Özel)"
 
-#: Mailnag/configuration/accountdialog.py:249
+#: Mailnag/configuration/accountdialog.py:254
 msgid "MBox (Custom)"
 msgstr "MBox (Özel)"
 
-#: Mailnag/configuration/accountdialog.py:250
+#: Mailnag/configuration/accountdialog.py:255
 msgid "Maildir (Custom)"
 msgstr "Maildir (Özel)"
 
-#: Mailnag/configuration/accountdialog.py:356
+#: Mailnag/configuration/accountdialog.py:361
 msgid "Connection failed."
 msgstr "Bağlantı başarısız oldu."
 
-#: Mailnag/configuration/configwindow.py:276
-#, python-format
-msgid "About %s"
-msgstr "%s hakkında"
+#: Mailnag/configuration/configwindow.py:278
+msgid "About Mailnagger"
+msgstr ""
 
-#: Mailnag/configuration/configwindow.py:279
+#: Mailnag/configuration/configwindow.py:281
 msgid "An extensible mail notification daemon."
 msgstr "Genişletilebilir bir e-posta bildirim arka plan programı."
 
-#: Mailnag/configuration/configwindow.py:281
+#: Mailnag/configuration/configwindow.py:283
 #, fuzzy, python-brace-format
 msgid "Copyright (c) {years} {author} and contributors."
 msgstr "Telif hakkı (c) 2011 - 2020 Patrick Ulbrich ve katkıda bulunanlar."
 
-#: Mailnag/configuration/configwindow.py:288
+#: Mailnag/configuration/configwindow.py:290
 msgid "Homepage"
 msgstr "Ana sayfa"
 
-#: Mailnag/configuration/configwindow.py:309
+#: Mailnag/configuration/configwindow.py:293
+msgid "maintainer"
+msgstr ""
+
+#. TRANSLATORS: Translate `translator-credits` to the list of names
+#. of translators, or team, or something like that.
+#: Mailnag/configuration/configwindow.py:313
 msgid "translator-credits"
 msgstr ""
 "Aydın Yakar https://launchpad.net/~yakar\n"
 "Oğuz Ersen <oguzersen@protonmail.com>"
 
-#: Mailnag/configuration/configwindow.py:349
+#: Mailnag/configuration/configwindow.py:353
 msgid "Delete this account:"
 msgstr "Bu hesabı sil:"
 
@@ -92,7 +97,7 @@ msgstr "Bu hesabı sil:"
 msgid "Plugin Configuration"
 msgstr "Eklenti Yapılandırması"
 
-#: Mailnag/daemon/mails.py:136
+#: Mailnag/daemon/mails.py:135
 msgid "No subject"
 msgstr "Konu yok"
 
@@ -105,18 +110,19 @@ msgid "Filters out unwanted mails."
 msgstr "İstenmeyen postaları filtreler."
 
 #: Mailnag/plugins/spamfilterplugin.py:87
+#, fuzzy
 msgid ""
-"Mailnag will ignore mails containing at least one of \n"
+"Mailnagger will ignore mails containing at least one of \n"
 "the following words in subject or sender."
 msgstr ""
 "Mailnag, konu veya gönderen kısmında aşağıdaki sözcüklerden\n"
 "en az birini içeren e-postaları dikkate almayacaktır."
 
-#: Mailnag/plugins/soundplugin.py:63
+#: Mailnag/plugins/soundplugin.py:64
 msgid "Sound Notifications"
 msgstr "Sesli Bildirimler"
 
-#: Mailnag/plugins/soundplugin.py:64
+#: Mailnag/plugins/soundplugin.py:65
 msgid "Plays a sound when new mails arrive."
 msgstr "Yeni e-posta geldiğinde bir ses çalar."
 
@@ -204,97 +210,102 @@ msgid "subject"
 msgstr "konu"
 
 #: Mailnag/plugins/userscriptplugin.py:81
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
-"Mailnag passes the total count of new mails to this script,\n"
+"Mailnagger passes the total count of new mails to this script,\n"
 "followed by %s sequences."
 msgstr ""
 "Yeni e-posta geldiğinde aşağıdaki betik çalıştırılacaktır.\n"
 "Mailnag, yeni e-postaların toplam sayısını, ve ardından\n"
 "%s dizisini bu betiğe iletir."
 
-#: data/account_widget.ui.h:1
+#: Mailnag/configuration/ui/account_widget.ui.h:1
 msgid ""
 "You may need to create an application-specific password for Gmail.\n"
 "Click this icon for more information."
 msgstr ""
 
-#: data/account_widget.ui.h:3
+#: Mailnag/configuration/ui/account_widget.ui.h:3
 msgid "Enable Push-IMAP"
 msgstr "Push-IMAP Etkinleştir"
 
-#: data/account_widget.ui.h:4
+#: Mailnag/configuration/ui/account_widget.ui.h:4
 msgid "Enable SSL encryption"
 msgstr "SSL şifrelemeyi etkinleştir"
 
-#: data/account_widget.ui.h:5
+#: Mailnag/configuration/ui/account_widget.ui.h:5
 msgid "Accountname:"
 msgstr "Hesap adı:"
 
-#: data/account_widget.ui.h:6
+#: Mailnag/configuration/ui/account_widget.ui.h:6
 msgid "Account type:"
 msgstr "Hesap türü:"
 
-#: data/account_widget.ui.h:7
+#: Mailnag/configuration/ui/account_widget.ui.h:7
 msgid "User:"
 msgstr "Kullanıcı:"
 
-#: data/account_widget.ui.h:8
+#: Mailnag/configuration/ui/account_widget.ui.h:8
 msgid "Password:"
 msgstr "Parola:"
 
-#: data/account_widget.ui.h:9
+#: Mailnag/configuration/ui/account_widget.ui.h:9
 msgid "Server:"
 msgstr "Sunucu:"
 
-#: data/account_widget.ui.h:10
+#: Mailnag/configuration/ui/account_widget.ui.h:10
 msgid "Port:"
 msgstr "Bağlantı noktası:"
 
-#: data/account_widget.ui.h:11
+#: Mailnag/configuration/ui/account_widget.ui.h:11
 msgid "Folders (optional)"
 msgstr "Klasörler (isteğe bağlı)"
 
-#: data/account_widget.ui.h:12
+#: Mailnag/configuration/ui/account_widget.ui.h:12
 msgid "File path:"
 msgstr "Dosya yolu:"
 
-#: data/account_widget.ui.h:13
+#: Mailnag/configuration/ui/account_widget.ui.h:13
 msgid "Directory:"
 msgstr "Dizin:"
 
-#: data/config_window.ui.h:1
-msgid "Enable/disable Mailnag daemon"
+#: Mailnag/configuration/ui/config_window.ui.h:1
+#, fuzzy
+msgid "Enable/disable Mailnagger daemon"
 msgstr "Mailnag arka plan programını etkinleştir/devre dışı bırak"
 
-#: data/config_window.ui.h:2
+#: Mailnag/configuration/ui/config_window.ui.h:2
 msgid "Add Account"
 msgstr "Hesap Ekle"
 
-#: data/config_window.ui.h:3
+#: Mailnag/configuration/ui/config_window.ui.h:3
 msgid "Remove Account"
 msgstr "Hesabı Sil"
 
-#: data/config_window.ui.h:4
+#: Mailnag/configuration/ui/config_window.ui.h:4
 msgid "Edit Account"
 msgstr "Hesabı Düzenle"
 
-#: data/config_window.ui.h:5
+#: Mailnag/configuration/ui/config_window.ui.h:5
 msgid "Accounts"
 msgstr "Hesaplar"
 
-#: data/config_window.ui.h:6
+#: Mailnag/configuration/ui/config_window.ui.h:6
 msgid "Edit Plugin"
 msgstr "Eklentiyi Düzenle"
 
-#: data/config_window.ui.h:7
+#: Mailnag/configuration/ui/config_window.ui.h:7
 msgid "Plugins"
 msgstr "Eklentiler"
 
-#: data/config_window.ui.h:8
+#: Mailnag/configuration/ui/config_window.ui.h:8
 msgid "Info"
 msgstr "Bilgi"
+
+#, python-format
+#~ msgid "About %s"
+#~ msgstr "%s hakkında"
 
 #~ msgid "MessagingMenu"
 #~ msgstr "MessagingMenu"

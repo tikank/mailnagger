@@ -21,8 +21,10 @@ import sysconfig
 # NOTE: These should be in sync with Mailnag.common.dist_cfg PACKAGE_NAME
 #       and APP_VERSION.
 PACKAGE_NAME = 'mailnagger'
-APP_VERSION = '2.3.0rc0'
+APP_VERSION = '2.3.0rc1'
 
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 
 logger = logging.getLogger(__name__)
 
@@ -116,6 +118,8 @@ class InstallData(install_data):
 setup(name=PACKAGE_NAME,
     version=APP_VERSION,
     description='An extensible mail notification daemon',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author='Timo Kankare',
     author_email='timo.kankare@iki.fi',
     url='https://github.com/tikank/mailnagger',

@@ -21,7 +21,7 @@ import sysconfig
 # NOTE: These should be in sync with Mailnag.common.dist_cfg PACKAGE_NAME
 #       and APP_VERSION.
 PACKAGE_NAME = 'mailnagger'
-APP_VERSION = '2.3.0'
+APP_VERSION = '2.4.0.dev0'
 
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()

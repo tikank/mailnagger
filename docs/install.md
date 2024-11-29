@@ -9,7 +9,6 @@ Mailnagger can be installed from
 * wheel package: `mailnagger-X.Y.Z-py3-none-any.whl`
 
 * package from [PyPi](https://pypi.org/): `mailnagger`
-  (**NOTE/TODO:** Not yet but someday in future!)
 
 Replace `mailnagger` with one of previous in following examples.
 
@@ -61,5 +60,17 @@ Run as root
     python3 -m pip install --break-system-packages mailnagger
 ```
 
+> **Note:**
+> Mailnagger conflict with Mailnag, because the code is not (yet) renamed.
+> So don't install Mailnagger and Mailnag same time.
+
 > **TODO:** Setup mailnagger-config.desktop file, etc. How?
+
+
+#### Distribution specific packages
+
+Mailnagger is not packaged to any Linux distribution (yet).
+If you make packaging or know one, let me know!
+
+Mailnag used to be packaged to Ubuntu, Debian, Fedora, Arch Linux and openSUSE.
 

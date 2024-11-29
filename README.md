@@ -1,4 +1,4 @@
-![Mailnagger](data/icons/hicolor/256x256/apps/mailnag.png)
+![Mailnagger](https://github.com/tikank/mailnagger/blob/22f00f270c616dc94e9bee301146ff117d00b3a4/data/icons/hicolor/256x256/apps/mailnag.png)
 
 ## An extensible mail notification daemon
 
@@ -15,38 +15,24 @@ __This project needs your support!__
 If you like Mailnagger, please help to keep it going by [contributing code](https://github.com/tikank/mailnagger),
 [reporting/fixing bugs](https://github.com/tikank/mailnagger/issues),
 [translating strings into your native language](https://github.com/tikank/mailnagger/tree/master/po),
-or writing docs.
+or [writing docs](https://github.com/tikank/mailnagger/tree/master/docs).
 
 
 ## Installation
 
-### Generic Tarballs
+Easiest way to install Mailnagger is to use
+[pipx](https://pypi.org/project/pipx/).
 
-Distribution independent tarball releases are available [here](https://github.com/tikank/mailnagger/releases).
-
-Build Mailnagger by running
-
+Run
 ```
-    ./setup build
+    pipx install mailnagger
 ```
-
-Then run
-
-```
-    python3 -m pip install --break-system-packages .
-```
-
-(as root) to install Mailnagger system wide,
 though make sure the requirements stated below are met.
 
-> **Note:**
-> Mailnagger conflict with Mailnag, because the code is not (yet) renamed.
-> So don't install Mailnagger and Mailnag same time.
 
+### Requirements
 
-###### Requirements
-
-* python (>= 3.5)
+* python (>= 3.9)
 * pygobject
 * gir-notify (>= 0.7.6)
 * gir-gtk-3.0
@@ -57,14 +43,6 @@ though make sure the requirements stated below are met.
 * pyxdg
 * gettext
 * gir1.2-secret-1 (optional)
-
-
-### Distribution specific packages
-
-Mailnagger is not packaged to any Linux distribution (yet).
-If you make packaging or know one, let me know!
-
-Mailnag used to be packaged to Ubuntu, Debian, Fedora, Arch Linux and openSUSE.
 
 
 ## Configuration
@@ -121,4 +99,4 @@ __Other issues__
 If Mailnagger doesn't work properly for you, either examine the system log
 for errors (`journalctl -b _COMM=mailnagger`)
 or run `mailnagger` in a terminal and observe the output.
-  
+

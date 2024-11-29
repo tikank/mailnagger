@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Mailnagger 2.3.0.dev0\n"
+"Project-Id-Version: Mailnagger 2.3.0rc0\n"
 "Report-Msgid-Bugs-To: https://github.com/tikank/mailnagger/issues\n"
-"POT-Creation-Date: 2024-11-20 19:12+0200\n"
+"POT-Creation-Date: 2024-11-27 20:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,74 +17,74 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: Mailnag/configuration/accountdialog.py:74
+#: Mailnag/configuration/accountdialog.py:77
 msgid "Mail Account"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:116
+#: Mailnag/configuration/accountdialog.py:119
 msgid "optional"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:120
-#: Mailnag/configuration/configwindow.py:86
-#: Mailnag/configuration/configwindow.py:106
+#: Mailnag/configuration/accountdialog.py:123
+#: Mailnag/configuration/configwindow.py:88
+#: Mailnag/configuration/configwindow.py:108
 msgid "Enabled"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:126
-#: Mailnag/configuration/configwindow.py:92
-#: Mailnag/configuration/configwindow.py:112
+#: Mailnag/configuration/accountdialog.py:129
+#: Mailnag/configuration/configwindow.py:94
+#: Mailnag/configuration/configwindow.py:114
 msgid "Name"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:249
+#: Mailnag/configuration/accountdialog.py:252
 msgid "IMAP (Custom)"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:250
+#: Mailnag/configuration/accountdialog.py:253
 msgid "POP3 (Custom)"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:251
+#: Mailnag/configuration/accountdialog.py:254
 msgid "MBox (Custom)"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:252
+#: Mailnag/configuration/accountdialog.py:255
 msgid "Maildir (Custom)"
 msgstr ""
 
-#: Mailnag/configuration/accountdialog.py:358
+#: Mailnag/configuration/accountdialog.py:361
 msgid "Connection failed."
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:273
+#: Mailnag/configuration/configwindow.py:278
 msgid "About Mailnagger"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:276
+#: Mailnag/configuration/configwindow.py:281
 msgid "An extensible mail notification daemon."
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:278
+#: Mailnag/configuration/configwindow.py:283
 #, python-brace-format
 msgid "Copyright (c) {years} {author} and contributors."
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:285
+#: Mailnag/configuration/configwindow.py:290
 msgid "Homepage"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:288
+#: Mailnag/configuration/configwindow.py:293
 msgid "maintainer"
 msgstr ""
 
 #. TRANSLATORS: Translate `translator-credits` to the list of names
 #. of translators, or team, or something like that.
-#: Mailnag/configuration/configwindow.py:308
+#: Mailnag/configuration/configwindow.py:313
 msgid "translator-credits"
 msgstr ""
 
-#: Mailnag/configuration/configwindow.py:348
+#: Mailnag/configuration/configwindow.py:353
 msgid "Delete this account:"
 msgstr ""
 

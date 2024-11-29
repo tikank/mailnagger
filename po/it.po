@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mailnag\n"
 "Report-Msgid-Bugs-To: https://github.com/tikank/mailnagger/issues\n"
-"POT-Creation-Date: 2024-10-14 18:10+0300\n"
+"POT-Creation-Date: 2024-11-27 20:16+0200\n"
 "PO-Revision-Date: 2020-10-15 17:26+0000\n"
 "Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/mailnag/mailnag/"
@@ -19,65 +19,70 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Loco-Target-Locale: it_IT\n"
 
-#: Mailnag/configuration/accountdialog.py:72
+#: Mailnag/configuration/accountdialog.py:77
 msgid "Mail Account"
 msgstr "Account di posta"
 
-#: Mailnag/configuration/accountdialog.py:114
+#: Mailnag/configuration/accountdialog.py:119
 msgid "optional"
 msgstr "opzionale"
 
-#: Mailnag/configuration/accountdialog.py:118
-#: Mailnag/configuration/configwindow.py:83
-#: Mailnag/configuration/configwindow.py:103
+#: Mailnag/configuration/accountdialog.py:123
+#: Mailnag/configuration/configwindow.py:88
+#: Mailnag/configuration/configwindow.py:108
 msgid "Enabled"
 msgstr "Attivo"
 
-#: Mailnag/configuration/accountdialog.py:124
-#: Mailnag/configuration/configwindow.py:89
-#: Mailnag/configuration/configwindow.py:109
+#: Mailnag/configuration/accountdialog.py:129
+#: Mailnag/configuration/configwindow.py:94
+#: Mailnag/configuration/configwindow.py:114
 msgid "Name"
 msgstr "Nome"
 
-#: Mailnag/configuration/accountdialog.py:247
+#: Mailnag/configuration/accountdialog.py:252
 msgid "IMAP (Custom)"
 msgstr "IMAP (personalizzato)"
 
-#: Mailnag/configuration/accountdialog.py:248
+#: Mailnag/configuration/accountdialog.py:253
 msgid "POP3 (Custom)"
 msgstr "POP3 (personalizzato)"
 
-#: Mailnag/configuration/accountdialog.py:249
+#: Mailnag/configuration/accountdialog.py:254
 msgid "MBox (Custom)"
 msgstr "MBox (personalizzato)"
 
-#: Mailnag/configuration/accountdialog.py:250
+#: Mailnag/configuration/accountdialog.py:255
 msgid "Maildir (Custom)"
 msgstr "Maildir (personalizzato)"
 
-#: Mailnag/configuration/accountdialog.py:356
+#: Mailnag/configuration/accountdialog.py:361
 msgid "Connection failed."
 msgstr "Connessione fallita."
 
-#: Mailnag/configuration/configwindow.py:276
-#, python-format
-msgid "About %s"
-msgstr "Informazioni su %s"
+#: Mailnag/configuration/configwindow.py:278
+msgid "About Mailnagger"
+msgstr ""
 
-#: Mailnag/configuration/configwindow.py:279
+#: Mailnag/configuration/configwindow.py:281
 msgid "An extensible mail notification daemon."
 msgstr "Un demone di notifica di e-mail estensibile."
 
-#: Mailnag/configuration/configwindow.py:281
+#: Mailnag/configuration/configwindow.py:283
 #, fuzzy, python-brace-format
 msgid "Copyright (c) {years} {author} and contributors."
 msgstr "Copyright © 2011 – 2020 Patrick Ulbrich e i collaboratori."
 
-#: Mailnag/configuration/configwindow.py:288
+#: Mailnag/configuration/configwindow.py:290
 msgid "Homepage"
 msgstr "Pagina principale"
 
-#: Mailnag/configuration/configwindow.py:309
+#: Mailnag/configuration/configwindow.py:293
+msgid "maintainer"
+msgstr ""
+
+#. TRANSLATORS: Translate `translator-credits` to the list of names
+#. of translators, or team, or something like that.
+#: Mailnag/configuration/configwindow.py:313
 msgid "translator-credits"
 msgstr ""
 "Launchpad Contributions:\n"
@@ -86,7 +91,7 @@ msgstr ""
 "  Patrick Ulbrich https://launchpad.net/~pulb\n"
 "  Pedro Beja https://launchpad.net/~althaser"
 
-#: Mailnag/configuration/configwindow.py:349
+#: Mailnag/configuration/configwindow.py:353
 msgid "Delete this account:"
 msgstr "Eliminare questo account:"
 
@@ -94,7 +99,7 @@ msgstr "Eliminare questo account:"
 msgid "Plugin Configuration"
 msgstr "Configurazione plugin"
 
-#: Mailnag/daemon/mails.py:136
+#: Mailnag/daemon/mails.py:135
 msgid "No subject"
 msgstr "Nessun oggetto"
 
@@ -107,18 +112,19 @@ msgid "Filters out unwanted mails."
 msgstr "Filtra le e-mail indesiderate."
 
 #: Mailnag/plugins/spamfilterplugin.py:87
+#, fuzzy
 msgid ""
-"Mailnag will ignore mails containing at least one of \n"
+"Mailnagger will ignore mails containing at least one of \n"
 "the following words in subject or sender."
 msgstr ""
 "Mailnag ignorerà le e-mail contenenti almeno una delle\n"
 "seguenti parole nell'oggetto o nel mittente."
 
-#: Mailnag/plugins/soundplugin.py:63
+#: Mailnag/plugins/soundplugin.py:64
 msgid "Sound Notifications"
 msgstr "Notifiche audio"
 
-#: Mailnag/plugins/soundplugin.py:64
+#: Mailnag/plugins/soundplugin.py:65
 msgid "Plays a sound when new mails arrive."
 msgstr "Riproduci un suono all'arrivo di nuove e-mail."
 
@@ -205,97 +211,102 @@ msgid "subject"
 msgstr "Oggetto"
 
 #: Mailnag/plugins/userscriptplugin.py:81
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "The following script will be executed whenever new mails arrive.\n"
-"Mailnag passes the total count of new mails to this script,\n"
+"Mailnagger passes the total count of new mails to this script,\n"
 "followed by %s sequences."
 msgstr ""
 "Il seguente script verrà eseguito ogni volta che nuove e-mail arrivano.\n"
 "Mailnag passa il conteggio totale dei nuovi messaggi a questo script,\n"
 "seguito da %s sequenze."
 
-#: data/account_widget.ui.h:1
+#: Mailnag/configuration/ui/account_widget.ui.h:1
 msgid ""
 "You may need to create an application-specific password for Gmail.\n"
 "Click this icon for more information."
 msgstr ""
 
-#: data/account_widget.ui.h:3
+#: Mailnag/configuration/ui/account_widget.ui.h:3
 msgid "Enable Push-IMAP"
 msgstr "Attiva il protocollo Push-IMAP"
 
-#: data/account_widget.ui.h:4
+#: Mailnag/configuration/ui/account_widget.ui.h:4
 msgid "Enable SSL encryption"
 msgstr "Attiva il protocollo crittografico SSL"
 
-#: data/account_widget.ui.h:5
+#: Mailnag/configuration/ui/account_widget.ui.h:5
 msgid "Accountname:"
 msgstr "Nome dell'account:"
 
-#: data/account_widget.ui.h:6
+#: Mailnag/configuration/ui/account_widget.ui.h:6
 msgid "Account type:"
 msgstr "Tipo di account:"
 
-#: data/account_widget.ui.h:7
+#: Mailnag/configuration/ui/account_widget.ui.h:7
 msgid "User:"
 msgstr "Nome utente:"
 
-#: data/account_widget.ui.h:8
+#: Mailnag/configuration/ui/account_widget.ui.h:8
 msgid "Password:"
 msgstr "Password:"
 
-#: data/account_widget.ui.h:9
+#: Mailnag/configuration/ui/account_widget.ui.h:9
 msgid "Server:"
 msgstr "Server:"
 
-#: data/account_widget.ui.h:10
+#: Mailnag/configuration/ui/account_widget.ui.h:10
 msgid "Port:"
 msgstr "Porta:"
 
-#: data/account_widget.ui.h:11
+#: Mailnag/configuration/ui/account_widget.ui.h:11
 msgid "Folders (optional)"
 msgstr "Cartelle (opzionale)"
 
-#: data/account_widget.ui.h:12
+#: Mailnag/configuration/ui/account_widget.ui.h:12
 msgid "File path:"
 msgstr "Percorso del file:"
 
-#: data/account_widget.ui.h:13
+#: Mailnag/configuration/ui/account_widget.ui.h:13
 msgid "Directory:"
 msgstr "Directory:"
 
-#: data/config_window.ui.h:1
-msgid "Enable/disable Mailnag daemon"
+#: Mailnag/configuration/ui/config_window.ui.h:1
+#, fuzzy
+msgid "Enable/disable Mailnagger daemon"
 msgstr "Abilita / disabilita il demone Mailnag"
 
-#: data/config_window.ui.h:2
+#: Mailnag/configuration/ui/config_window.ui.h:2
 msgid "Add Account"
 msgstr "Aggiungi account"
 
-#: data/config_window.ui.h:3
+#: Mailnag/configuration/ui/config_window.ui.h:3
 msgid "Remove Account"
 msgstr "Rimuovi account"
 
-#: data/config_window.ui.h:4
+#: Mailnag/configuration/ui/config_window.ui.h:4
 msgid "Edit Account"
 msgstr "Modifica account"
 
-#: data/config_window.ui.h:5
+#: Mailnag/configuration/ui/config_window.ui.h:5
 msgid "Accounts"
 msgstr "Account"
 
-#: data/config_window.ui.h:6
+#: Mailnag/configuration/ui/config_window.ui.h:6
 msgid "Edit Plugin"
 msgstr "Modifica plugin"
 
-#: data/config_window.ui.h:7
+#: Mailnag/configuration/ui/config_window.ui.h:7
 msgid "Plugins"
 msgstr "Plugin"
 
-#: data/config_window.ui.h:8
+#: Mailnag/configuration/ui/config_window.ui.h:8
 msgid "Info"
 msgstr "Informazioni"
+
+#, python-format
+#~ msgid "About %s"
+#~ msgstr "Informazioni su %s"
 
 #~ msgid "MessagingMenu"
 #~ msgstr "MessagingMenu"

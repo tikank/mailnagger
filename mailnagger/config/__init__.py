@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-#
 # Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 - 2019 Patrick Ulbrich <zulu99@gmx.net>
 #
@@ -19,6 +17,9 @@
 # MA 02110-1301, USA.
 #
 
+"""Configuration main function and configuration application."""
+
+
 import gi
 gi.require_version('Gtk', '3.0')
 
@@ -37,6 +38,8 @@ LOG_LEVEL = logging.DEBUG
 
 
 class App(Gtk.Application):
+    """Mailnagger config Gtk application."""
+
     def __init__(self):
         Gtk.Application.__init__(self, application_id = 'com.github.tikank.mailnagger')
         self.win = None
@@ -52,7 +55,7 @@ class App(Gtk.Application):
         for path in get_icon_paths():
             icon_theme.append_search_path(str(path))
 
-    def do_activate(self):
+    def do_activate(self) -> None:
         Gtk.Application.do_activate(self)
 
         if not self.win:
@@ -60,7 +63,7 @@ class App(Gtk.Application):
         self.win.get_gtk_window().present()
 
 
-    def do_shutdown(self):
+    def do_shutdown(self) -> None:
         Gtk.Application.do_shutdown(self)
 
         if self.win.get_daemon_enabled():
@@ -76,11 +79,12 @@ class App(Gtk.Application):
             shutdown_existing_instance(wait_for_completion = False)
 
 
-def main():
+def main() -> int:
+    """Mailnagger config main function."""
+
     set_procname("mailnagger-config")
     init_logging(enable_stdout = True, enable_syslog = False, log_level = LOG_LEVEL)
     app = App()
     app.run(None)
+    return os.EX_OK
 
-
-if __name__ == "__main__":  main()

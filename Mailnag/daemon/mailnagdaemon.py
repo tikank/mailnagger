@@ -1,4 +1,4 @@
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2014 - 2021 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2020 Andreas Angerer
 #
@@ -18,11 +18,16 @@
 # MA 02110-1301, USA.
 #
 
+"""Daemon implementation."""
+
+
 import threading
 import logging
 import time
+from configparser import RawConfigParser
+from typing import Callable
 
-from Mailnag.common.accounts import AccountManager
+from Mailnag.common.accounts import AccountManager, Account
 from Mailnag.daemon.mailchecker import MailChecker
 from Mailnag.daemon.mails import Memorizer
 from Mailnag.daemon.idlers import IdlerRunner
@@ -43,13 +48,21 @@ testmode_mapping = {
 
 
 class MailnagDaemon(MailnagController):
-	def __init__(self, fatal_error_handler = None, shutdown_request_handler = None):
+	"""Daemon implementation."""
+
+	def __init__(
+			self,
+			fatal_error_handler: Callable[[Exception], None] | None = None,
+			shutdown_request_handler: Callable[[], None] | None = None
+	):
+		"""Initialize daemon with error and shutdown callback handlers."""
+
 		self._fatal_error_handler = fatal_error_handler
 		self._shutdown_request_handler = shutdown_request_handler
-		self._plugins = []
-		self._poll_thread = None
+		self._plugins: list[Plugin] = []
+		self._poll_thread: threading.Thread | None = None
 		self._poll_thread_stop = threading.Event()
-		self._idlrunner = None
+		self._idlrunner: IdlerRunner | None = None
 		self._disposed = False
 	
 		self._cfg = read_cfg()
@@ -77,7 +90,9 @@ class MailnagDaemon(MailnagController):
 		self._start_thread.start()
 	
 	
-	def dispose(self):
+	def dispose(self) -> None:
+		"""Releases resources allocated by daemon."""
+
 		if self._disposed:
 			return
 
@@ -93,12 +108,12 @@ class MailnagDaemon(MailnagController):
 			self._start_thread.join()
 			logging.info('Starter thread exited successfully.')
 
-		if (self._poll_thread != None) and (self._poll_thread.is_alive()):
+		if (self._poll_thread is not None) and (self._poll_thread.is_alive()):
 			self._poll_thread_stop.set()
 			self._poll_thread.join()
 			logging.info('Polling thread exited successfully.')
 
-		if self._idlrunner != None:
+		if self._idlrunner is not None:
 			self._idlrunner.dispose()
 
 		if self._accounts != None:
@@ -110,12 +125,13 @@ class MailnagDaemon(MailnagController):
 		self._unload_plugins()
 	
 	
-	def is_disposed(self):
+	def is_disposed(self) -> bool:
+		"""Tells if daemon resources are already disposed."""
 		return self._disposed
 	
 	
 	# Part of MailnagController interface
-	def get_hooks(self):
+	def get_hooks(self) -> HookRegistry:
 		# Note: ensure_not_disposed() cannot be called here
 		# because plugins are calling get_hooks() when being disabled in dispose().
 		# self._ensure_not_disposed()
@@ -123,13 +139,13 @@ class MailnagDaemon(MailnagController):
 	
 
 	# Part of MailnagController interface
-	def shutdown(self):
-		if self._shutdown_request_handler != None:
+	def shutdown(self) -> None:
+		if self._shutdown_request_handler is not None:
 			self._shutdown_request_handler()
 	
 	
 	# Part of MailnagController interface
-	def mark_mail_as_read(self, mail_id):
+	def mark_mail_as_read(self, mail_id: str) -> None:
 		# Note: ensure_not_disposed() is not really necessary here
 		# (the memorizer object is available in dispose()), 
 		# but better be consistent with other daemon methods.
@@ -141,7 +157,7 @@ class MailnagDaemon(MailnagController):
 	
 	# Enforces manual mail checks
 	# Part of MailnagController interface
-	def check_for_mails(self):
+	def check_for_mails(self) -> None:
 		# Don't allow mail checks after object disposal. 
 		# F.i. plugins may not be unloaded completely or 
 		# connections may have been closed already.
@@ -151,13 +167,16 @@ class MailnagDaemon(MailnagController):
 		self._mailchecker.check(non_idle_accounts)
 
 		
-	def _ensure_not_disposed(self):
+	def _ensure_not_disposed(self) -> None:
+		"""Sanity check that daemon is not disposed.
+		If it is, the program is in incosistent state."""
 		if self._disposed:
 			raise InvalidOperationException(
 				"Daemon has been disposed")
 	
 	
-	def _start(self):
+	def _start(self) -> None:
+		"""Daemon main loop in thread."""
 		try:
 			# Call Accounts-Loaded plugin hooks
 			for f in self._hookreg.get_hook_funcs(HookTypes.ACCOUNTS_LOADED):
@@ -180,7 +199,8 @@ class MailnagDaemon(MailnagController):
 			if len(non_idle_accounts) > 0:
 				poll_interval = int(self._cfg.get('core', 'poll_interval'))
 
-				def poll_func():
+				def poll_func() -> None:
+					"""Poll loop."""
 					while True:
 						self._poll_thread_stop.wait(timeout = 60.0 * poll_interval)
 						if self._poll_thread_stop.is_set():
@@ -196,20 +216,21 @@ class MailnagDaemon(MailnagController):
 
 			# start idler threads for IMAP accounts with idle support
 			if len(idle_accounts) > 0:
-				def sync_func(account):
+				def sync_func(account: Account) -> None:
+					"""Sync callback function for idle runner."""
 					self._mailchecker.check([account])
-
 
 				idle_timeout = int(self._cfg.get('core', 'imap_idle_timeout'))				
 				self._idlrunner = IdlerRunner(idle_accounts, sync_func, idle_timeout)
 				self._idlrunner.start()
 		except Exception as ex:
 			logging.exception('Caught an exception.')
-			if self._fatal_error_handler != None:
+			if self._fatal_error_handler is not None:
 				self._fatal_error_handler(ex)
 	
 
-	def _wait_for_inet_connection(self):
+	def _wait_for_inet_connection(self) -> bool:
+		"""Wait that internet connection is available."""
 		if self._conntest.is_offline():
 			logging.info('Waiting for internet connection...')
 		
@@ -224,15 +245,19 @@ class MailnagDaemon(MailnagController):
 			time.sleep(3)
 
 
-	def _get_idle_accounts(self, accounts):
+	def _get_idle_accounts(self, accounts: list[Account]) -> list[Account]:
+		"""Returns accounts that can notify when new mail has arrived."""
 		return [acc for acc in self._accounts if acc.supports_notifications()]
 
 
-	def _get_non_idle_accounts(self, accounts):
+	def _get_non_idle_accounts(self, accounts: list[Account]) -> list[Account]:
+		"""Returns accouns that must be polled to know if new mails has
+		arrived."""
 		return [acc for acc in self._accounts if not acc.supports_notifications()]
 
 
-	def _load_plugins(self, cfg):
+	def _load_plugins(self, cfg: RawConfigParser) -> None:
+		"""Loads and enables plugins."""
 		enabled_lst = cfg.get('core', 'enabled_plugins').split(',')
 		enabled_lst = [s for s in [s.strip() for s in enabled_lst] if s != '']
 		self._plugins = Plugin.load_plugins(cfg, self, enabled_lst)
@@ -245,7 +270,8 @@ class MailnagDaemon(MailnagController):
 				logging.error("Failed to enable plugin '%s'." % p.get_modname())
 	
 
-	def _unload_plugins(self):
+	def _unload_plugins(self) -> None:
+		"""Disables loaded plugins."""
 		if len(self._plugins) > 0:
 			err = False
 		

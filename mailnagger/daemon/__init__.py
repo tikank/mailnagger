@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-#
 # Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 - 2020 Patrick Ulbrich <zulu99@gmx.net>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
@@ -21,10 +19,14 @@
 # MA 02110-1301, USA.
 #
 
+"""Daemon main function."""
+
+
 import gi
 gi.require_version('GLib', '2.0')
 
 from gi.repository import GLib
+from dataclasses import dataclass
 from dbus.mainloop.glib import DBusGMainLoop
 import threading
 import argparse
@@ -43,11 +45,13 @@ PROGNAME = 'mailnagger'
 LOG_LEVEL = logging.DEBUG
 
 
-def cleanup(daemon):
+def cleanup(daemon: MailnagDaemon | None) -> None:
+    """Terminates the deamon subprocesses."""
+
     event = threading.Event()
 
-    def thread():
-        if daemon != None:
+    def thread() -> None:
+        if daemon is not None:
             daemon.dispose()
 
         terminate_subprocesses(timeout = 3.0)
@@ -65,22 +69,32 @@ def cleanup(daemon):
         os._exit(os.EX_SOFTWARE)
 
 
-def get_args():
+@dataclass
+class Args:
+    """Command line arguments."""
+    quiet: bool = False
+
+
+def get_args() -> Args:
+    """Parses command line arguments."""
     parser = argparse.ArgumentParser(prog=PROGNAME)
     parser.add_argument('-q', '--quiet', action = 'store_true', 
         help = "don't print log messages to stdout")
     parser.add_argument('-v', '--version', action = 'version',
         version = '%s %s' % (PROGNAME, APP_VERSION))
 
-    return parser.parse_args()
+    return parser.parse_args(namespace=Args())
 
 
-def sigterm_handler(mainloop):
-    if mainloop != None:
+def sigterm_handler(mainloop: GLib.MainLoop) -> bool:
+    """Handler for TERM signal. Stops the main loop."""
+    if mainloop is not None:
         mainloop.quit()
+    return False
 
 
-def main():
+def main() -> int:
+    """Mailnagger daemon main function."""
     mainloop = GLib.MainLoop()
     daemon = None
 
@@ -112,13 +126,13 @@ def main():
                 "Please run mailnagger-config first.")
             exit(1)
 
-        def fatal_error_hdlr(ex):
+        def fatal_error_hdlr(ex: Exception) -> None:
             # Note: don't raise an exception 
             # (e.g InvalidOperationException) 
             # in the error handler.
             mainloop.quit()
 
-        def shutdown_request_hdlr():
+        def shutdown_request_hdlr() -> None:
             if not mainloop.is_running():
                 raise InvalidOperationException(
                     "Mainloop is not running")
@@ -138,5 +152,5 @@ def main():
         logging.info('Shutting down...')
         cleanup(daemon)
 
+    return os.EX_OK
 
-if __name__ == '__main__': main()

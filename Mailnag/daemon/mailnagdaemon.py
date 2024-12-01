@@ -180,7 +180,7 @@ class MailnagDaemon(MailnagController):
 		try:
 			# Call Accounts-Loaded plugin hooks
 			for f in self._hookreg.get_hook_funcs(HookTypes.ACCOUNTS_LOADED):
-				try_call(lambda: f(self._accounts))
+				try_call(lambda: f(self._accounts), None)
 			
 			if not self._wait_for_inet_connection():
 				return

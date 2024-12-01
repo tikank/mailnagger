@@ -23,6 +23,8 @@ import time
 import dbus
 import logging
 import logging.handlers
+from collections.abc import Callable
+from typing import TypeVar
 
 
 from Mailnag.common.dist_cfg import DBUS_BUS_NAME, DBUS_OBJ_PATH
@@ -31,7 +33,11 @@ LOG_FORMAT = '%(levelname)s (%(asctime)s): %(message)s'
 LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 
-def init_logging(enable_stdout = True, enable_syslog = True, log_level = logging.DEBUG):
+def init_logging(
+	enable_stdout: bool = True,
+	enable_syslog: bool = True,
+	log_level: int = logging.DEBUG
+) -> None:
 	logging.basicConfig(
 		format = LOG_FORMAT,
 		datefmt = LOG_DATE_FORMAT,
@@ -51,11 +57,11 @@ def init_logging(enable_stdout = True, enable_syslog = True, log_level = logging
 		logger.addHandler(syslog_handler)
 
 
-def splitstr(strn, delimeter):
+def splitstr(strn: str, delimeter: str) -> list[str]:
 	return [s.strip() for s in strn.split(delimeter) if s.strip()]
 
 
-def set_procname(newname):
+def set_procname(newname: str) -> None:
 	from ctypes import cdll, byref, create_string_buffer
 	libc = cdll.LoadLibrary('libc.so.6')
 	buff = create_string_buffer(len(newname)+1)
@@ -63,7 +69,10 @@ def set_procname(newname):
 	libc.prctl(15, byref(buff), 0, 0, 0)
 
 
-def try_call(f, err_retval = None):
+T = TypeVar("T")
+
+
+def try_call(f: Callable[[], T], err_retval: T) -> T:
 	try:
 		return f()
 	except:
@@ -71,7 +80,7 @@ def try_call(f, err_retval = None):
 		return err_retval
 
 
-def shutdown_existing_instance(wait_for_completion = True):
+def shutdown_existing_instance(wait_for_completion: bool = True) -> None:
 	bus = dbus.SessionBus()
 	
 	if bus.name_has_owner(DBUS_BUS_NAME):

@@ -19,11 +19,20 @@
 # MA 02110-1301, USA.
 #
 
+"""Account handling."""
+
+
 import logging
 import hashlib
-from Mailnag.backends import create_backend, get_mailbox_parameter_specs
+from collections.abc import Callable, Iterator
+from configparser import RawConfigParser
+from email.message import Message
+from typing import Any
+from Mailnag.backends import create_backend, get_mailbox_parameter_specs, Param
+from Mailnag.backends.base import MailboxBackend
 from Mailnag.common.secretstore import SecretStore
 from Mailnag.common.dist_cfg import PACKAGE_NAME
+from Mailnag.daemon.mails import Mail
 
 account_defaults = {
 	'enabled'			: '0',
@@ -42,8 +51,17 @@ account_defaults = {
 
 class Account:
 	"""Account class"""
-	def __init__(self, mailbox_type = None, enabled = False, name = '', **kw):
-		self._backend = None
+
+	def __init__(
+		self,
+		mailbox_type: str | None = None,
+		enabled: bool = False,
+		name: str = '',
+		**kw
+	):
+		"""Initializes account whit type, name and other configuration
+		paramaters."""
+		self._backend: MailboxBackend | None = None
 		self.set_config(
 			mailbox_type=mailbox_type,
 			name=name,
@@ -51,7 +69,13 @@ class Account:
 			config=kw)
 
 
-	def set_config(self, mailbox_type, enabled, name, config):
+	def set_config(
+		self,
+		mailbox_type: str | None,
+		enabled: bool,
+		name: str,
+		config: dict[str, Any]
+	) -> None:
 		"""Set accounts configuration."""
 		self.enabled = enabled
 		if mailbox_type:
@@ -76,7 +100,7 @@ class Account:
 		self._backend = None
 
 
-	def get_config(self):
+	def get_config(self) -> dict[str, Any]:
 		"""Return account's configuration as a dict."""
 		config = {
 			'enabled': self.enabled,
@@ -87,36 +111,40 @@ class Account:
 		return config
 
 
-	def open(self):
+	def open(self) -> None:
 		"""Open mailbox for the account."""
 		self._get_backend().open()
 
 
-	def close(self):
+	def close(self) -> None:
 		"""Close mailbox for this account."""
 		self._get_backend().close()
 
 
 	# Indicates whether the account 
 	# holds an active existing connection.
-	def is_open(self):
+	def is_open(self) -> bool:
 		"""Returns true if the mailbox is opened."""
 		return self._get_backend().is_open()
 
 
-	def list_messages(self):
+	def list_messages(self) -> Iterator[tuple[str, Message, dict[str, Any]]]:
 		"""Lists unseen messages from the mailbox for this account.
-		Yields a set of tuples (folder, message).
+		Yields a set of tuples (folder, message, flags).
 		"""
 		return self._get_backend().list_messages()
 
 
-	def supports_notifications(self):
+	def supports_notifications(self) -> bool:
 		"""Returns True if account supports notifications."""
 		return self._get_backend().supports_notifications()
 
 
-	def notify_next_change(self, callback=None, timeout=None):
+	def notify_next_change(
+		self,
+		callback: Callable[[tuple[str, Any]], None] | None = None,
+		timeout: int | None = None
+	) -> None:
 		"""Asks mailbox to notify next change.
 		Callback is called when new mail arrives or removed.
 		This may raise an exception if mailbox does not support
@@ -125,7 +153,7 @@ class Account:
 		self._get_backend().notify_next_change(callback, timeout)
 
 
-	def cancel_notifications(self):
+	def cancel_notifications(self) -> None:
 		"""Cancels notifications.
 		This may raise an exception if mailbox does not support
 		notifications.
@@ -133,29 +161,31 @@ class Account:
 		self._get_backend().cancel_notifications()
 
 
-	def request_server_folders(self):
+	def request_server_folders(self) -> list[str]:
 		"""Requests folder names (list) from a server.
 		Returns an empty list if mailbox does not support folders.
 		"""
 		return self._get_backend().request_folders()
 
 
-	def supports_mark_as_seen(self):
+	def supports_mark_as_seen(self) -> bool:
+		"""Tells whether mails can be marked as seen in this account."""
 		return self._get_backend().supports_mark_as_seen()
 
 
-	def mark_as_seen(self, mails):
+	def mark_as_seen(self, mails: list[Mail]):
+		"""Marks mails as seen."""
 		self._get_backend().mark_as_seen(mails)
 		
 			
-	def get_id(self):
+	def get_id(self) -> str:
 		"""Returns unique id for the account."""
 		# Assumption: The name of the account is unique.
 		return str(hash(self.name))
 
 
-	def _get_backend(self):
-		if not self._backend:
+	def _get_backend(self) -> MailboxBackend:
+		if self._backend is None:
 			backend_config = self._get_backend_config()
 			self._backend = create_backend(self.mailbox_type,
 											name=self.name,
@@ -163,7 +193,7 @@ class Account:
 		return self._backend
 
 
-	def _get_backend_config(self):
+	def _get_backend_config(self) -> dict[str, Any]:
 		config = {}
 		imap_pop_config = {
 			'user': self.user,
@@ -185,50 +215,64 @@ class Account:
 # AccountManager class
 #
 class AccountManager:
-	def __init__(self):
-		self._accounts = []
-		self._removed = []
+	"""Account manager holds accounts"""
+
+	def __init__(self) -> None:
+		self._accounts: list[Account] = []
+		self._removed: list[Account] = []
 		self._secretstore = SecretStore.get_default()
 		
-		if self._secretstore == None:
+		if self._secretstore is None:
 			logging.warning("Failed to create secretstore - account passwords will be stored in plaintext config file.")
 
 	
-	def __len__(self):
+	def __len__(self) -> int:
+		"""Returns number of accounts"""
 		return len(self._accounts)
 	
 	
-	def __iter__(self):
+	def __iter__(self) -> Iterator[Account]:
+		"""Returns iterator for accounts"""
 		for acc in self._accounts:
 			yield acc
 
 		
-	def __contains__(self, item):
+	def __contains__(self, item: Account) -> bool:
+		"""Checks if account is in account managers collection."""
 		return (item in self._accounts)
 	
 	
-	def add(self, account):
+	def add(self, account: Account) -> None:
+		"""Adds account to account manager."""
 		self._accounts.append(account)
 	
 	
-	def remove(self, account):
+	def remove(self, account: Account) -> None:
+		"""Removes account from account manager."""
 		self._accounts.remove(account)
 		self._removed.append(account)
 	
 	
-	def clear(self):
+	def clear(self) -> None:
+		"""Removes all accounts."""
 		for acc in self._accounts:
 			self._removed.append(acc)
 		del self._accounts[:]
 	
 	
-	def to_list(self):
+	def to_list(self) -> list[Account]:
+		"""Returns list of accounts."""
 		# Don't pass a ref to the internal accounts list.
 		# (Accounts must be removed via the remove() method only.)
 		return self._accounts[:]
 	
 	
-	def load_from_cfg(self, cfg, enabled_only = False):
+	def load_from_cfg(
+		self,
+		cfg: RawConfigParser,
+		enabled_only: bool = False
+	) -> None:
+		"""Loads accounts from configuration."""
 		del self._accounts[:]
 		del self._removed[:]
 		
@@ -271,7 +315,8 @@ class AccountManager:
 			section_name = "account" + str(i)
 			
 
-	def save_to_cfg(self, cfg):		
+	def save_to_cfg(self, cfg: RawConfigParser) -> None:
+		"""Saves accounts to configuration."""
 		# Remove all accounts from cfg
 		i = 1
 		section_name = "account" + str(i)
@@ -300,7 +345,7 @@ class AccountManager:
 			
 			cfg.add_section(section_name)
 			
-			cfg.set(section_name, 'enabled', int(acc.enabled))
+			cfg.set(section_name, 'enabled', str(int(acc.enabled)))
 			cfg.set(section_name, 'type', acc.mailbox_type)
 			cfg.set(section_name, 'name', acc.name)
 
@@ -322,19 +367,29 @@ class AccountManager:
 			i = i + 1
 	
 		
-	def _get_account_id(self, user, server, is_imap):
+	def _get_account_id(self, user: str, server: str, is_imap: bool) -> str:
 		# TODO : Introduce account.uuid when rewriting account and backend code
 		return hashlib.md5((user + server + str(is_imap)).encode('utf-8')).hexdigest()
 	
 	
-	def _get_account_cfg(self, cfg, section_name, option_name):
+	def _get_account_cfg(
+		self,
+		cfg: RawConfigParser,
+		section_name: str,
+		option_name: str
+	) -> Any:
 		if cfg.has_option(section_name, option_name):
 			return cfg.get(section_name, option_name)
 		else:
 			return account_defaults[option_name]
 
 
-	def _get_cfg_options(self, cfg, section_name, option_spec):
+	def _get_cfg_options(
+		self,
+		cfg: RawConfigParser,
+		section_name: str,
+		option_spec: list[Param]
+	) -> dict[str, Any]:
 		options = {}
 		for s in option_spec:
 			options[s.param_name] = self._get_cfg_option(cfg,
@@ -345,7 +400,14 @@ class AccountManager:
 		return options
 
 
-	def _get_cfg_option(self, cfg, section_name, option_name, convert, default_value):
+	def _get_cfg_option(
+		self,
+		cfg: RawConfigParser,
+		section_name: str,
+		option_name: str,
+		convert: Callable[[str], Any] | None,
+		default_value: Any
+	) -> Any:
 		if convert and cfg.has_option(section_name, option_name):
 			value = convert(cfg.get(section_name, option_name))
 		else:
@@ -353,7 +415,13 @@ class AccountManager:
 		return value
 
 
-	def _set_cfg_options(self, cfg, section_name, options, option_spec):
+	def _set_cfg_options(
+		self,
+		cfg: RawConfigParser,
+		section_name: str,
+		options: dict[str, Any],
+		option_spec: list[Param]
+	) -> None:
 		for s in option_spec:
 			if s.to_str and s.param_name in options:
 				value = s.to_str(options[s.param_name])

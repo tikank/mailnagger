@@ -22,20 +22,35 @@
 #
 
 import email
+import email.utils
 import os
 import logging
 import hashlib
 
+from configparser import RawConfigParser
 from email.header import decode_header, make_header
+from email.message import Message
+from typing import Any, TYPE_CHECKING
 from Mailnag.common.i18n import _
 from Mailnag.common.config import cfg_folder
+
+if TYPE_CHECKING:
+	from Mailnag.common.accounts import Account
 
 
 #
 # Mail class
 #
 class Mail:
-	def __init__(self, datetime, subject, sender, id, account, flags):
+	def __init__(
+		self,
+		datetime: int,
+		subject: str,
+		sender: tuple[str, str],
+		id: str,
+		account: "Account",
+		flags: dict[str, Any]
+	):
 		self.datetime = datetime
 		self.subject = subject
 		self.sender = sender
@@ -48,14 +63,14 @@ class Mail:
 # MailCollector class
 #
 class MailCollector:
-	def __init__(self, cfg, accounts):
+	def __init__(self, cfg: RawConfigParser, accounts: list["Account"]):
 		self._cfg = cfg
 		self._accounts = accounts
 		
 		
-	def collect_mail(self, sort = True):
-		mail_list = []
-		mail_ids = {}
+	def collect_mail(self, sort: bool = True) -> list[Mail]:
+		mail_list: list[Mail] = []
+		mail_ids: dict[str, None] = {}
 		
 		for acc in self._accounts:
 			# open mailbox for this account
@@ -108,7 +123,10 @@ class MailCollector:
 		return mail_list
 
 
-	def _get_header(self, msg_dict):
+	def _get_header(
+		self,
+		msg_dict: Message
+	) -> tuple[tuple[str, str], str, int, str]:
 		# Get sender
 		sender = ('', '')
 		
@@ -140,8 +158,12 @@ class MailCollector:
 			
 			# make a 10-tupel (UTC)
 			parsed_date = email.utils.parsedate_tz(content)
-			# convert 10-tupel to seconds incl. timezone shift
-			datetime = email.utils.mktime_tz(parsed_date)
+			if parsed_date is not None:
+				# convert 10-tupel to seconds incl. timezone shift
+				datetime = email.utils.mktime_tz(parsed_date)
+			else:
+				logging.warning('Email date set to zero.')
+				datetime = 0
 		except:
 			logging.warning('Email date set to zero.')
 			datetime = 0
@@ -155,7 +177,7 @@ class MailCollector:
 		return (sender, subject, datetime, msgid)
 	
 	
-	def _get_header_field(self, msg_dict, key):
+	def _get_header_field(self, msg_dict: Message, key: str) -> str:
 		if key in msg_dict:
 			value = msg_dict[key]
 		elif key.lower() in msg_dict:
@@ -168,12 +190,20 @@ class MailCollector:
 
 
 	# return utf-8 decoded string from multi-part/multi-charset header text
-	def _convert(self, text):
+	def _convert(self, text: str) -> str:
 		decoded = decode_header(text)
 		return str(make_header(decoded))
 
 
-	def _get_id(self, msgid, acc, folder, sender, subject, datetime):
+	def _get_id(
+		self,
+		msgid: str,
+		acc: "Account",
+		folder: str,
+		sender: tuple[str, str],
+		subject: str,
+		datetime: int
+	) -> str:
 		if len(msgid) > 0:
 			id = hashlib.md5(msgid.encode('utf-8')).hexdigest()
 		else:
@@ -194,20 +224,20 @@ class MailCollector:
 # MailSyncer class
 #
 class MailSyncer:
-	def __init__(self, cfg):
+	def __init__(self, cfg: RawConfigParser):
 		self._cfg = cfg
-		self._mails_by_account = {}
-		self._mail_list = []
+		self._mails_by_account: dict[str, dict[str, Mail]] = {}
+		self._mail_list: list[Mail] = []
 	
 	
-	def sync(self, accounts):
+	def sync(self, accounts: list["Account"]) -> list[Mail]:
 		needs_rebuild = False
 		
 		# collect mails from given accounts
 		rcv_lst = MailCollector(self._cfg, accounts).collect_mail(sort = False)
 		
 		# group received mails by account
-		tmp = {}
+		tmp: dict[str, dict[str, Mail]] = {}
 		for acc in accounts:
 			tmp[acc.get_id()] = {}
 		for mail in rcv_lst:
@@ -249,13 +279,13 @@ class MailSyncer:
 #
 # Memorizer class
 #
-class Memorizer(dict):
-	def __init__(self):
+class Memorizer(dict[str, str]):
+	def __init__(self) -> None:
 		dict.__init__(self)
-		self._changed = False
+		self._changed: bool = False
 	
 	
-	def load(self):
+	def load(self) -> None:
 		self.clear()
 		self._changed = False
 		
@@ -274,7 +304,7 @@ class Memorizer(dict):
 
 	
 	# save mail ids to a file
-	def save(self, force = False):
+	def save(self, force: bool = False) -> None:
 		if (not self._changed) and (not force):
 			return
 		
@@ -290,7 +320,7 @@ class Memorizer(dict):
 		self._changed = False
 
 
-	def sync(self, mail_list):
+	def sync(self, mail_list: list[Mail]) -> None:
 		for m in mail_list:
 			if m.id not in self:
 				# new mail is not yet known to the memorizer
@@ -310,17 +340,17 @@ class Memorizer(dict):
 	
 	
 	# check if mail id is in the memorizer list
-	def contains(self, id):
+	def contains(self, id: str):
 		return (id in self)
 
 
 	# set seen flag for this email
-	def set_to_seen(self, id):
+	def set_to_seen(self, id: str):
 		self[id] = '1'
 		self._changed = True
 
 
-	def is_unseen(self, id):
+	def is_unseen(self, id: str):
 		if id in self:
 			flag = self[id]
 			return (flag == '0')

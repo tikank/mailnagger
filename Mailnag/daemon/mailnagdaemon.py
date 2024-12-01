@@ -25,7 +25,7 @@ import threading
 import logging
 import time
 from configparser import RawConfigParser
-from typing import Callable
+from collections.abc import Callable
 
 from Mailnag.common.accounts import AccountManager, Account
 from Mailnag.daemon.mailchecker import MailChecker

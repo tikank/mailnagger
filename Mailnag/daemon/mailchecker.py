@@ -21,14 +21,26 @@
 
 import threading
 import logging
+from configparser import RawConfigParser
 
+from Mailnag.common.accounts import Account
+from Mailnag.common.plugins import HookTypes, HookRegistry
 from Mailnag.common.utils import try_call
-from Mailnag.common.plugins import HookTypes
-from Mailnag.daemon.mails import MailSyncer
+from Mailnag.daemon.conntest import ConnectivityTest
+from Mailnag.daemon.dbus import DBusService
+from Mailnag.daemon.mails import MailSyncer, Memorizer, Mail
 
 
 class MailChecker:
-	def __init__(self, cfg, memorizer, hookreg, conntest, dbus_service):
+
+	def __init__(
+		self,
+		cfg: RawConfigParser,
+		memorizer: Memorizer,
+		hookreg: HookRegistry,
+		conntest: ConnectivityTest,
+		dbus_service: DBusService
+	):
 		self._firstcheck = True # first check after startup
 		self._mailcheck_lock = threading.Lock()
 		self._mailsyncer = MailSyncer(cfg)
@@ -40,7 +52,7 @@ class MailChecker:
 		self._count_on_last_check = 0
 		
 	
-	def check(self, accounts):
+	def check(self, accounts: list[Account]) -> None:
 		# make sure multiple threads (idler and polling thread) 
 		# don't check for mails simultaneously.
 		with self._mailcheck_lock:
@@ -56,7 +68,7 @@ class MailChecker:
 			all_mails = self._mailsyncer.sync(accounts)
 			unseen_mails = []
 			new_mails = []
-			seen_mails_by_account = {}
+			seen_mails_by_account: dict[Account, list[Mail]] = {}
 			
 			for mail in all_mails:
 				if self._memorizer.contains(mail.id): # mail was fetched before

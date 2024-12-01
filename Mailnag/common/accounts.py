@@ -298,7 +298,7 @@ class AccountManager:
 				#       Not every backend requires a password.
 				user = options.get('user')
 				server = options.get('server')
-				if self._secretstore != None and user and server:
+				if self._secretstore is not None and user and server:
 					password = self._secretstore.get(self._get_account_id(user, server, imap))
 					if not password: password = ''
 					options['password'] = password
@@ -328,7 +328,7 @@ class AccountManager:
 		# Delete secrets of removed accounts from the secretstore
 		# (it's important to do this before adding accounts, 
 		# in case multiple accounts with the same id exist).
-		if self._secretstore != None:
+		if self._secretstore is not None:
 			for acc in self._removed:
 				self._secretstore.remove(self._get_account_id(acc.user, acc.server, acc.imap))
 			
@@ -354,7 +354,7 @@ class AccountManager:
 
 			# TODO: Storing a password is mailbox specific.
 			#       Not every backend requires a password.
-			if self._secretstore != None:
+			if self._secretstore is not None:
 				self._secretstore.set(
 					self._get_account_id(acc.user, acc.server, acc.imap),
 					acc.password,

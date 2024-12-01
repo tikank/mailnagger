@@ -19,21 +19,21 @@
 #
 
 
+from typing import Self, ClassVar, Optional
 try:
 	import gi
 	gi.require_version('Secret', '1')
 	from gi.repository import Secret
-	_libsecret_err = None
+	_libsecret_err: ModuleNotFoundError | None = None
 except ModuleNotFoundError as e:
 	_libsecret_err = e
 
 
-
-class SecretStore():
-	_instance = None
+class SecretStore:
+	_instance: ClassVar[Self | None] = None
 	
-	def __init__(self):
-		if _libsecret_err != None:
+	def __init__(self) -> None:
+		if _libsecret_err is not None:
 			raise _libsecret_err
 
 		self._schema = Secret.Schema.new(
@@ -43,26 +43,26 @@ class SecretStore():
 		)
 
 
-	def get(self, secret_id):
+	def get(self, secret_id: str) -> str:
 		return Secret.password_lookup_sync(self._schema, {'id': secret_id}, None)
 
 
-	def set(self, secret_id, secret, description):
+	def set(self, secret_id: str, secret: str, description: str) -> None:
 		Secret.password_store_sync(
 			self._schema, {'id': secret_id}, Secret.COLLECTION_DEFAULT, 
 			description, secret, None)
 
 
-	def remove(self, secret_id):
+	def remove(self, secret_id: str) -> bool:
 		return Secret.password_clear_sync(self._schema, {'id': secret_id}, None)
 	
 	
 	@staticmethod
-	def get_default():
-		if _libsecret_err != None:
+	def get_default() -> Optional["SecretStore"]:
+		if _libsecret_err is not None:
 			return None
 
-		if SecretStore._instance == None:
+		if SecretStore._instance is None:
 			SecretStore._instance = SecretStore()
 
 		return SecretStore._instance

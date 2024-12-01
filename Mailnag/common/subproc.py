@@ -20,6 +20,7 @@
 import subprocess
 import threading
 import logging
+from collections.abc import Callable
 
 # Note : All functions of this module *are* thread-safe.
 
@@ -38,8 +39,12 @@ _procs : dict[threading.Thread, subprocess.Popen] = {}
 
 # Starts a subprocess and an associated thread that waits for
 # the subprocess to terminate (prevents zombie processes).
-def start_subprocess(args, shell = False, callback = None):
-	def thread():
+def start_subprocess(
+	args: list[str] | str,
+	shell: bool = False,
+	callback: Callable[[int], None] | None = None
+) -> int:
+	def thread() -> None:
 		t = threading.currentThread()
 		
 		try:
@@ -47,7 +52,7 @@ def start_subprocess(args, shell = False, callback = None):
 			with _proc_lock: p = _procs[t]
 			retcode = p.wait()
 			
-			if callback != None:
+			if callback is not None:
 				callback(retcode)
 		finally:
 			with _proc_lock: del _procs[t]
@@ -59,7 +64,7 @@ def start_subprocess(args, shell = False, callback = None):
 			p = subprocess.Popen(args, shell = shell)
 		except: logging.exception('Caught an exception.')
 	
-		if p != None:
+		if p is not None:
 			pid = p.pid
 			t = threading.Thread(target = thread)
 			with _proc_lock:
@@ -73,7 +78,7 @@ def start_subprocess(args, shell = False, callback = None):
 # start_subprocess(). Subprocesses that don't terminate
 # within the timeframe (seconds) specified by the 
 # timeout argument, are sent a kill signal.
-def terminate_subprocesses(timeout = 3.0):
+def terminate_subprocesses(timeout: float = 3.0) -> None:
 	with _func_lock:
 		
 		threads = []
@@ -109,14 +114,14 @@ def terminate_subprocesses(timeout = 3.0):
 
 # Internal Watchdog class
 class _Watchdog(threading.Thread):
-	def __init__(self, timeout):
+	def __init__(self, timeout: float):
 		threading.Thread.__init__(self)
 		self.triggered = False
 		self._timeout = timeout
 		self._event = threading.Event()
 
 
-	def run(self):
+	def run(self) -> None:
 		self._event.wait(self._timeout)
 		if not self._event.is_set():
 			logging.warning('Process termination took too long - watchdog starts killing...')
@@ -131,7 +136,7 @@ class _Watchdog(threading.Thread):
 					except: logging.debug('p.kill() failed')
 
 
-	def stop(self):
+	def stop(self) -> None:
 		# Abort watchdog thread (may have been triggered already)
 		self._event.set()
 		# Wait for watchdog thread (may be inactive already)

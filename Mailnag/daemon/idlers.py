@@ -1,5 +1,5 @@
 # Copyright 2011 - 2021 Patrick Ulbrich <zulu99@gmx.net>
-# Copyright 2016, 2018 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2018, 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 Leighton Earl <leighton.earl@gmx.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -21,14 +21,21 @@
 import threading
 import time
 import logging
+from collections.abc import Callable
 from Mailnag.common.exceptions import InvalidOperationException
+from Mailnag.common.accounts import Account
 
 
 #
 # Idler class
 #
-class Idler(object):
-	def __init__(self, account, sync_callback, idle_timeout):
+class Idler:
+	def __init__(
+		self,
+		account: Account,
+		sync_callback: Callable[[Account], None],
+		idle_timeout: int
+	):
 		self.RECONNECT_RETRY_INTERVAL = 5 # minutes
 		
 		self._thread = threading.Thread(target=self._idle)
@@ -40,14 +47,14 @@ class Idler(object):
 		self._disposed = False
 
 
-	def start(self):
+	def start(self) -> None:
 		if self._disposed:
 			raise InvalidOperationException("Idler has been disposed")
 			
 		self._thread.start()
 
 		
-	def dispose(self):
+	def dispose(self) -> None:
 		if self._thread.is_alive():
 			# flag a shutdown
 			self._disposing = True
@@ -60,7 +67,7 @@ class Idler(object):
 
 		
 	# idle thread
-	def _idle(self):
+	def _idle(self) -> None:
 		# mailbox may have been opened in mailnagdaemon.py already (immediate check)
 		while (not self._account.is_open()) and (not self._disposing):
 			try:
@@ -111,7 +118,7 @@ class Idler(object):
 		
 	
 	# idle callback (runs on a further thread)
-	def _idle_callback(self, error):
+	def _idle_callback(self, error: tuple[str, int] | None) -> None:
 		# flag that a mail sync is needed
 		self._needsync = True
 		
@@ -125,7 +132,7 @@ class Idler(object):
 		self._event.set()
 	
 			
-	def _reset_conn(self):
+	def _reset_conn(self) -> None:
 		# Try to reset the connection to recover from a possible connection error (e.g. after system suspend)
 		logging.info("Resetting connection for account '%s'" % self._account.name)
 		try: self._account.close()
@@ -133,7 +140,7 @@ class Idler(object):
 		self._reconnect()
 		
 	
-	def _reconnect(self):
+	def _reconnect(self) -> None:
 		# connection has been reset by provider -> try to reconnect
 		logging.info("Idler thread for account '%s' has been disconnected" % self._account.name)
 
@@ -149,7 +156,7 @@ class Idler(object):
 				self._wait(60 * self.RECONNECT_RETRY_INTERVAL) # don't hammer the server
 	
 					
-	def _wait(self, secs):
+	def _wait(self, secs: int) -> None:
 		start_time = time.time()
 		while (((time.time() - start_time) < secs) and (not self._disposing)):
 			time.sleep(1)
@@ -159,14 +166,19 @@ class Idler(object):
 # IdlerRunner class
 #
 class IdlerRunner:
-	def __init__(self, accounts, sync_callback, idle_timeout):
-		self._idlerlist = []
+	def __init__(
+		self,
+		accounts: list[Account],
+		sync_callback: Callable[[Account], None],
+		idle_timeout: int
+	):
+		self._idlerlist: list[Idler] = []
 		self._accounts = accounts
 		self._sync_callback = sync_callback
 		self._idle_timeout = idle_timeout
 	
 	
-	def start(self):
+	def start(self) -> None:
 		for acc in self._accounts:
 			if acc.supports_notifications():
 				try:
@@ -177,7 +189,7 @@ class IdlerRunner:
 					logging.error("Error: Failed to create an idler thread for account '%s' (%s)" % (acc.name, ex))
 					
 	
-	def dispose(self):
+	def dispose(self) -> None:
 		for idler in self._idlerlist:
 			idler.dispose()
 

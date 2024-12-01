@@ -142,7 +142,7 @@ class Account:
 
 	def notify_next_change(
 		self,
-		callback: Callable[[tuple[str, Any]], None] | None = None,
+		callback: Callable[[tuple[str, int] | None], None] | None = None,
 		timeout: int | None = None
 	) -> None:
 		"""Asks mailbox to notify next change.

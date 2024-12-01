@@ -21,41 +21,50 @@ import dbus.service
 import logging
 from Mailnag.common.dist_cfg import DBUS_BUS_NAME, DBUS_OBJ_PATH
 from Mailnag.common.exceptions import InvalidOperationException
+from Mailnag.common.plugins import MailnagController
+from Mailnag.daemon.mails import Mail
 
 MAX_INT32 = ((0xFFFFFFFF // 2) - 1)
 
 
 # DBUS server that exports Mailnag signals and methods 
 class DBusService(dbus.service.Object):
-	def __init__(self, mailnag_daemon):
-		self._mails = []
+	def __init__(self, mailnag_daemon: MailnagController):
+		self._mails: list[dict[str, str | int]] = []
 		self._daemon = mailnag_daemon
 		bus_name = dbus.service.BusName(DBUS_BUS_NAME, bus = dbus.SessionBus())
 		dbus.service.Object.__init__(self, bus_name, DBUS_OBJ_PATH)
 	
 
 	@dbus.service.signal(dbus_interface = DBUS_BUS_NAME, signature = 'aa{sv}aa{sv}')
-	def MailsAdded(self, new_mails, all_mails):
+	def MailsAdded(
+		self,
+		new_mails: list[dict[str, str | int]],
+		all_mails: list[dict[str, str | int]]
+	) -> None:
 		pass
 	
 	
 	@dbus.service.signal(dbus_interface = DBUS_BUS_NAME, signature = 'aa{sv}')
-	def MailsRemoved(self, remaining_mails):
+	def MailsRemoved(
+		self,
+		remaining_mails: list[dict[str, str | int]]
+	) -> None:
 		pass
 	
 		
 	@dbus.service.method(dbus_interface = DBUS_BUS_NAME, out_signature = 'aa{sv}')
-	def GetMails(self):
+	def GetMails(self) -> list[dict[str, str | int]]:
 		return self._mails
 		
 	
 	@dbus.service.method(dbus_interface = DBUS_BUS_NAME, out_signature = 'u')
-	def GetMailCount(self):
+	def GetMailCount(self) -> int:
 		return len(self._mails)
 
 
 	@dbus.service.method(dbus_interface = DBUS_BUS_NAME)
-	def Shutdown(self):
+	def Shutdown(self) -> None:
 		try:
 			self._daemon.shutdown()
 		except InvalidOperationException:
@@ -63,7 +72,7 @@ class DBusService(dbus.service.Object):
 	
 	
 	@dbus.service.method(dbus_interface = DBUS_BUS_NAME)
-	def CheckForMails(self):
+	def CheckForMails(self) -> None:
 		try:
 			self._daemon.check_for_mails()
 		except InvalidOperationException:
@@ -71,7 +80,7 @@ class DBusService(dbus.service.Object):
 
 
 	@dbus.service.method(dbus_interface = DBUS_BUS_NAME, in_signature = 's')
-	def MarkMailAsRead(self, mail_id):
+	def MarkMailAsRead(self, mail_id: str) -> None:
 		self._mails = [m for m in self._mails if m['id'] != mail_id]
 		try:
 			self._daemon.mark_mail_as_read(mail_id)
@@ -79,23 +88,27 @@ class DBusService(dbus.service.Object):
 			pass
 			
 	
-	def signal_mails_added(self, new_mails, all_mails):
+	def signal_mails_added(
+		self,
+		new_mails: list[Mail],
+		all_mails: list[Mail]
+	) -> None:
 		conv_new_mails = self._convert_mails(new_mails)
 		conv_all_mails = self._convert_mails(all_mails)
 		self._mails = conv_all_mails
 		self.MailsAdded(conv_new_mails, conv_all_mails)
 		
 		
-	def signal_mails_removed(self, remaining_mails):
+	def signal_mails_removed(self, remaining_mails: list[Mail]) -> None:
 		conv_remaining_mails = self._convert_mails(remaining_mails)
 		self._mails = conv_remaining_mails
 		self.MailsRemoved(conv_remaining_mails)
 	
 		
-	def _convert_mails(self, mails):
+	def _convert_mails(self, mails: list[Mail]) -> list[dict[str, str | int]]:
 		converted_mails = []
 		for m in mails:
-			d = {}
+			d: dict[str, str | int] = {}
 			name, addr = m.sender
 			
 			if m.datetime > MAX_INT32:

@@ -29,14 +29,14 @@ class TestModes(Enum):
 
 
 class ConnectivityTest:
-	def __init__(self, testmode):
+	def __init__(self, testmode: TestModes):
 		self._testmode = testmode
-		self._monitor = None
+		self._monitor: Gio.NetworkMonitor | None = None
 		
 		
-	def is_offline(self):
+	def is_offline(self) -> bool:
 		if self._testmode == TestModes.NETWORKMONITOR:
-			if self._monitor == None:
+			if self._monitor is None:
 				# The monitor instance is based on NetworkManager if available, 
 				# otherwise on the kernels netlink interface.
 				self._monitor = Gio.NetworkMonitor.get_default()

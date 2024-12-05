@@ -13,6 +13,8 @@ Fixes
 * Fixed compatibility with Python 3.9. Too new type hints are now replaced
   with Optional and Union types.
 
+* Added missing package metadata and classifiers.
+
 
 Version 2.3.0 (2024-11-29)
 ==========================

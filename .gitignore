@@ -8,4 +8,5 @@ Mailnag/plugins/messagingmenuplugin.py
 .nox/
 .env-dev/
 *.egg-info/
+.python-version
 

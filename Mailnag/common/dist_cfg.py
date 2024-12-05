@@ -22,9 +22,12 @@
    propper distro integration."""
 
 import sysconfig
-from importlib.resources import files
-from importlib.resources.abc import Traversable
 from pathlib import Path
+from importlib.resources import files
+try:
+    from importlib.resources.abc import Traversable
+except ModuleNotFoundError:
+    from importlib_resources.abc import Traversable
 
 # Application version displayed in the 
 # about dialog of the config window.

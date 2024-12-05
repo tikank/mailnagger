@@ -160,6 +160,7 @@ setup(name=PACKAGE_NAME,
         'pygobject',
         'pyxdg',
         'dbus-python',
+        "importlib_resources;python_version<'3.11'",
     ],
     extras_require={
         "dev": [

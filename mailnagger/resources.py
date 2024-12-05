@@ -22,9 +22,9 @@ import sysconfig
 import xdg.BaseDirectory as base
 
 from importlib.resources import files
-from importlib.resources.abc import Traversable
+
 from Mailnag.common.dist_cfg import (
-    PACKAGE_NAME, DATA_DIR, PLUGIN_DIR, LOCALE_DIR
+    PACKAGE_NAME, DATA_DIR, PLUGIN_DIR, LOCALE_DIR, Traversable
 )
 from pathlib import Path
 from types import ModuleType

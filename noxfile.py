@@ -30,7 +30,7 @@ def tests_default(session : nox.Session) -> None:
 
 
 @nox.session(
-    python=['3.13', '3.12'],
+    python=['3.13', '3.12', '3.11', '3.10'],
     venv_backend='venv',
 )
 def tests(session : nox.Session) -> None:

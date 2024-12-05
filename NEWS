@@ -1,6 +1,16 @@
 Mailnagger news
 ===============
 
+Version 2.3.1.dev0 (not released)
+=================================
+
+Fixes
+-----
+
+* Fixed compatibility with Python 3.10. Using importlib.resources.abc package
+  requires importlib-resources, which contains backport for that.
+
+
 Version 2.3.0 (2024-11-29)
 ==========================
 

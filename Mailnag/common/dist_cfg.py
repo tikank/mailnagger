@@ -23,6 +23,7 @@
 
 import sysconfig
 from pathlib import Path
+from typing import Union
 from importlib.resources import files
 try:
     from importlib.resources.abc import Traversable
@@ -65,7 +66,7 @@ DESKTOP_FILE_DIR: Path = _DEFAULT_DESKTOP_FILE_DIR
 
 # The PLUGIN_DIR constant specifies the root path for the mailnagger plugin
 # files (usually you have to make it point to <PYTHON_LIB_DIR>/Mailnag/plugins).
-PLUGIN_DIR: Traversable | Path = _DEFAULT_PLUGIN_DIR
+PLUGIN_DIR: Union[Traversable, Path] = _DEFAULT_PLUGIN_DIR
 
 # The BIN_DIR constant specifies the path for the mailnag start scripts
 # (usually you have to make it point to '/usr/bin').

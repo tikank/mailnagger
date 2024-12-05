@@ -28,6 +28,7 @@ from Mailnag.common.dist_cfg import (
 )
 from pathlib import Path
 from types import ModuleType
+from typing import Optional, Union
 
 
 def get_data_paths() -> list[Path]:
@@ -40,7 +41,7 @@ def get_data_paths() -> list[Path]:
     return data_paths
 
 
-def get_data_file(filename: str) -> Path | None:
+def get_data_file(filename: str) -> Optional[Path]:
     """Return path to filename if it exists anywhere in the data paths,
        else return None
     """
@@ -69,7 +70,7 @@ def get_config_path() -> Path:
     return cfg_folder
 
 
-def get_plugin_paths() -> list[Path | Traversable]:
+def get_plugin_paths() -> list[Union[Path, Traversable]]:
     """Returns paths to plugin directories."""
     PLUGIN_LIB_PATH = PLUGIN_DIR
     PLUGIN_USER_PATH = get_config_path() / "plugins"

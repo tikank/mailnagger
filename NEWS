@@ -10,6 +10,9 @@ Fixes
 * Fixed compatibility with Python 3.10. Using importlib.resources.abc package
   requires importlib-resources, which contains backport for that.
 
+* Fixed compatibility with Python 3.9. Too new type hints are now replaced
+  with Optional and Union types.
+
 
 Version 2.3.0 (2024-11-29)
 ==========================

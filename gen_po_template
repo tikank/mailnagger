@@ -21,7 +21,7 @@ done
 
 # write template files
 pyfiles=`find $python_dir -iname "*.py" -printf "%p "`
-xgettext $pyfiles $glade_dir/*.h --keyword=_ --keyword=N_ --add-comments="TRANSLATORS:" --from-code=UTF-8 --copyright-holder="2024 Timo Kankare <timo.kankare@iki.fi>" --package-name="Mailnagger" --package-version="2.3.0" --msgid-bugs-address="https://github.com/tikank/mailnagger/issues" --output=$pot_file
+xgettext $pyfiles $glade_dir/*.h --keyword=_ --keyword=N_ --add-comments="TRANSLATORS:" --from-code=UTF-8 --copyright-holder="2024 Timo Kankare <timo.kankare@iki.fi>" --package-name="Mailnagger" --package-version="2.3.1.dev0" --msgid-bugs-address="https://github.com/tikank/mailnagger/issues" --output=$pot_file
 
 # clean up
 rm $glade_dir/*.h

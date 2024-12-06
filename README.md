@@ -20,7 +20,8 @@ or [writing docs](https://github.com/tikank/mailnagger/tree/master/docs).
 
 ## Installation
 
-Easiest way to install Mailnagger is to use
+Easiest way to install Mailnagger from
+[PyPI](https://pypi.org/project/mailnagger/) is to use
 [pipx](https://pypi.org/project/pipx/).
 
 Run

@@ -18,12 +18,13 @@ import sys
 import sysconfig
 
 
+this_directory = Path(__file__).parent
+
 # NOTE: These should be in sync with Mailnag.common.dist_cfg PACKAGE_NAME
 #       and APP_VERSION.
 PACKAGE_NAME = 'mailnagger'
-APP_VERSION = '2.4.0.dev0'
+app_version = (this_directory / "VERSION").read_text().strip()
 
-this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
 logger = logging.getLogger(__name__)
@@ -116,14 +117,44 @@ class InstallData(install_data):
 
 
 setup(name=PACKAGE_NAME,
-    version=APP_VERSION,
+    version=app_version,
     description='An extensible mail notification daemon',
     long_description=long_description,
     long_description_content_type="text/markdown",
     author='Timo Kankare',
     author_email='timo.kankare@iki.fi',
-    url='https://github.com/tikank/mailnagger',
-    license='GNU GPL2',
+    project_urls={
+        "homepage": "https://github.com/tikank/mailnagger",
+        "source": "https://github.com/tikank/mailnagger",
+        "issues": "https://github.com/tikank/mailnagger/issues",
+        "releasenotes": "https://github.com/tikank/mailnagger/blob/master/NEWS",
+        "documentation": "https://github.com/tikank/mailnagger/tree/master/docs",
+    },
+    license='GPL-2.0-or-later',
+    license_file='LICENSE',
+    classifiers=[
+        "Development Status :: 5 - Production/Stable",
+        "Environment :: X11 Applications",
+        "Environment :: X11 Applications :: GTK",
+        "Environment :: X11 Applications :: Gnome",
+        "Intended Audience :: End Users/Desktop",
+        "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+        "Natural Language :: English",
+        "Natural Language :: Finnish",
+        "Natural Language :: German",
+        "Operating System :: POSIX :: Linux",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Topic :: Communications :: Email",
+        "Topic :: Communications :: Email :: Post-Office :: IMAP",
+        "Topic :: Communications :: Email :: Post-Office :: POP3",
+        "Topic :: Utilities",
+    ],
     packages=find_packages(
         include=[
             "Mailnag*",
@@ -156,10 +187,12 @@ setup(name=PACKAGE_NAME,
         ])
     ],
     include_package_data=True,
+    python_requires=">=3.9",
     install_requires=[
         'pygobject',
         'pyxdg',
         'dbus-python',
+        "importlib_resources;python_version<'3.11'",
     ],
     extras_require={
         "dev": [

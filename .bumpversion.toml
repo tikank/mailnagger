@@ -37,9 +37,9 @@ optional_value = "final"
 
 
 [[tool.bumpversion.files]]
-filename = "setup.py"
-search = "APP_VERSION = '{current_version}'"
-replace = "APP_VERSION = '{new_version}'"
+filename = "VERSION"
+search = "{current_version}"
+replace = "{new_version}"
 
 
 [[tool.bumpversion.files]]

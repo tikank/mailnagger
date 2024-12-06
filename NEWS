@@ -12,6 +12,21 @@ New features
 ------------
 
 
+Version 2.3.1 (2024-12-06)
+==========================
+
+Fixes
+-----
+
+* Fixed compatibility with Python 3.10. Using importlib.resources.abc package
+  requires importlib-resources, which contains backport for that.
+
+* Fixed compatibility with Python 3.9. Too new type hints are now replaced
+  with Optional and Union types.
+
+* Added missing package metadata and classifiers.
+
+
 Version 2.3.0 (2024-11-29)
 ==========================
 

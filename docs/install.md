@@ -8,7 +8,7 @@ Mailnagger can be installed from
 
 * wheel package: `mailnagger-X.Y.Z-py3-none-any.whl`
 
-* package from [PyPi](https://pypi.org/): `mailnagger`
+* package from [PyPI](https://pypi.org/project/mailnagger/): `mailnagger`
 
 Replace `mailnagger` with one of previous in following examples.
 

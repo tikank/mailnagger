@@ -51,6 +51,7 @@ def mypy(session : nox.Session) -> None:
         env={"PYGOBJECT_STUB_CONFIG": "Gtk3"}
     )
     session.install('.[dev]')
+    session.install('importlib_resources')
     session.run('python', '-m', 'mypy')
 
 

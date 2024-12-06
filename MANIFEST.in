@@ -5,9 +5,10 @@ include po/*.po
 include po/*.pot
 include po/*.md
 recursive-include data/** *
-include doc/*.md
+include docs/*.md
 include .flake8
 include .bumpversion.toml
 include mypy.ini
 include noxfile.py
 include NEWS
+include VERSION

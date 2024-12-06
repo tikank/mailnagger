@@ -28,6 +28,7 @@ gi.require_version('GLib', '2.0')
 from gi.repository import GLib
 from dataclasses import dataclass
 from dbus.mainloop.glib import DBusGMainLoop
+from typing import Optional
 import threading
 import argparse
 import logging
@@ -45,7 +46,7 @@ PROGNAME = 'mailnagger'
 LOG_LEVEL = logging.DEBUG
 
 
-def cleanup(daemon: MailnagDaemon | None) -> None:
+def cleanup(daemon: Optional[MailnagDaemon]) -> None:
     """Terminates the deamon subprocesses."""
 
     event = threading.Event()

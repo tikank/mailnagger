@@ -19,18 +19,18 @@
 #
 
 
-from typing import Self, ClassVar, Optional
+from typing import ClassVar, Optional
 try:
 	import gi
 	gi.require_version('Secret', '1')
 	from gi.repository import Secret
-	_libsecret_err: ModuleNotFoundError | None = None
+	_libsecret_err: Optional[ModuleNotFoundError] = None
 except ModuleNotFoundError as e:
 	_libsecret_err = e
 
 
 class SecretStore:
-	_instance: ClassVar[Self | None] = None
+	_instance: ClassVar[Optional["SecretStore"]] = None
 	
 	def __init__(self) -> None:
 		if _libsecret_err is not None:

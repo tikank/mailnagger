@@ -27,7 +27,7 @@ import hashlib
 from collections.abc import Callable, Iterator
 from configparser import RawConfigParser
 from email.message import Message
-from typing import Any
+from typing import Any, Optional
 from Mailnag.backends import create_backend, get_mailbox_parameter_specs, Param
 from Mailnag.backends.base import MailboxBackend
 from Mailnag.common.secretstore import SecretStore
@@ -54,14 +54,14 @@ class Account:
 
 	def __init__(
 		self,
-		mailbox_type: str | None = None,
+		mailbox_type: Optional[str] = None,
 		enabled: bool = False,
 		name: str = '',
 		**kw
 	):
 		"""Initializes account whit type, name and other configuration
 		paramaters."""
-		self._backend: MailboxBackend | None = None
+		self._backend: Optional[MailboxBackend] = None
 		self.set_config(
 			mailbox_type=mailbox_type,
 			name=name,
@@ -71,7 +71,7 @@ class Account:
 
 	def set_config(
 		self,
-		mailbox_type: str | None,
+		mailbox_type: Optional[str],
 		enabled: bool,
 		name: str,
 		config: dict[str, Any]
@@ -142,8 +142,8 @@ class Account:
 
 	def notify_next_change(
 		self,
-		callback: Callable[[tuple[str, int] | None], None] | None = None,
-		timeout: int | None = None
+		callback: Optional[Callable[[Optional[tuple[str, int]]], None]] = None,
+		timeout: Optional[int] = None
 	) -> None:
 		"""Asks mailbox to notify next change.
 		Callback is called when new mail arrives or removed.
@@ -405,7 +405,7 @@ class AccountManager:
 		cfg: RawConfigParser,
 		section_name: str,
 		option_name: str,
-		convert: Callable[[str], Any] | None,
+		convert: Optional[Callable[[str], Any]],
 		default_value: Any
 	) -> Any:
 		if convert and cfg.has_option(section_name, option_name):

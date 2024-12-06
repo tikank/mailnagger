@@ -21,6 +21,7 @@ import subprocess
 import threading
 import logging
 from collections.abc import Callable
+from typing import Optional, Union
 
 # Note : All functions of this module *are* thread-safe.
 
@@ -40,9 +41,9 @@ _procs : dict[threading.Thread, subprocess.Popen] = {}
 # Starts a subprocess and an associated thread that waits for
 # the subprocess to terminate (prevents zombie processes).
 def start_subprocess(
-	args: list[str] | str,
+	args: Union[list[str], str],
 	shell: bool = False,
-	callback: Callable[[int], None] | None = None
+	callback: Optional[Callable[[int], None]] = None
 ) -> int:
 	def thread() -> None:
 		t = threading.currentThread()

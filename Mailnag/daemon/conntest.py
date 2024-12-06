@@ -19,6 +19,7 @@
 import os
 from enum import Enum
 from gi.repository import Gio
+from typing import Optional
 
 TEST_HOST = 'www.google.com'
 
@@ -31,7 +32,7 @@ class TestModes(Enum):
 class ConnectivityTest:
 	def __init__(self, testmode: TestModes):
 		self._testmode = testmode
-		self._monitor: Gio.NetworkMonitor | None = None
+		self._monitor: Optional[Gio.NetworkMonitor] = None
 		
 		
 	def is_offline(self) -> bool:

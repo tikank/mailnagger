@@ -26,6 +26,7 @@ import logging
 import time
 from configparser import RawConfigParser
 from collections.abc import Callable
+from typing import Optional
 
 from Mailnag.common.accounts import AccountManager, Account
 from Mailnag.daemon.mailchecker import MailChecker
@@ -52,17 +53,17 @@ class MailnagDaemon(MailnagController):
 
 	def __init__(
 			self,
-			fatal_error_handler: Callable[[Exception], None] | None = None,
-			shutdown_request_handler: Callable[[], None] | None = None
+			fatal_error_handler: Optional[Callable[[Exception], None]] = None,
+			shutdown_request_handler: Optional[Callable[[], None]] = None
 	):
 		"""Initialize daemon with error and shutdown callback handlers."""
 
 		self._fatal_error_handler = fatal_error_handler
 		self._shutdown_request_handler = shutdown_request_handler
 		self._plugins: list[Plugin] = []
-		self._poll_thread: threading.Thread | None = None
+		self._poll_thread: Optional[threading.Thread] = None
 		self._poll_thread_stop = threading.Event()
-		self._idlrunner: IdlerRunner | None = None
+		self._idlrunner: Optional[IdlerRunner] = None
 		self._disposed = False
 	
 		self._cfg = read_cfg()

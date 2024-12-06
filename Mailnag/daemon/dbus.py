@@ -19,6 +19,7 @@
 import dbus
 import dbus.service
 import logging
+from typing import Union
 from Mailnag.common.dist_cfg import DBUS_BUS_NAME, DBUS_OBJ_PATH
 from Mailnag.common.exceptions import InvalidOperationException
 from Mailnag.common.plugins import MailnagController
@@ -30,7 +31,7 @@ MAX_INT32 = ((0xFFFFFFFF // 2) - 1)
 # DBUS server that exports Mailnag signals and methods 
 class DBusService(dbus.service.Object):
 	def __init__(self, mailnag_daemon: MailnagController):
-		self._mails: list[dict[str, str | int]] = []
+		self._mails: list[dict[str, Union[str, int]]] = []
 		self._daemon = mailnag_daemon
 		bus_name = dbus.service.BusName(DBUS_BUS_NAME, bus = dbus.SessionBus())
 		dbus.service.Object.__init__(self, bus_name, DBUS_OBJ_PATH)
@@ -39,8 +40,8 @@ class DBusService(dbus.service.Object):
 	@dbus.service.signal(dbus_interface = DBUS_BUS_NAME, signature = 'aa{sv}aa{sv}')
 	def MailsAdded(
 		self,
-		new_mails: list[dict[str, str | int]],
-		all_mails: list[dict[str, str | int]]
+		new_mails: list[dict[str, Union[str, int]]],
+		all_mails: list[dict[str, Union[str, int]]]
 	) -> None:
 		pass
 	
@@ -48,13 +49,13 @@ class DBusService(dbus.service.Object):
 	@dbus.service.signal(dbus_interface = DBUS_BUS_NAME, signature = 'aa{sv}')
 	def MailsRemoved(
 		self,
-		remaining_mails: list[dict[str, str | int]]
+		remaining_mails: list[dict[str, Union[str, int]]]
 	) -> None:
 		pass
 	
 		
 	@dbus.service.method(dbus_interface = DBUS_BUS_NAME, out_signature = 'aa{sv}')
-	def GetMails(self) -> list[dict[str, str | int]]:
+	def GetMails(self) -> list[dict[str, Union[str, int]]]:
 		return self._mails
 		
 	
@@ -105,10 +106,10 @@ class DBusService(dbus.service.Object):
 		self.MailsRemoved(conv_remaining_mails)
 	
 		
-	def _convert_mails(self, mails: list[Mail]) -> list[dict[str, str | int]]:
+	def _convert_mails(self, mails: list[Mail]) -> list[dict[str, Union[str, int]]]:
 		converted_mails = []
 		for m in mails:
-			d: dict[str, str | int] = {}
+			d: dict[str, Union[str, int]] = {}
 			name, addr = m.sender
 			
 			if m.datetime > MAX_INT32:

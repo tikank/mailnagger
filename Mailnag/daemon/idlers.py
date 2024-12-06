@@ -22,6 +22,7 @@ import threading
 import time
 import logging
 from collections.abc import Callable
+from typing import Optional
 from Mailnag.common.exceptions import InvalidOperationException
 from Mailnag.common.accounts import Account
 
@@ -118,7 +119,7 @@ class Idler:
 		
 	
 	# idle callback (runs on a further thread)
-	def _idle_callback(self, error: tuple[str, int] | None) -> None:
+	def _idle_callback(self, error: Optional[tuple[str, int]]) -> None:
 		# flag that a mail sync is needed
 		self._needsync = True
 		

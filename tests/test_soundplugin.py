@@ -36,6 +36,7 @@ from Mailnag.common.plugins import (
 import configparser
 from unittest.mock import MagicMock, patch, ANY
 import sys
+from time import sleep
 
 
 @pytest.fixture
@@ -149,6 +150,7 @@ def test_mails_added_should_start_playing_sound(fake_gst):
     # WHEN
     hook_func = controller.hooks.get_hook_funcs(HookTypes.MAILS_ADDED)[0]
     hook_func([], [])
+    sleep(0.1) # Just wait a moment to give soundplugin time to react.
 
     # THEN
     play.set_state.assert_called_with(fake_gst.State.PLAYING)
@@ -168,6 +170,7 @@ def test_end_of_stream_stop_playing(fake_gst):
     soundplugin.enable()
     hook_func = controller.hooks.get_hook_funcs(HookTypes.MAILS_ADDED)[0]
     hook_func([], [])
+    sleep(0.1) # Just wait a moment to give soundplugin time to react.
 
     # WHEN
     args = bus.connect.call_args.args

@@ -21,41 +21,48 @@
 
 import mailbox
 import os.path
+from email.message import Message
+from typing import Any, Iterator, Optional
 
 from Mailnag.backends.base import MailboxBackend
+from Mailnag.common.exceptions import InvalidOperationException
 
 
 class MBoxBackend(MailboxBackend):
 	"""Implementation of mbox mail boxes."""
 	
-	def __init__(self, name = '', path=None, **kw):
+	def __init__(self, name: str = '', path: Optional[str] = None, **kw):
 		"""Initialize mbox mailbox backend with a name and path."""
 		self._name = name
 		self._path = path
 		self._opened = False
 
 
-	def open(self):
+	def open(self) -> None:
 		"""'Open' mbox. (Actually just checks that mailbox file exists.)"""
-		if not os.path.isfile(self._path):
+		if self._path is None or not os.path.isfile(self._path):
 			raise IOError('Mailbox {} does not exist.'.format(self._path))
 		self._opened = True
 
 
-	def close(self):
+	def close(self) -> None:
 		"""Close mbox."""
 		self._opened = False
 
 
-	def is_open(self):
+	def is_open(self) -> bool:
 		"""Return True if mailbox is opened."""
 		return self._opened
 
 
-	def list_messages(self):
+	def list_messages(self) -> Iterator[tuple[str, Message, dict[str, Any]]]:
 		"""List unread messages from the mailbox.
-		Yields pairs (folder, message) where folder is always ''.
+		Yields tuples (folder, message, flags) where folder is always ''.
 		"""
+		if self._path is None:
+			raise InvalidOperationException(
+				"Path is not defined for Mbox '{self._name}'"
+			)
 		mbox = mailbox.mbox(self._path, create=False)
 		folder = ''
 		try:
@@ -66,32 +73,42 @@ class MBoxBackend(MailboxBackend):
 			mbox.close()
 
 
-	def request_folders(self):
+	def request_folders(self) -> list[str]:
 		"""mbox does not suppoert folders."""
 		raise NotImplementedError("mbox does not support folders")
 
 
-	def supports_mark_as_seen(self):
+	def supports_mark_as_seen(self) -> bool:
 		return False
 
 
-	def mark_as_seen(self, mails):
+	def mark_as_seen(self, mails: Any) -> None:
 		# TODO: local mailboxes should support this
 		raise NotImplementedError
 
 		
-	def notify_next_change(self, callback=None, timeout=None):
+	def notify_next_change(
+		self,
+		callback: Any = None,
+		timeout: Optional[int] = None
+	) -> None:
 		raise NotImplementedError("mbox does not support notifications")
 
 
-	def cancel_notifications(self):
+	def cancel_notifications(self) -> None:
 		raise NotImplementedError("mbox does not support notifications")
 
 
 class MaildirBackend(MailboxBackend):
 	"""Implementation of maildir mail boxes."""
 
-	def __init__(self, name = '', path=None, folders=[], **kw):
+	def __init__(
+		self,
+		name: str = '',
+		path: Optional[str] = None,
+		folders: list[str] = [],
+		**kw
+	):
 		"""Initialize maildir mailbox backend with a name, path and folders."""
 		self._name = name
 		self._path = path
@@ -99,27 +116,31 @@ class MaildirBackend(MailboxBackend):
 		self._opened = False
 
 
-	def open(self):
+	def open(self) -> None:
 		"""'Open' mailbox. (Actually just checks that maildir directory exists.)"""
-		if not os.path.isdir(self._path):
+		if self._path is None or not os.path.isdir(self._path):
 			raise IOError('Mailbox {} does not exist.'.format(self._path))
 		self._opened = True
 
 
-	def close(self):
+	def close(self) -> None:
 		"""Close mailbox."""
 		self._opened = False
 
 
-	def is_open(self):
+	def is_open(self) -> bool:
 		"""Return True if mailbox is opened."""
 		return self._opened
 
 
-	def list_messages(self):
+	def list_messages(self) -> Iterator[tuple[str, Message, dict[str, Any]]]:
 		"""List unread messages from the mailbox.
 		Yields tuples (folder, message, flags).
 		"""
+		if self._path is None:
+			raise InvalidOperationException(
+				"Path is not defined for Maildir '{self._name}'"
+			)
 		folders = self._folders if len(self._folders) != 0 else ['']
 		root_maildir = mailbox.Maildir(self._path, factory=None, create=False)
 		try:
@@ -132,8 +153,12 @@ class MaildirBackend(MailboxBackend):
 			root_maildir.close()
 
 
-	def request_folders(self):
+	def request_folders(self) -> list[str]:
 		"""Lists folders from maildir."""
+		if self._path is None:
+			raise InvalidOperationException(
+				"Path is not defined for Maildir '{self._name}'"
+			)
 		maildir = mailbox.Maildir(self._path, factory=None, create=False)
 		try:
 			return [''] + maildir.list_folders()
@@ -141,20 +166,28 @@ class MaildirBackend(MailboxBackend):
 			maildir.close()
 
 
-	def mark_as_seen(self, mails):
+	def mark_as_seen(self, mails: Any) -> None:
 		# TODO: local mailboxes should support this
 		raise NotImplementedError
 
 
-	def notify_next_change(self, callback=None, timeout=None):
+	def notify_next_change(
+		self,
+		callback: Any = None,
+		timeout: Optional[int] = None
+	) -> None:
 		raise NotImplementedError("maildir does not support notifications")
 
 
-	def cancel_notifications(self):
+	def cancel_notifications(self) -> None:
 		raise NotImplementedError("maildir does not support notifications")
 
 
-	def _get_folder(self, maildir, folder):
+	def _get_folder(
+		self,
+		maildir: mailbox.Maildir,
+		folder: str
+	) -> mailbox.Maildir:
 		"""Returns folder instance of the given maildir."""
 		if folder == '':
 			return maildir

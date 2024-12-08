@@ -26,19 +26,34 @@
 import email
 import logging
 import re
+from collections.abc import Callable
+from email.message import Message
+from typing import Any, Iterator, Optional
 
 from Mailnag.backends.base import MailboxBackend
 import Mailnag.common.imaplib2 as imaplib
 from Mailnag.common.imaplib2 import AUTH
 from Mailnag.common.exceptions import InvalidOperationException
 from Mailnag.common.mutf7 import encode_mutf7, decode_mutf7
+from Mailnag.daemon.mails import Mail
 
 
 class IMAPMailboxBackend(MailboxBackend):
 	"""Implementation of IMAP mail boxes."""
 
-	def __init__(self, name = '', user = '', password = '', oauth2string = '',
-				server = '', port = '', ssl = True, folders = [], idle=True, **kw):
+	def __init__(
+		self,
+		name: str = '',
+		user: str = '',
+		password: str = '',
+		oauth2string: str = '',
+		server: str = '',
+		port: str = '',
+		ssl: bool = True,
+		folders: list[str] = [],
+		idle: bool = True,
+		**kw
+	):
 		self.name = name
 		self.user = user
 		self.password = password
@@ -48,31 +63,31 @@ class IMAPMailboxBackend(MailboxBackend):
 		self.ssl = ssl # bool
 		self.folders = [encode_mutf7(folder) for folder in folders]
 		self.idle = idle
-		self._conn = None
+		self._conn: Optional[imaplib.IMAP4] = None
 
 
-	def open(self):
+	def open(self) -> None:
 		if self._conn != None:
 			raise InvalidOperationException("Account is aready open")
 		
 		self._conn = self._connect()
 
 		
-	def close(self):
+	def close(self) -> None:
 		# if conn has already been closed, don't try to close it again
-		if self._conn != None:
+		if self._conn is not None:
 			conn = self._conn
 			self._conn = None
 			self._disconnect(conn)
 
 
-	def is_open(self):
+	def is_open(self) -> bool:
 		return self._conn != None
 
 
-	def list_messages(self):
+	def list_messages(self) -> Iterator[tuple[str, Message, dict[str, Any]]]:
 		self._ensure_open()
-		
+		assert self._conn is not None
 		conn = self._conn
 		
 		if len(self.folders) == 0:
@@ -104,7 +119,7 @@ class IMAPMailboxBackend(MailboxBackend):
 						yield (folder, msg, {'uid' : num.decode("utf-8"), 'folder' : folder})
 
 
-	def request_folders(self):
+	def request_folders(self) -> list[str]:
 		lst = []
 		
 		# Always create a new connection as an existing one may
@@ -119,7 +134,7 @@ class IMAPMailboxBackend(MailboxBackend):
 		for d in data:
 			match = re.match(r'.+\s+("."|"?NIL"?)\s+"?([^"]+)"?$', d.decode('utf-8'))
 
-			if match == None:
+			if match is None:
 				logging.warning("Folder format not supported.")
 			else:
 				folder = match.group(2)
@@ -128,11 +143,11 @@ class IMAPMailboxBackend(MailboxBackend):
 		return lst
 
 
-	def supports_mark_as_seen(self):
+	def supports_mark_as_seen(self) -> bool:
 		return True
 
 
-	def mark_as_seen(self, mails):
+	def mark_as_seen(self, mails: list[Mail]) -> None:
 		# Always create a new connection as an existing one may
 		# be used for IMAP IDLE.
 		conn = self._connect()
@@ -156,14 +171,19 @@ class IMAPMailboxBackend(MailboxBackend):
 			self._disconnect(conn)
 	
 	
-	def supports_notifications(self):
+	def supports_notifications(self) -> bool:
 		"""Returns True if mailbox supports notifications.
 		IMAP mailbox supports notifications if idle parameter is True"""
 		return self.idle
 
 
-	def notify_next_change(self, callback=None, timeout=None):
+	def notify_next_change(
+		self,
+		callback: Optional[Callable[[Optional[tuple[str, int]]], None]] = None,
+		timeout: Optional[int] = None
+	) -> None:
 		self._ensure_open()
+		assert self._conn is not None
 		
 		# register idle callback that is called whenever an idle event
 		# arrives (new mail / mail deleted).
@@ -171,23 +191,24 @@ class IMAPMailboxBackend(MailboxBackend):
 		# gmail sends keepalive events every 5 minutes.
 
 		# idle callback (runs on a further thread)
-		def _idle_callback(args):
+		def _idle_callback(args: tuple[Any, Any, tuple[str, int]]) -> None:
 			# error = (error_type, error_val)
 			response, callback_arg, error = args
 			# call actual callback
-			callback(error)
+			if callback is not None:
+				callback(error)
 		
 		self._conn.idle(callback = _idle_callback, timeout = timeout)
 
 
-	def cancel_notifications(self):
+	def cancel_notifications(self) -> None:
 		# NOTE: Don't throw if the connection is closed.
 		# Analogous to close().
 		# (Otherwise cleanup code like in Idler._idle() will fail)
 		# self._ensure_open()
 		
 		try:
-			if self._conn != None:
+			if self._conn is not None:
 				# Exit possible active idle state.
 				# (also calls idle_callback)
 				self._conn.noop()
@@ -195,8 +216,8 @@ class IMAPMailboxBackend(MailboxBackend):
 			pass
 	
 	
-	def _connect(self):
-		conn = None
+	def _connect(self) -> imaplib.IMAP4:
+		conn: Optional[imaplib.IMAP4] = None
 		
 		try:
 			if self.ssl:
@@ -224,7 +245,7 @@ class IMAPMailboxBackend(MailboxBackend):
 				conn.login(self.user, self.password)
 		except:
 			try:
-				if conn != None:
+				if conn is not None:
 					# conn.close() # allowed in SELECTED state only
 					conn.logout()
 			except: pass
@@ -237,7 +258,7 @@ class IMAPMailboxBackend(MailboxBackend):
 		return conn
 
 
-	def _disconnect(self, conn):
+	def _disconnect(self, conn: imaplib.IMAP4) -> None:
 		try:
 			conn.close()
 		finally:		
@@ -246,14 +267,14 @@ class IMAPMailboxBackend(MailboxBackend):
 			conn.logout()
 	
 	
-	def _select_single_folder(self, conn):
+	def _select_single_folder(self, conn: imaplib.IMAP4) -> None:
 		if len(self.folders) == 1:
 			folder = self.folders[0]
 		else:
 			folder = "INBOX"
 		conn.select(f'"{folder}"', readonly = True)
 	
-	def _ensure_open(self):
+	def _ensure_open(self) -> None:
 		if not self.is_open():
 			raise InvalidOperationException("Account is not open")
 

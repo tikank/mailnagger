@@ -25,6 +25,8 @@
 import email
 import logging
 import poplib
+from email.message import Message
+from typing import Any, Iterator, Optional
 
 from Mailnag.backends.base import MailboxBackend
 from Mailnag.common.exceptions import InvalidOperationException
@@ -33,8 +35,17 @@ from Mailnag.common.exceptions import InvalidOperationException
 class POP3MailboxBackend(MailboxBackend):
 	"""Implementation of POP3 mail boxes."""
 	
-	def __init__(self, name = '', user = '', password = '', oauth2string = '',
-				server = '', port = '', ssl = True, **kw):
+	def __init__(
+		self,
+		name: str = '',
+		user: str = '',
+		password: str = '',
+		oauth2string: str = '',
+		server: str = '',
+		port: str = '',
+		ssl: bool = True,
+		**kw
+	):
 		self.name = name
 		self.user = user
 		self.password = password
@@ -42,14 +53,14 @@ class POP3MailboxBackend(MailboxBackend):
 		self.server = server
 		self.port = port
 		self.ssl = ssl # bool
-		self._conn = None
+		self._conn: Optional[poplib.POP3] = None
 
 
-	def open(self):
+	def open(self) -> None:
 		if self._conn != None:
 			raise InvalidOperationException("Account is aready open")
 				
-		conn = None
+		conn: Optional[poplib.POP3] = None
 		
 		try:
 			if self.ssl:
@@ -73,7 +84,7 @@ class POP3MailboxBackend(MailboxBackend):
 			conn.pass_(self.password)
 		except:
 			try:
-				if conn != None:
+				if conn is not None:
 					conn.quit()
 			except: pass
 			raise # re-throw exception
@@ -81,20 +92,20 @@ class POP3MailboxBackend(MailboxBackend):
 		self._conn = conn
 
 
-	def close(self):
-		if self._conn != None:
+	def close(self) -> None:
+		if self._conn is not None:
 			self._conn.quit()
 			self._conn = None
 
 
-	def is_open(self):
+	def is_open(self) -> bool:
 		return (self._conn != None) and \
 				('sock' in self._conn.__dict__)
 
 
-	def list_messages(self):
+	def list_messages(self) -> Iterator[tuple[str, Message, dict[str, Any]]]:
 		self._ensure_open()
-		
+		assert self._conn is not None
 		conn = self._conn
 		folder = ''
 		
@@ -112,34 +123,33 @@ class POP3MailboxBackend(MailboxBackend):
 			message_bytes = b'\n'.join(message)
 			
 			try:
-				# put message into email object and make a dictionary
-				msg = dict(email.message_from_bytes(message_bytes))
+				msg = email.message_from_bytes(message_bytes)
 			except:
 				logging.debug("Couldn't get msg from POP message.")
 				continue
 			yield (folder, msg, {})
 
 
-	def request_folders(self):
+	def request_folders(self) -> list[str]:
 		raise NotImplementedError("POP3 does not support folders")
 
 
-	def supports_mark_as_seen(self):
+	def supports_mark_as_seen(self) -> bool:
 		return False
 
 
-	def mark_as_seen(self, mails):
+	def mark_as_seen(self, mails: Any) -> bool:
 		raise NotImplementedError
 
 
-	def notify_next_change(self, callback=None, timeout=None):
+	def notify_next_change(self, callback: Any = None, timeout: Any = None) -> None:
 		raise NotImplementedError("POP3 does not support notifications")
 
 
-	def cancel_notifications(self):
+	def cancel_notifications(self) -> None:
 		raise NotImplementedError("POP3 does not support notifications")
 
 
-	def _ensure_open(self):
+	def _ensure_open(self) -> None:
 		if not self.is_open():
 			raise InvalidOperationException("Account is not open")

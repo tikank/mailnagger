@@ -46,11 +46,20 @@ def fake_gst():
 
 
 class SampleController(MailnagController):
-    def __init__(self):
+    def __init__(self) -> None:
         self.hooks = HookRegistry()
 
-    def get_hooks(self):
+    def get_hooks(self) -> HookRegistry:
         return self.hooks
+
+    def shutdown(self) -> None:
+        pass
+
+    def check_for_mails(self) -> None:
+        pass
+
+    def mark_mail_as_read(self, mail_id: str) -> None:
+        pass
 
 
 def get_soundplugin(controller):
@@ -85,7 +94,7 @@ def test_enable_should_register_a_hook():
     assert len(hook_funcs) == 1
 
 
-def test_mails_added_should_initialize_gst(fake_gst):
+def test_mails_added_should_initialize_gst(fake_gst) -> None:
     # GIVEN
     controller = SampleController()
     soundplugin = get_soundplugin(controller)
@@ -114,10 +123,10 @@ def test_multiple_mails_added_should_initialize_gst_only_once(fake_gst):
     fake_gst.init.assert_called_once_with(None)
 
 
-def test_mails_added_should_play_correct_sound(fake_gst):
+def test_mails_added_should_play_correct_sound(fake_gst) -> None:
     # GIVEN
-    play = MagicMock()
-    factory = MagicMock()
+    play = MagicMock(spec=Gst.Pipeline)
+    factory = MagicMock(spec=Gst.ElementFactory)
     fake_gst.ElementFactory = factory
     factory.make.return_value = play
     controller = SampleController()
@@ -160,7 +169,7 @@ def test_end_of_stream_stop_playing(fake_gst):
     # GIVEN
     factory = MagicMock()
     fake_gst.ElementFactory = factory
-    play = MagicMock()
+    play = MagicMock(spec=Gst.Pipeline)
     factory.make.return_value = play
     bus = MagicMock()
     play.get_bus.return_value = bus

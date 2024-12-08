@@ -423,7 +423,7 @@ class AccountManager:
 		option_spec: list[Param]
 	) -> None:
 		for s in option_spec:
-			if s.to_str and s.param_name in options:
+			if s.param_name in options:
 				value = s.to_str(options[s.param_name])
 			else:
 				value = s.default_value

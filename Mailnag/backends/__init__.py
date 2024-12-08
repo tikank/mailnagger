@@ -1,4 +1,4 @@
-# Copyright 2016 Timo Kankare <timo.kankare@iki.fi>
+# Copyright 2016, 2024 Timo Kankare <timo.kankare@iki.fi>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -18,17 +18,19 @@
 
 """Backends to implement mail box specific functionality, like IMAP and POP3."""
 
-from collections import namedtuple
+from collections.abc import Callable
+from typing import Any, NamedTuple
 import json
 import re
 
+from Mailnag.backends.base import MailboxBackend
 from Mailnag.backends.imap import IMAPMailboxBackend
 from Mailnag.backends.pop3 import POP3MailboxBackend
 from Mailnag.backends.local import MBoxBackend, MaildirBackend
 from Mailnag.common.utils import splitstr
 
 
-def _str_to_folders(folders_str):
+def _str_to_folders(folders_str: str) -> list[str]:
 	if re.match(r'^\[.*\]$', folders_str):
 		folders = json.loads(folders_str)
 	else:
@@ -36,24 +38,32 @@ def _str_to_folders(folders_str):
 	return folders
 
 
-def _folders_to_str(folders):
+def _folders_to_str(folders: list[str]) -> str:
 	return json.dumps(folders, ensure_ascii=False)
 
 
-def _str_to_bool(string):
+def _str_to_bool(string: str) -> bool:
 	return bool(int(string))
 
 
-def _bool_to_str(b):
+def _bool_to_str(b: bool) -> str:
 	return str(int(b))
 
 
-Param = namedtuple('Param',
-	['param_name', 'option_name', 'from_str', 'to_str', 'default_value']
-)
-Backend = namedtuple('Backend', ['backend_class', 'params'])
+class Param(NamedTuple):
+	param_name: str
+	option_name: str
+	from_str: Callable[[str], Any]
+	to_str: Callable[[Any], str]
+	default_value: Any
 
-_backends = {
+
+class Backend(NamedTuple):
+	backend_class: type[MailboxBackend]
+	params: list[Param]
+
+
+_backends: dict[str, Backend] = {
 	'imap' : Backend(IMAPMailboxBackend, [
 				Param('user', 'user', str, str, ''),
 				Param('password', 'password', str, str, ''),
@@ -83,12 +93,12 @@ _backends = {
 }
 
 
-def create_backend(mailbox_type, **kw):
+def create_backend(mailbox_type: str, **kw) -> MailboxBackend:
 	"""Create mailbox backend of specified type and parameters."""
 	return _backends[mailbox_type].backend_class(**kw)
 
 
-def get_mailbox_parameter_specs(mailbox_type):
+def get_mailbox_parameter_specs(mailbox_type: str) -> list[Param]:
 	"""Returns mailbox backend specific parameter specification.
 	The specification is a list objects which have atributes:
 	* param_name - the name of argument in which parameter value is given to

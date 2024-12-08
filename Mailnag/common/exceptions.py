@@ -1,3 +1,4 @@
+# Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2014 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -17,5 +18,5 @@
 #
 
 class InvalidOperationException(Exception):
-	def __init__(self, message):
+	def __init__(self, message: str):
 		Exception.__init__(self, message)

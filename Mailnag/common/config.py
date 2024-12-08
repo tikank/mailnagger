@@ -1,3 +1,4 @@
+# Copyright 2024 Timo Kankare <timo.kankare@iki.fi>
 # Copyright 2011 - 2021 Patrick Ulbrich <zulu99@gmx.net>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -37,11 +38,11 @@ cfg_folder = Path(bd.xdg_config_home) / "mailnag"
 cfg_file = os.path.join(cfg_folder, "mailnag.cfg")
 
 
-def cfg_exists():
+def cfg_exists() -> bool:
 	return os.path.exists(cfg_file)
 
 
-def read_cfg():
+def read_cfg() -> RawConfigParser:
 	cfg = RawConfigParser()
 	cfg.read_dict(mailnag_defaults)
 
@@ -51,7 +52,7 @@ def read_cfg():
 	return cfg
 
 
-def write_cfg(cfg):
+def write_cfg(cfg: RawConfigParser) -> None:
 	if not os.path.exists(cfg_folder):
 		os.makedirs(cfg_folder)
 	

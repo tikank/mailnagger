@@ -28,11 +28,14 @@ gi.require_version('Gtk', '3.0')
 import os
 import dbus
 import threading
+from collections.abc import Callable
+from typing import Any, Optional
 from gi.repository import Notify, Gio, Gtk
 from Mailnag.common.plugins import Plugin, HookTypes
 from Mailnag.common.i18n import _
 from Mailnag.common.subproc import start_subprocess
 from Mailnag.common.exceptions import InvalidOperationException
+from Mailnag.daemon.mails import Mail
 
 NOTIFICATION_MODE_COUNT = '0'
 NOTIFICATION_MODE_SHORT_SUMMARY = '3'
@@ -46,18 +49,18 @@ plugin_defaults = {
 
 
 class LibNotifyPlugin(Plugin):
-	def __init__(self):
+	def __init__(self) -> None:
 		# dict that tracks all notifications that need to be closed
-		self._notifications = {}
+		self._notifications: dict[str, Notify.Notification] = {}
 		self._initialized = False
 		self._lock = threading.Lock()
 		self._notification_server_wait_event = threading.Event()
 		self._notification_server_ready = False
 		self._is_gnome = False
-		self._mails_added_hook = None
+		self._mails_added_hook: Optional[Callable[[list[Mail], list[Mail]], None]] = None
 		
 	
-	def enable(self):
+	def enable(self) -> None:
 		self._max_mails = int(self.get_config()['max_visible_mails'])
 		self._notification_server_wait_event.clear()
 		self._notification_server_ready = False
@@ -66,18 +69,18 @@ class LibNotifyPlugin(Plugin):
 		# initialize Notification
 		if not self._initialized:
 			Notify.init("Mailnagger")
-			self._is_gnome = self._is_gnome_environment(('XDG_CURRENT_DESKTOP', 'GDMSESSION'))
+			self._is_gnome = self._is_gnome_environment(['XDG_CURRENT_DESKTOP', 'GDMSESSION'])
 			self._initialized = True
 		
-		def mails_added_hook(new_mails, all_mails):
+		def mails_added_hook(new_mails: list[Mail], all_mails: list[Mail]) -> None:
 			self._notify_async(new_mails, all_mails)
 		
 		self._mails_added_hook = mails_added_hook
 		
-		def mails_removed_hook(remaining_mails):
+		def mails_removed_hook(remaining_mails: list[Mail]) -> None:
 			self._notify_async([], remaining_mails)
 		
-		self._mails_removed_hook = mails_removed_hook
+		self._mails_removed_hook: Optional[Callable[[list[Mail]], None]] = mails_removed_hook
 		
 		controller = self.get_mailnag_controller()
 		hooks = controller.get_hooks()
@@ -88,16 +91,16 @@ class LibNotifyPlugin(Plugin):
 		hooks.register_hook_func(HookTypes.MAILS_REMOVED,
 			self._mails_removed_hook)
 	
-	def disable(self):
+	def disable(self) -> None:
 		controller = self.get_mailnag_controller()
 		hooks = controller.get_hooks()
 		
-		if self._mails_added_hook != None:
+		if self._mails_added_hook is not None:
 			hooks.unregister_hook_func(HookTypes.MAILS_ADDED,
 				self._mails_added_hook)
 			self._mails_added_hook = None
 		
-		if self._mails_removed_hook != None:
+		if self._mails_removed_hook is not None:
 			hooks.unregister_hook_func(HookTypes.MAILS_REMOVED,
 				self._mails_removed_hook)
 			self._mails_removed_hook = None
@@ -110,22 +113,22 @@ class LibNotifyPlugin(Plugin):
 		self._close_notifications()
 
 	
-	def get_manifest(self):
+	def get_manifest(self) -> tuple[str, str, str, str]:
 		return (_("LibNotify Notifications"),
 				_("Shows a popup when new mails arrive."),
 				"2.1",
 				"Patrick Ulbrich <zulu99@gmx.net>")
 
 
-	def get_default_config(self):
+	def get_default_config(self) -> dict[str, Any]:
 		return plugin_defaults
 	
 	
-	def has_config_ui(self):
+	def has_config_ui(self) -> bool:
 		return True
 	
 	
-	def get_config_ui(self):
+	def get_config_ui(self) -> Gtk.Box:
 		radio_mapping = [
 			(NOTIFICATION_MODE_COUNT,				Gtk.RadioButton(label = _('Count of new mails'))),
 			(NOTIFICATION_MODE_SHORT_SUMMARY,		Gtk.RadioButton(label = _('Short summary of new mails'))),
@@ -158,25 +161,25 @@ class LibNotifyPlugin(Plugin):
 		alignment.add(inner_box)
 		box.pack_start(alignment, False, False, 0)
 		
-		box._radio_mapping = radio_mapping
+		self._radio_mapping = radio_mapping
 		
 		return box
 	
 	
-	def load_ui_from_config(self, config_ui):
+	def load_ui_from_config(self, config_ui: Gtk.Widget) -> None:
 		config = self.get_config()		
-		radio = [r for m, r in config_ui._radio_mapping if m == config['notification_mode']][0]
+		radio = [r for m, r in self._radio_mapping if m == config['notification_mode']][0]
 		radio.set_active(True)
 	
 	
-	def save_ui_to_config(self, config_ui):
+	def save_ui_to_config(self, config_ui: Gtk.Widget) -> None:
 		config = self.get_config()
-		mode = [m for m, r in config_ui._radio_mapping if r.get_active()][0]
+		mode = [m for m, r in self._radio_mapping if r.get_active()][0]
 		config['notification_mode'] = mode
 
 
-	def _notify_async(self, new_mails, all_mails):
-		def thread():
+	def _notify_async(self, new_mails: list[Mail], all_mails: list[Mail]) -> None:
+		def thread() -> None:
 			with self._lock:
 				# The desktop session may have started Mailnag 
 				# before the libnotify dbus daemon.
@@ -206,7 +209,7 @@ class LibNotifyPlugin(Plugin):
 		t.start()
 	
 	
-	def _notify_short_summary(self, new_mails, all_mails):
+	def _notify_short_summary(self, new_mails: list[Mail], all_mails: list[Mail]) -> None:
 		summary = ""
 		body = ""
 		lst = []
@@ -244,8 +247,8 @@ class LibNotifyPlugin(Plugin):
 		self._notifications['0'].show()
 		
 	
-	def _notify_summary(self, new_mails, all_mails):
-		summary = ""		
+	def _notify_summary(self, new_mails: list[Mail], all_mails: list[Mail]) -> None:
+		summary = ""
 		body = ""
 		mails = self._prepend_new_mails(new_mails, all_mails)
 		
@@ -299,7 +302,7 @@ class LibNotifyPlugin(Plugin):
 			self._notifications[notification_id] = n
 
 
-	def _notify_count(self, count):
+	def _notify_count(self, count: int) -> None:
 		if len(self._notifications) == 0:
 			self._notifications['0'] = self._get_notification(" ", None, None) # empty string will emit a gtk warning
 		
@@ -312,15 +315,20 @@ class LibNotifyPlugin(Plugin):
 		self._notifications['0'].show()
 	
 	
-	def _close_notifications(self):
+	def _close_notifications(self) -> None:
 		with self._lock:
 			for n in self._notifications.values():
 				try_close(n)
 			self._notifications = {}
 	
 	
-	def _get_notification(self, summary, body, icon):
-		n = Notify.Notification.new(summary, body, icon)		
+	def _get_notification(
+		self,
+		summary: str,
+		body: Optional[str],
+		icon: Optional[str]
+	) -> Notify.Notification:
+		n = Notify.Notification.new(summary, body, icon)
 		n.set_category("email")
 		n.set_hint_string("desktop-entry", "mailnagger")
 		
@@ -330,7 +338,7 @@ class LibNotifyPlugin(Plugin):
 		return n
 	
 	
-	def _wait_for_notification_server(self):
+	def _wait_for_notification_server(self) -> bool:
 		bus = dbus.SessionBus()
 		while not bus.name_has_owner('org.freedesktop.Notifications'):
 			self._notification_server_wait_event.wait(5)
@@ -339,11 +347,16 @@ class LibNotifyPlugin(Plugin):
 		return True
 
 	
-	def _notification_action_handler(self, n, action, user_data):
+	def _notification_action_handler(
+		self,
+		n: Notify.Notification,
+		action: str,
+		user_data: tuple[Mail, str]
+	) -> None:
 		with self._lock:
 			if action == "default":
 				mailclient = get_default_mail_reader()
-				if mailclient != None:
+				if mailclient is not None:
 					start_subprocess(mailclient)
 
 				# clicking the notification bubble has closed all notifications
@@ -361,13 +374,13 @@ class LibNotifyPlugin(Plugin):
 				del self._notifications[user_data[1]]
 	
 
-	def _get_sender(self, mail):
+	def _get_sender(self, mail: Mail) -> str:
 		name, addr = mail.sender
 		if len(name) > 0: return name
 		else: return addr
 	
 	
-	def _prepend_new_mails(self, new_mails, all_mails):
+	def _prepend_new_mails(self, new_mails: list[Mail], all_mails: list[Mail]) -> list[Mail]:
 		# The mail list (all_mails) is sorted by date (mails with most recent 
 		# date on top). New mails with no date or older mails that come in 
 		# delayed won't be listed on top. So if a mail with no or an older date 
@@ -377,18 +390,18 @@ class LibNotifyPlugin(Plugin):
 		return new_mails + [m for m in all_mails if m not in new_mails]
 
 
-	def _is_gnome_environment(self, env_vars):
+	def _is_gnome_environment(self, env_vars: list[str]) -> bool:
 		for var in env_vars:
 			if 'gnome' in os.environ.get(var, '').lower().split(':'):
 				return True
 		return False
 
 
-def get_default_mail_reader():
-	mail_reader = None
+def get_default_mail_reader() -> Optional[str]:
+	mail_reader: Optional[str] = None
 	app_info = Gio.AppInfo.get_default_for_type("x-scheme-handler/mailto", False)
 
-	if app_info != None:
+	if app_info is not None:
 		executable = Gio.AppInfo.get_executable(app_info)
 
 		if (executable != None) and (len(executable) > 0):
@@ -397,7 +410,7 @@ def get_default_mail_reader():
 	return mail_reader
 
 
-def ellipsize(str, max_len):
+def ellipsize(str: str, max_len: int) -> str:
 	if max_len < 3: max_len = 3
 	if len(str) <= max_len:
 		return str
@@ -406,7 +419,7 @@ def ellipsize(str, max_len):
 
 
 # If the user has closed the notification, an exception is raised.
-def try_close(notification):
+def try_close(notification: Notify.Notification) -> None:
 	try:
 		notification.close()
 	except:
